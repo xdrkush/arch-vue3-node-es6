@@ -11,7 +11,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 // Modules
 // Controllers
 // Middlewares
-var router = _express["default"].Router();
+var router = _express["default"].Router(); // let cb = new TestControllers();
+// // cb.connectedCallback()
+
 
 router.route('/').get(_TestMiddleware.TestMD, new _TestControllers["default"]().get).post(new _TestControllers["default"]().post);
 module.exports = router;
