@@ -11,9 +11,7 @@ var _TestMiddleware = require("../middlewares/TestMiddleware");
 // Modules
 // Controllers
 // Middlewares
-var router = _express["default"].Router(); // let cb = new TestControllers();
-// // cb.connectedCallback()
-
+var router = _express["default"].Router();
 
 router.route('/').get(_TestMiddleware.TestMD, _controllers.GetTest).post(_controllers.PostTest);
 router.route('/landing').get(_TestMiddleware.TestMD, _controllers.GetMonit);

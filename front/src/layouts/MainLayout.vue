@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout v-if='!monitStore.getLanding' view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar class="glossy">
         <q-btn flat round dense icon="menu" class="q-mr-sm" />
@@ -31,64 +31,17 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
-// import EssentialLink from "components/website/EssentialLink.vue";
-import { useTestStore } from "../stores/test.store";
-
-const linksList = [
-  {
-    title: "Home",
-    caption: "home",
-    icon: "code",
-    link: "/",
-  },
-  {
-    title: "Article",
-    caption: "Article",
-    icon: "code",
-    link: "/article",
-  },
-  {
-    title: "Contact",
-    caption: "Contact",
-    icon: "code",
-    link: "/contact",
-  },
-  {
-    title: "Login",
-    caption: "authentification",
-    icon: "code",
-    link: "/login",
-  },
-  {
-    title: "Admin",
-    caption: "admin",
-    icon: "code",
-    link: "/admin",
-  },
-];
+import { defineComponent, onBeforeMount } from "vue";
+import { useMonitStore } from "src/stores/monit.store";
 
 export default defineComponent({
   name: "MainLayout",
 
-  components: {
-    // EssentialLink,
-  },
+  components: {},
 
   setup() {
-    const leftDrawerOpen = ref(false);
-    const store = useTestStore();
-    store.testFn();
-    console.log("Admin Website mainStore", store.title);
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
-      store,
-    };
+    const monitStore = useMonitStore();
+    return {monitStore};
   },
 });
 </script>

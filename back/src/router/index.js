@@ -3,8 +3,10 @@ import express from 'express';
 
 // Controllers
 import {
+    // Test
     GetTest,
     PostTest,
+    // Monit
     GetMonit
 } from '../controllers';
 
@@ -12,8 +14,6 @@ import {
 import { TestMD } from '../middlewares/TestMiddleware';
 
 const router = express.Router()
-// let cb = new TestControllers();
-// // cb.connectedCallback()
 
 router.route('/')
     .get(TestMD, GetTest)

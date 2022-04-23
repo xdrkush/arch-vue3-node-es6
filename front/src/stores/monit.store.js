@@ -1,19 +1,30 @@
 import { defineStore } from 'pinia';
 import { api } from 'boot/axios'
 
-export const useTestStore = defineStore('monit', {
+export const useMonitStore = defineStore('monit', {
   state: () => ({
-    landing: true
+    load: false,
+    landing: null
   }),
   getters: {
+    getLoad: (state) => state.load,
     getLanding: (state) => state.landing
   },
   actions: {
-    testFn() {
-      api.get('http://localhost:8088/api/landing').then(res => {
-        console.log('landing response', res)
-        this.landing = res.data.landing;
-      })
+    async getLandingStatus() {
+      try {
+        await api
+          .get('http://localhost:8088/api/landing')
+          .then(res => {
+            setTimeout(() => {
+              console.log('response getLandingStatus', res.data.landing)
+              this.landing = res.data.landing
+              this.load = true
+            }, 500)
+          })
+      } catch (error) {
+        return error
+      }
     },
   },
 });
