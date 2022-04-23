@@ -2,8 +2,11 @@
 import express from 'express';
 
 // Controllers
-import TestControllers from '../controllers/TestControllers';
-import MonitControllers from '../controllers/MonitControllers';
+import {
+    GetTest,
+    PostTest,
+    GetMonit
+} from '../controllers';
 
 // Middlewares
 import { TestMD } from '../middlewares/TestMiddleware';
@@ -13,10 +16,10 @@ const router = express.Router()
 // // cb.connectedCallback()
 
 router.route('/')
-    .get(TestMD, new TestControllers().get)
-    .post(new TestControllers().post)
+    .get(TestMD, GetTest)
+    .post(PostTest)
 
 router.route('/landing')
-    .get(TestMD, new MonitControllers().get)
+    .get(TestMD, GetMonit)
 
 module.exports = router

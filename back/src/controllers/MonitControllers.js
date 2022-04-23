@@ -12,13 +12,12 @@ export default class MonitControllers extends Connection {
   
   async get(req, res) {
     const dbMonit = await Monit.find()
-    console.log('dbMonit', dbMonit)
     
     try {
-      return res.send({
+      return res.status(200).json({
         status: "success",
         message: "Method Get Monit Controller",
-        data: dbMonit
+        data: { landing: dbMonit[0].landing }
       });
     } catch (error) {
       throw error;
