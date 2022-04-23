@@ -1,37 +1,24 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar class="glossy">
-        <q-btn flat round dense icon="menu" class="q-mr-sm" />
-        <q-avatar>
-          <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-        </q-avatar>
-
-        <q-toolbar-title>Quasar Framework</q-toolbar-title>
-
-        <q-btn flat round dense icon="whatshot" />
-      </q-toolbar>
-    </q-header>
-
     <q-footer elevated>
       <q-toolbar class="glossy">
         <q-toolbar-title>Footer</q-toolbar-title>
       </q-toolbar>
     </q-footer>
-    <!-- <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        /> -->
-
     <q-page-container>
-      <router-view />
+      <!-- Main -->
+      <img :src="UnicornCircle" alt="my-logo" />
+
+
+      <!-- / Main -->
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
+import UnicornCircle from "../assets/Unicorn-circle.svg";
+
 // import EssentialLink from "components/website/EssentialLink.vue";
 import { useTestStore } from "../stores/test.store";
 
@@ -87,7 +74,7 @@ export default defineComponent({
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
-      store,
+      store,UnicornCircle
     };
   },
 });

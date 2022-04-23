@@ -36,6 +36,6 @@ export default class Server {
         this.app.use(express.json())
 
         // Routes
-        this.app.use(router);
+        this.app.use('/api', router);
     }
 }

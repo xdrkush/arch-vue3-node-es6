@@ -1,9 +1,15 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var _express = _interopRequireDefault(require("express"));
 
@@ -17,23 +23,14 @@ var _cors = _interopRequireDefault(require("cors"));
 
 var _index = _interopRequireDefault(require("../router/index"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
 var Server = /*#__PURE__*/function () {
   function Server(app, port) {
-    _classCallCheck(this, Server);
-
+    (0, _classCallCheck2["default"])(this, Server);
     this.app = app;
     this.port = port;
   }
 
-  _createClass(Server, [{
+  (0, _createClass2["default"])(Server, [{
     key: "config",
     value: function config() {
       // Log
@@ -56,10 +53,9 @@ var Server = /*#__PURE__*/function () {
 
       this.app.use(_express["default"].json()); // Routes
 
-      this.app.use(_index["default"]);
+      this.app.use('/api', _index["default"]);
     }
   }]);
-
   return Server;
 }();
 

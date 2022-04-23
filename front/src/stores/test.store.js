@@ -10,7 +10,7 @@ export const useTestStore = defineStore('test', {
   },
   actions: {
     testFn() {
-      api.get('http://localhost:8088/').then(res => {
+      api.get('http://localhost:8088/api').then(res => {
         console.log('response', res)
         this.title = res.data.message;
       })

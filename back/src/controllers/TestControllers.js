@@ -4,7 +4,7 @@ const Article = require("../models/Article.model.js");
 // Ramasse miette (clean de l'objet)
 const privateProps = new WeakMap();
 
-class TestControllers extends Connection {
+export default class TestControllers extends Connection {
   constructor() {
     super();
     privateProps.set(this.databaseConnection());
@@ -16,11 +16,11 @@ class TestControllers extends Connection {
     //   if (err) console.log('Error', err)
     //   console.log('data', data)
     // })
-
-    Article.find((err, data) => {
-      if (err) console.log('Error', err)
-      console.log('data', data)
-    })
+    // const dbArticle = await Article.find()
+    // Article.find((err, data) => {
+    //   if (err) console.log('Error', err)
+    //   console.log('data', data)
+    // })
     
     try {
       return res.send({
@@ -45,5 +45,3 @@ class TestControllers extends Connection {
   }
 
 }
-
-export default TestControllers

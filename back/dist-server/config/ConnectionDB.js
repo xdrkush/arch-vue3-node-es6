@@ -1,10 +1,10 @@
 "use strict";
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 var mongoose = require('mongoose');
 
@@ -14,10 +14,10 @@ console.log('process', process.env.MONGO_URI);
 
 var Connection = /*#__PURE__*/function () {
   function Connection() {
-    _classCallCheck(this, Connection);
+    (0, _classCallCheck2["default"])(this, Connection);
   }
 
-  _createClass(Connection, [{
+  (0, _createClass2["default"])(Connection, [{
     key: "databaseConnection",
     value: function databaseConnection() {
       try {
@@ -33,7 +33,6 @@ var Connection = /*#__PURE__*/function () {
       }
     }
   }]);
-
   return Connection;
 }();
 

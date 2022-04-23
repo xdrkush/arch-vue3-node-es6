@@ -1,5 +1,9 @@
 const routes = [
   {
+    path: "/landing",
+    component: () => import("layouts/LandingPage.vue")
+  },
+  {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [

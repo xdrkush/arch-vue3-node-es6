@@ -1,12 +1,14 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 var _express = _interopRequireDefault(require("express"));
 
 var _TestControllers = _interopRequireDefault(require("../controllers/TestControllers"));
 
-var _TestMiddleware = require("../middlewares/TestMiddleware");
+var _MonitControllers = _interopRequireDefault(require("../controllers/MonitControllers"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _TestMiddleware = require("../middlewares/TestMiddleware");
 
 // Modules
 // Controllers
@@ -16,4 +18,5 @@ var router = _express["default"].Router(); // let cb = new TestControllers();
 
 
 router.route('/').get(_TestMiddleware.TestMD, new _TestControllers["default"]().get).post(new _TestControllers["default"]().post);
+router.route('/landing').get(_TestMiddleware.TestMD, new _MonitControllers["default"]().get);
 module.exports = router;
