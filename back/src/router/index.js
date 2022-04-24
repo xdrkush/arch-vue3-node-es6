@@ -7,7 +7,13 @@ import {
     GetTest,
     PostTest,
     // Monit
-    GetMonit
+    GetMonit,
+    // User
+    GetProfile,
+    PostProfile,
+    PutProfile,
+    // Authenticate
+    LoginAuth
 } from '../controllers';
 
 // Middlewares
@@ -21,5 +27,13 @@ router.route('/')
 
 router.route('/landing')
     .get(TestMD, GetMonit)
+
+router.route('/profile')
+    .get(GetProfile)
+    .post(PostProfile)
+    .put(PutProfile)
+    
+router.route('/auth')
+    .post(LoginAuth)
 
 module.exports = router

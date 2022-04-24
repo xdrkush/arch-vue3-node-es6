@@ -15,4 +15,6 @@ var router = _express["default"].Router();
 
 router.route('/').get(_TestMiddleware.TestMD, _controllers.GetTest).post(_controllers.PostTest);
 router.route('/landing').get(_TestMiddleware.TestMD, _controllers.GetMonit);
+router.route('/profile').get(_controllers.GetProfile).post(_controllers.PostProfile).put(_controllers.PutProfile);
+router.route('/auth').post(_controllers.LoginAuth);
 module.exports = router;

@@ -1,6 +1,6 @@
 <template>
-  <q-layout v-if='!monitStore.getLanding' view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="lHh Lpr lFf">
+    <q-header v-if="!monitStore.getLanding" elevated>
       <q-toolbar class="glossy">
         <q-btn flat round dense icon="menu" class="q-mr-sm" />
         <q-avatar>
@@ -13,7 +13,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-footer elevated>
+    <q-footer v-if="!monitStore.getLanding" elevated>
       <q-toolbar class="glossy">
         <q-toolbar-title>Footer</q-toolbar-title>
       </q-toolbar>
@@ -33,6 +33,7 @@
 <script>
 import { defineComponent, onBeforeMount } from "vue";
 import { useMonitStore } from "src/stores/monit.store";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "MainLayout",
@@ -41,7 +42,9 @@ export default defineComponent({
 
   setup() {
     const monitStore = useMonitStore();
-    return {monitStore};
+    const Router = useRouter();
+    // if (monitStore.getLanding) Router.push({ path: "/landing" })
+    return { monitStore };
   },
 });
 </script>

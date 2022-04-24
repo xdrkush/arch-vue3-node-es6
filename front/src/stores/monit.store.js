@@ -4,7 +4,7 @@ import { api } from 'boot/axios'
 export const useMonitStore = defineStore('monit', {
   state: () => ({
     load: false,
-    landing: null
+    landing: true
   }),
   getters: {
     getLoad: (state) => state.load,
@@ -14,7 +14,7 @@ export const useMonitStore = defineStore('monit', {
     async getLandingStatus() {
       try {
         await api
-          .get('http://localhost:8088/api/landing')
+          .get('/landing')
           .then(res => {
             setTimeout(() => {
               console.log('response getLandingStatus', res.data.landing)

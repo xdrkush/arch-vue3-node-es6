@@ -1,29 +1,19 @@
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 import logger from 'morgan';
 import cors from "cors";
 import router from "../router/index";
 
 export default class Server {
-    constructor(app, port) {
+    constructor(app) {
         this.app = app;
-        this.port = port;
     }
 
     config() {
         // Log
         this.app.use(logger('dev'));
-
-        // Parse Json (Body-Parser)
-        this.app.use(express.json());
-        this.app.use(express.urlencoded({ extended: false }));
-
-        // Cookie
-        this.app.use(cookieParser());
-
-        // File Static '/assets'
-        this.app.use('/assets', express.static(path.join(__dirname, 'public')));
 
         // Cors
         this.app.use(cors({
@@ -32,8 +22,15 @@ export default class Server {
             credentials: true
         }))
 
-        // Body Parser
-        this.app.use(express.json())
+        // Parse Json (Body-Parser)
+        this.app.use(bodyParser.json({limit: '5mb'}));
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+
+        // Cookie
+        this.app.use(cookieParser());
+
+        // File Static '/assets'
+        this.app.use('/assets', express.static(path.join(__dirname, 'public')));
 
         // Routes
         this.app.use('/api', router);
