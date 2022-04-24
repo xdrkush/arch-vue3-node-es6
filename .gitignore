@@ -34,5 +34,5 @@ node_modules/
 .next
 
 # Nuxt.js build / generate output
-# .nuxt
-# dist
+.nuxt
+dist

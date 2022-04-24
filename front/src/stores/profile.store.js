@@ -3,12 +3,7 @@ import { api } from 'boot/axios'
 
 export const useProfileStore = defineStore('profile', {
   state: () => ({
-    profile: {
-      name: "Hi, i'm Dr Kush,",
-      mail: "drkushikush@protomail.com",
-      phone: '+336XXXXXXXXX',
-      description: "I'm a french Developper, i like the open-source project, & the hamburgers !"
-    }
+    profile: {}
   }),
   getters: {
     getProfile: (state) => state.profile,
@@ -20,8 +15,8 @@ export const useProfileStore = defineStore('profile', {
           .get('/profile')
           .then(res => {
             setTimeout(() => {
-              // console.log('response getProfile', res.data.profile)
-              if (res.data.profile === true) this.profile = res.data.profile
+              console.log('response getProfile', res.data.profile)
+              if (res.data.profile) this.profile = res.data.profile
 
             }, 500)
           })

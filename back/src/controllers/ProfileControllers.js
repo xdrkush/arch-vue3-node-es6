@@ -26,6 +26,8 @@ export default class MonitControllers extends Connection {
         name: user.name,
         mail: user.mail,
         phone: user.phone,
+        address: user.address,
+        social: user.social,
         description: user.description,
       }
     }
@@ -57,7 +59,7 @@ export default class MonitControllers extends Connection {
   }
 
   put(req, res) {
-    // console.log('PUT User by name', req.body)
+    console.log('PUT User by name', req.body)
     const { oldName } = req.body;
 
     try {

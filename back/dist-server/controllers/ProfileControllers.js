@@ -80,6 +80,8 @@ var MonitControllers = /*#__PURE__*/function (_Connection) {
                     name: user.name,
                     mail: user.mail,
                     phone: user.phone,
+                    address: user.address,
+                    social: user.social,
                     description: user.description
                   };
                 } // console.log('get user profile', info)
@@ -132,7 +134,7 @@ var MonitControllers = /*#__PURE__*/function (_Connection) {
   }, {
     key: "put",
     value: function put(req, res) {
-      // console.log('PUT User by name', req.body)
+      console.log('PUT User by name', req.body);
       var oldName = req.body.oldName;
 
       try {

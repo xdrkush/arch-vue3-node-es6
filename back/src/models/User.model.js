@@ -20,7 +20,23 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    firstname: {
+        type: String,
+        default: ""
+    },
+    lastname: {
+        type: String,
+        default: ""
+    },
     description: {
+        type: String,
+        default: ""
+    },
+    address: {
+        type: String,
+        default: ""
+    },
+    siret: {
         type: String,
         default: ""
     },
@@ -30,6 +46,11 @@ const UserSchema = new Schema({
     },
     social: {
         type: Object,
+        default: {
+            facebook: "user",
+            twitter: "@user",
+            youtube: "user"
+        }
     },
     isValid: {
         type: Boolean,
