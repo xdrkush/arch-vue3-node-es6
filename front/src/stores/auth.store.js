@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import jwt_decode from "jwt-decode";
 import { api } from 'boot/axios'
 
 export const useAuthStore = defineStore('auth', {
@@ -13,11 +14,19 @@ export const useAuthStore = defineStore('auth', {
       console.log('Store Login', form)
       try {
         await api
-          .post('/auth', { ...form })
+          .put('/auth', { ...form })
           .then(res => {
             setTimeout(() => {
-              console.log('response getProfile', res.data)
-              this.loggedIn = res.data.loggedIn
+              let token = res.data.token;
+              if (res.data.token) localStorage.setItem("user_token", token);
+
+              const value_t = jwt_decode(token)
+              if (value_t.loggedIn) this.loggedIn = value_t.loggedIn
+              else this.loggedIn = false
+
+              console.log('response getProfile', token, value_t)
+
+
             }, 500)
           })
       } catch (error) {

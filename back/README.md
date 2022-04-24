@@ -9,6 +9,11 @@ Back-end of templater
 yarn
 ```
 
+## Run Mongodb:
+```
+sudo mongod
+```
+
 ## Dev
 ```
 yarn w:dev

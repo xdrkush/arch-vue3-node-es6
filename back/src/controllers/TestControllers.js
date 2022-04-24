@@ -1,5 +1,5 @@
-const Connection = require("../config/ConnectionDB");
-const Article = require("../models/Article.model.js");
+import Connection from "../config/ConnectionDB";
+import Article from "../models/Article.model.js";
 
 // Ramasse miette (clean de l'objet)
 const privateProps = new WeakMap();

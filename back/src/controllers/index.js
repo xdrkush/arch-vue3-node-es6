@@ -21,6 +21,7 @@ module.exports = {
 
     // AuthControllers
     LoginAuth: new AuthControllers().login,
+    RegisterAuth: new AuthControllers().create,
 
     // XXXControllers
     // GetXXX: new XXXControllers().get,

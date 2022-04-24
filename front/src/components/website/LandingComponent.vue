@@ -1,13 +1,27 @@
 <template>
   <div class="q-pa-md text-center">
+
     <div>
       <h2>{{ user.name }}</h2>
-      <h5>( In Progress ... )</h5>
+      <h5>( Site en construction ... )</h5>
       <p>{{ user.description }}</p>
     </div>
-    <q-img :src="UnicornCircle" spinner-color="white"
-      width="50vh"
-     />
+
+    <q-img :src="UnicornCircle" spinner-color="white" width="50vh" />
+
+    <q-footer elevated>
+      <q-toolbar class="glossy text-center">
+        <q-toolbar-title
+          >Écrivez-moi: {{ user.mail }}
+          <q-icon name="mail" />
+        </q-toolbar-title>
+        <q-toolbar-title
+          >Appellez-moi: {{ user.phone }}
+          <q-icon name="phone" />
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
+
   </div>
 </template>
 

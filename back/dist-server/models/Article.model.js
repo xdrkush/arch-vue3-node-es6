@@ -1,12 +1,14 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _mongoose = _interopRequireDefault(require("mongoose"));
+
 /*
  * Model de 'Article'
  ******************************/
 // Import de Mongoose
-var mongoose = require('mongoose');
-
-var Schema = mongoose.Schema;
+var Schema = _mongoose["default"].Schema;
 var ArticleSchema = new Schema({
   title: {
     type: String,
@@ -17,4 +19,4 @@ var ArticleSchema = new Schema({
     "default": "J'ai oublie la description"
   }
 });
-module.exports = mongoose.model('Article', ArticleSchema);
+module.exports = _mongoose["default"].model('Article', ArticleSchema);

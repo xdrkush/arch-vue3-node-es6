@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center column">
+  <q-page class="q-pa-md">
     <h2>Admin Website Page</h2>
     <TabAdminWebsite />
   </q-page>

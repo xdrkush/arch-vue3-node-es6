@@ -23,7 +23,8 @@ module.exports = {
   PostProfile: new _ProfileControllers["default"]().post,
   PutProfile: new _ProfileControllers["default"]().put,
   // AuthControllers
-  LoginAuth: new _AuthControllers["default"]().login // XXXControllers
+  LoginAuth: new _AuthControllers["default"]().login,
+  RegisterAuth: new _AuthControllers["default"]().create // XXXControllers
   // GetXXX: new XXXControllers().get,
 
 };

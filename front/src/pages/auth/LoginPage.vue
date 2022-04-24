@@ -1,6 +1,14 @@
 <template>
   <q-page class="">
+    <q-inner-loading
+      :showing="visible"
+      label="Chargement ..."
+      label-class="text-primary"
+      label-style="font-size: 1.5em"
+    />
     <div
+      v-if="!visible"
+      v-show="!visible"
       class="q-gutter-md row text-center justify-center items-center"
       style="width: 100vw; height: 80vh"
     >
@@ -14,15 +22,11 @@
           label="Password"
           type="password"
         />
-        <q-btn
-          label="Mot de passe oublier ?"
-          class="q-ma-md"
-          color="warning"
-        />
+        <q-btn label="Mot de passe oublier ?" class="q-ma-md" color="warning" />
         <q-btn
           label="Confirmez"
           class="q-ma-md"
-          color="positive"
+          color="primary"
           @click="loginSubmit({ ...form })"
         />
       </div>
@@ -32,20 +36,29 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/auth.store";
 
 export default defineComponent({
   name: "LoginPage",
   setup() {
     const authStore = useAuthStore();
+    const Router = useRouter();
     const form = ref({ mail: "", password: "" });
+    let visible = ref(false);
+
+    if (authStore.getLoggedIn) Router.push({ path: "/admin" });
 
     const loginSubmit = (obj) => {
-      console.log("login", obj);
+      visible.value = true;
       authStore.loginAuth(obj);
+
+      setTimeout(() => {
+        if (authStore.getLoggedIn) Router.push({ path: "/admin" });
+      }, 2000);
     };
 
-    return { form, loginSubmit };
+    return { form, loginSubmit, visible };
   },
 });
 </script>

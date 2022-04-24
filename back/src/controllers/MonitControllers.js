@@ -1,5 +1,5 @@
-const Connection = require("../config/ConnectionDB");
-const Monit = require("../models/Monit.model.js");
+import Connection from "../config/ConnectionDB";
+import Monit from "../models/Monit.model.js";
 
 // Ramasse miette (clean de l'objet)
 const privateProps = new WeakMap();

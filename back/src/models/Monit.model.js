@@ -3,13 +3,22 @@
  ******************************/
 
 // Import de Mongoose
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+import mongoose from 'mongoose'
+const { Schema } = mongoose
 
 const MonitSchema = new Schema({
     landing: {
         type: Boolean,
         default: true
+    },
+    theme: {
+        type: Boolean,
+        default: {
+            color: {
+                primary: String,
+                default: '#000000'
+            }
+        }
     },
 })
 

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="q-pa-md">
     <h2>Admin Dashboard Page</h2>
   </q-page>
 </template>

@@ -4,16 +4,13 @@ import express from 'express';
 // Controllers
 import {
     // Test
-    GetTest,
-    PostTest,
+    GetTest, PostTest,
     // Monit
     GetMonit,
     // User
-    GetProfile,
-    PostProfile,
-    PutProfile,
+    GetProfile, PostProfile, PutProfile,
     // Authenticate
-    LoginAuth
+    LoginAuth, RegisterAuth
 } from '../controllers';
 
 // Middlewares
@@ -32,8 +29,9 @@ router.route('/profile')
     .get(GetProfile)
     .post(PostProfile)
     .put(PutProfile)
-    
+
 router.route('/auth')
-    .post(LoginAuth)
+    .put(LoginAuth)
+    .post(RegisterAuth)
 
 module.exports = router

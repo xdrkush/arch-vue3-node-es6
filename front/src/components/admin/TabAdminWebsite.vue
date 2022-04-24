@@ -3,7 +3,7 @@
     <q-tabs
       v-model="tab"
       inline-label
-      class="bg-purple text-white shadow-2"
+      class="bg-primary text-white shadow-2"
       style="min-width: 70vw"
     >
       <q-tab name="landing" icon="home" label="landing" />

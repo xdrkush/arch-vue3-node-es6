@@ -18,8 +18,6 @@ import { useRouter } from "vue-router";
 import { useMonitStore } from "./stores/monit.store";
 import { useProfileStore } from "./stores/profile.store";
 import { ref } from "vue";
-// require('dotenv').config()
-// console.log('process.env', process.env)
 
 export default defineComponent({
   name: "App",
@@ -33,7 +31,7 @@ export default defineComponent({
 
     setTimeout(() => {
       visible.value = false
-      // if (monitStore.getLanding) Router.push({path: "/landing"})
+      
     }, 2000);
 
     return {

@@ -17,15 +17,15 @@ var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime
 
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
+var _ConnectionDB = _interopRequireDefault(require("../config/ConnectionDB"));
+
+var _ArticleModel = _interopRequireDefault(require("../models/Article.model.js"));
+
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-var Connection = require("../config/ConnectionDB");
-
-var Article = require("../models/Article.model.js"); // Ramasse miette (clean de l'objet)
-
-
+// Ramasse miette (clean de l'objet)
 var privateProps = new WeakMap();
 
 var TestControllers = /*#__PURE__*/function (_Connection) {
@@ -79,6 +79,6 @@ var TestControllers = /*#__PURE__*/function (_Connection) {
     }
   }]);
   return TestControllers;
-}(Connection);
+}(_ConnectionDB["default"]);
 
 exports["default"] = TestControllers;

@@ -3,8 +3,9 @@
  ******************************/
 
 // Import de Mongoose
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+import mongoose from 'mongoose'
+import bcrypt from 'bcrypt';
+const { Schema } = mongoose
 
 const UserSchema = new Schema({
     name: {
@@ -16,14 +17,16 @@ const UserSchema = new Schema({
         required: true
     },
     password: {
-        type: String
+        type: String,
+        required: true
     },
     description: {
-        type: String
+        type: String,
+        default: ""
     },
     phone: {
         type: String,
-        required: true
+        default: ""
     },
     social: {
         type: Object,
@@ -49,5 +52,15 @@ const UserSchema = new Schema({
         default: false
     },
 })
+
+UserSchema.pre('save', function (next) {
+    const user = this
+    // eslint-disable-next-line handle-callback-err
+    bcrypt.hash(user.password, 10, (err, encrypted) => {
+        user.password = encrypted
+        next()
+    })
+})
+
 
 module.exports = mongoose.model('User', UserSchema)
