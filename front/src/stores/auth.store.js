@@ -12,6 +12,7 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async loginAuth(form) {
       console.log('Store Login', form)
+
       try {
         await api
           .put('/auth', { ...form })
@@ -25,7 +26,6 @@ export const useAuthStore = defineStore('auth', {
               else this.loggedIn = false
 
               console.log('response getProfile', token, value_t)
-
 
             }, 500)
           })
