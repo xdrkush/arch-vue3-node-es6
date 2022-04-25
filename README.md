@@ -33,6 +33,22 @@ Back:
 http://localhost:8088
 ```
 
+# Docker
+## Run All (just the front nomw, build global in progress)
+```
+docker-compose up --build --remove-orphans
+```
+
+## Clear disk image docker
+```
+docker rm $(docker ps -a -q)
+```
+
+## Go to
+```
+http://172.20.0.2:8080
+```
+
 Cette architecture sera encapsuler avec docker de la même manière que celle-ci:
   - https://github.com/xdrkush/tuto-reactjs/tree/main/15-docker
 
