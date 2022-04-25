@@ -23,7 +23,7 @@ yarn
 yarn w:dev
 ```
 
-## go to :
+## go to:
 Front:
 ```
 http://localhost:8080
@@ -34,7 +34,7 @@ http://localhost:8088
 ```
 
 # Docker
-## Run All (just the front nomw, build global in progress)
+## Run All (build global in progress)
 ```
 docker-compose up --build --remove-orphans
 ```
