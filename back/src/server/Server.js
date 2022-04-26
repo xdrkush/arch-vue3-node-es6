@@ -6,6 +6,8 @@ import logger from 'morgan';
 import cors from "cors";
 import router from "../router/index";
 
+require('../config/script_db')
+
 export default class Server {
     constructor(app) {
         this.app = app;
@@ -17,7 +19,7 @@ export default class Server {
 
         // Cors
         this.app.use(cors({
-            origin: ['http://localhost:8080', 'http://localhost:8081', 'https://domain.com/', 'http://172.20.0.2:8080', 'http://172.20.0.3:8080'],
+            origin: '*',
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
             credentials: true
         }))

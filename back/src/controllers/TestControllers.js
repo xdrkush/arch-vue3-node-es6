@@ -11,7 +11,7 @@ export default class TestControllers extends Connection {
   }
   
   get(req, res) {
-    console.log('article')
+    console.log('article', req)
     // Article.create({title: 'mon super titre', descritption: 'ma super description'},(err, data) => {
     //   if (err) console.log('Error', err)
     //   console.log('data', data)

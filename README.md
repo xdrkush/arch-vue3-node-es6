@@ -49,6 +49,11 @@ docker rm $(docker ps -a -q)
 http://172.20.0.2:8080
 ```
 
+user: user
+password: user$
+
+info dans: `./back/src/config/script_db.js`
+
 Cette architecture sera encapsuler avec docker de la même manière que celle-ci:
   - https://github.com/xdrkush/tuto-reactjs/tree/main/15-docker
 

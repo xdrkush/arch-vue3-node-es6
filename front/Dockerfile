@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:14.18.2-alpine
+FROM node:14 as build-stage
 
 # set working directory
 WORKDIR /app
@@ -11,10 +11,17 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY ./package*.json ./
 RUN yarn --silent
 RUN yarn global add @quasar/cli --silent
+
 # add app to container
 COPY . ./
 
-# RUN quasar build --force
+# Production
+RUN quasar build --force
+FROM nginx as production-stage
+EXPOSE 3000
+RUN mkdir /app
+COPY front.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-stage /app/dist/spa /app
 
-# start app in container
-CMD ["quasar", "dev"]
+# start app in container dev
+# CMD ["quasar", "dev"]

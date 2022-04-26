@@ -4,7 +4,7 @@
       <h2 class="q-mb-none">{{ user.name }}</h2>
       <h5>( Site en construction ... )</h5>
       <p>{{ user.description }}</p>
-      <h6>Address: {{ user.address }}</h6>
+      <h6>Addres: {{ user.address }}</h6>
     </div>
 
     <q-img :src="UnicornCircle" spinner-color="white" width="50vh" />

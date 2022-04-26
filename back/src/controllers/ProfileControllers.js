@@ -37,7 +37,7 @@ export default class MonitControllers extends Connection {
     try {
       return res.status(200).json({
         status: "success",
-        message: "Method Get Monit Controller",
+        message: "Method Get Monit Controllersssss",
         profile: (info) ? info : "Aucun Profile"
       });
     } catch (error) {
