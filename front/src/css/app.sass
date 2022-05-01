@@ -1,1 +1,53 @@
 // app global css in Sass form
+
+@font-face
+    font-family: OrelegaOne
+    src: url(./fonts/OrelegaOne-Regular.ttf)
+
+@font-face
+    font-family: Montserrat
+    src: url(./fonts/Montserrat-Regular.ttf)
+
+body
+    background-color: $light
+
+h1, h2, h3, h4, h5, h6, p, a
+    color: #2F1F34
+
+h1, h2, h3, h4, h5, h6
+    font-family: 'Montserrat'
+    color: #2F1F34
+
+p
+    font-family: 'Roboto'
+    font-style: normal
+
+.inter
+    font-family: 'Inter'
+    font-style: normal
+    font-weight: 500
+    font-size: 24px
+    line-height: 128.4%
+
+/* width */
+::-webkit-scrollbar
+    width: 11px
+    border-left: 1px solid white
+    background: $light
+
+/* Track */
+::-webkit-scrollbar-track
+    background: $light
+    border-left: 1px solid $secondary
+    border-radius: 15px
+
+/* Handle */
+::-webkit-scrollbar-thumb
+    background: $secondary
+    border-radius: 15px
+    border: solid 1px $dark
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover
+    background: $secondary
+    border: 1px solid white

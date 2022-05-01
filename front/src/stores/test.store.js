@@ -11,7 +11,7 @@ export const useTestStore = defineStore('test', {
   actions: {
     testFn() {
       api.get('/').then(res => {
-        console.log('response', res)
+        // console.log('response', res)
         this.title = res.data.message;
       })
     },

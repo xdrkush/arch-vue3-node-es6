@@ -12,7 +12,7 @@ const MonitSchema = new Schema({
         default: true
     },
     theme: {
-        type: Boolean,
+        type: Object,
         default: {
             color: {
                 primary: String,

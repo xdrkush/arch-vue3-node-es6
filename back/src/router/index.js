@@ -7,10 +7,12 @@ import {
     GetTest, PostTest,
     // Monit
     GetMonit,
-    // User
+    // Profile
     GetProfile, PostProfile, PutProfile,
     // Authenticate
-    LoginAuth, RegisterAuth
+    LoginAuth, RegisterAuth,
+    // User
+    PutPassword, PutAccount, CheckPassword
 } from '../controllers';
 
 // Middlewares
@@ -33,5 +35,12 @@ router.route('/profile')
 router.route('/auth')
     .put(LoginAuth)
     .post(RegisterAuth)
+
+router.route('/account')
+    .post(PutAccount)
+    .put(PutPassword)
+
+router.route('/check/password')
+    .put(CheckPassword)
 
 module.exports = router

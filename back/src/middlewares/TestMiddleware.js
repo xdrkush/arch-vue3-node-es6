@@ -1,6 +1,6 @@
 
 // TestMD
 exports.TestMD = (req, res, next) => {
-    console.log('TestMD')
+    // console.log('TestMD')
     next()
 }

@@ -1,6 +1,7 @@
 <template>
   <q-page class="q-pa-md">
-    <h2>Admin Website Page</h2>
+    <h2 class="q-ma-none">Admin Website</h2>
+    <p>(in progress ...)</p>
     <TabAdminWebsite />
   </q-page>
 </template>

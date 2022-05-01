@@ -6,7 +6,7 @@ export function checkIsLoggedIn (from, to) {
     // console.log('Middleware checkIsLoggedIn', from, to)
     const authStore = useAuthStore();
     const isLoggedIn = authStore.loggedIn
-    console.log('middleware isloggedin', isLoggedIn)
+    // console.log('middleware isloggedin', isLoggedIn)
     if (!isLoggedIn) return { path: '/auth/login' }
     else return
 }

@@ -1,6 +1,4 @@
 // server.js
-console.log('Hello ES6 !')
-
 import express from 'express';
 import Server from './server/Server';
 

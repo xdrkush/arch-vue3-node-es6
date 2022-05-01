@@ -1,6 +1,7 @@
 <template>
   <q-page class="q-pa-md">
-    <h2>Admin Dashboard Page</h2>
+    <h2 class="q-ma-none">Admin Dashboard</h2>
+    <p>(in progress ...)</p>
   </q-page>
 </template>
 

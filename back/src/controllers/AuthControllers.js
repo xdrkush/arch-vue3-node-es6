@@ -14,7 +14,7 @@ export default class AuthControllers extends Connection {
   }
 
   async create(req, res) {
-    console.log('POST Register Login', req.body)
+    // console.log('POST Register Login', req.body)
     const { mail, password, name } = req.body
 
     try {
@@ -36,7 +36,7 @@ export default class AuthControllers extends Connection {
 
 
   async login(req, res) {
-    console.log('POST Auth Login', req.body)
+    // console.log('POST Auth Login', req.body)
     const { mail, password } = req.body;
 
     try {

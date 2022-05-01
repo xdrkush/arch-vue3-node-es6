@@ -20,7 +20,7 @@ export default defineComponent({
 
     const user = ref(profileStore.getProfile);
 
-    console.log("userProfile", profileStore);
+    // console.log("userProfile", profileStore);
     return { user };
   },
 });

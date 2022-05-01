@@ -18,10 +18,10 @@ export const useMainStore = defineStore({
 
   actions: {
     testFn () {
-      console.log('axios', this);
+      // console.log('axios', this);
     },
     updateSlide(id, payload) {
-      console.log("updateSlide", id, payload);
+      // console.log("updateSlide", id, payload);
       if (!id || !payload) return;
 
       //   const index = this.findIndexById(id);

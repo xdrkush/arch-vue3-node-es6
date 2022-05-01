@@ -1,6 +1,7 @@
 <template>
   <q-page class="q-pa-md">
-    <h2>admin profil Page</h2>
+    <h2 class="q-ma-none">Admin Profil</h2>
+    <p>(in progress ...)</p>
     <CardProfil />
   </q-page>
 </template>
@@ -13,8 +14,7 @@ export default defineComponent({
   name: "IndexPage",
   components: { CardProfil },
   setup() {
-    return {
-    };
+    return {};
   },
 });
 </script>

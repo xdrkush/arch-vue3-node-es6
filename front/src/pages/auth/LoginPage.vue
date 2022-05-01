@@ -14,7 +14,7 @@
     >
       <div>
         <h4>Connectez-vous:</h4>
-        <q-input outlined v-model="form.mail" label="E-mail" class="q-ma-md" />
+        <q-input outlined v-model="form.mail" label="E-mail ou name" class="q-ma-md" />
         <q-input
           outlined
           class="q-ma-md"
@@ -55,6 +55,8 @@ export default defineComponent({
 
       setTimeout(() => {
         if (authStore.getLoggedIn) Router.push({ path: "/admin" });
+        else Router.push({ path: "/auth/login" });
+        visible.value = false;
       }, 2000);
     };
 

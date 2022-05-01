@@ -11,21 +11,23 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
     async loginAuth(form) {
-      console.log('Store Login', form)
+      // console.log('Store Login', form)
 
       try {
         await api
           .put('/auth', { ...form })
           .then(res => {
+            // console.log('response getProfile', res.data)
             setTimeout(() => {
-              let token = res.data.token;
-              if (res.data.token) localStorage.setItem("user_token", token);
-
-              const value_t = jwt_decode(token)
+              let value_t, token = res.data.token;
+              if (res.data.token) {
+                localStorage.setItem("user_token", token);
+                value_t = jwt_decode(token)
+              }
               if (value_t.loggedIn) this.loggedIn = value_t.loggedIn
               else this.loggedIn = false
 
-              console.log('response getProfile', token, value_t)
+              // console.log('response getProfile2', token, value_t)
 
             }, 500)
           })

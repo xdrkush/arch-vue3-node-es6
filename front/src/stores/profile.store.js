@@ -15,7 +15,7 @@ export const useProfileStore = defineStore('profile', {
           .get('/profile')
           .then(res => {
             setTimeout(() => {
-              console.log('response getProfile', res.data.profile)
+              // console.log('response getProfile', res.data.profile)
               if (res.data.profile) this.profile = res.data.profile
 
             }, 500)

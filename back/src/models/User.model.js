@@ -14,7 +14,12 @@ const UserSchema = new Schema({
     },
     mail: {
         type: String,
-        required: true
+        required: true,
+        unique: true
+    },
+    nameCompany: {
+        type: String,
+        default: "DAVROOT"
     },
     password: {
         type: String,
@@ -47,9 +52,10 @@ const UserSchema = new Schema({
     social: {
         type: Object,
         default: {
-            facebook: "user",
-            twitter: "@user",
-            youtube: "user"
+            facebook: "",
+            twitter: "",
+            linkedin: "",
+            youtube: ""
         }
     },
     isValid: {
@@ -82,6 +88,5 @@ UserSchema.pre('save', function (next) {
         next()
     })
 })
-
 
 module.exports = mongoose.model('User', UserSchema)
