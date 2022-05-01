@@ -16,7 +16,7 @@ export default defineComponent({
   },
   setup() {
     const profileStore = useProfileStore();
-    profileStore.getProfileApi();
+    if (!profileStore.getProfileLoaded) profileStore.getProfileApi();
 
     const user = ref(profileStore.getProfile);
 

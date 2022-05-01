@@ -17,8 +17,11 @@ import {
 
 // Middlewares
 import { TestMD } from '../middlewares/TestMiddleware';
+import { token } from '../middlewares/TestMiddleware';
 
 const router = express.Router()
+
+router.use(token)
 
 router.route('/')
     .get(TestMD, GetTest)

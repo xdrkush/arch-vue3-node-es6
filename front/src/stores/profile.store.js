@@ -3,10 +3,12 @@ import { api } from 'boot/axios'
 
 export const useProfileStore = defineStore('profile', {
   state: () => ({
-    profile: {}
+    profile: {},
+    profileLoaded: false
   }),
   getters: {
     getProfile: (state) => state.profile,
+    getProfileLoaded: (state) => state.profileLoaded,
   },
   actions: {
     async getProfileApi() {
@@ -16,8 +18,10 @@ export const useProfileStore = defineStore('profile', {
           .then(res => {
             setTimeout(() => {
               // console.log('response getProfile', res.data.profile)
-              if (res.data.profile) this.profile = res.data.profile
-
+              if (res.data.profile) {
+                this.profile = res.data.profile
+                this.profileLoaded = true
+              }
             }, 500)
           })
       } catch (error) {

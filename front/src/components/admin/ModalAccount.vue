@@ -163,7 +163,7 @@ export default defineComponent({
   setup() {
     const userStore = useUserStore();
     const profileStore = useProfileStore();
-    profileStore.getProfileApi();
+    if (!profileStore.getProfileLoaded) profileStore.getProfileApi();
     const oldName = profileStore.profile.name;
 
     const modalAccount = ref(false);

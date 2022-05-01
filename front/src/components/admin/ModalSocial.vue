@@ -64,7 +64,7 @@ export default defineComponent({
   name: "ModalSocial",
   setup() {
     const profileStore = useProfileStore();
-    profileStore.getProfileApi();
+    if (!profileStore.getProfileLoaded) profileStore.getProfileApi();
     const oldName = profileStore.profile.name;
 
     const modalSocial = ref(false);

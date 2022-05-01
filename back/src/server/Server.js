@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import cors from "cors";
 import router from "../router/index";
+import helmet from "helmet";
 
 require('../config/script_db')
 
@@ -17,30 +18,25 @@ export default class Server {
         // Log
         this.app.use(logger('dev'));
 
+        // Helmet
+        this.app.use(helmet())
+
+        // Config default
         this.app.disable('x-powered-by')
 
-        // this.app.use("*", (req, res, next) => {
-        //     res.header("Access-Control-Allow-Origin", "*");
-        //     res.header(
-        //         "Access-Control-Allow-Headers",
-        //         "Origin, X-Requested-With, Content-Type, Accept"
-        //     );
-        //     next();
-        // });
-
-        // this.app.use((req, res, next) => {
-        //     res.header("Access-Control-Allow-Origin", req.header("origin"));
-        //     res.header(
-        //         "Access-Control-Allow-Headers",
-        //         "Origin, X-Requested-With, Content-Type, Accept"
-        //     );
-        //     next();
-        // });
+        // Headers
+        this.app.use((req, res, next) => {
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Autorization, X-WEBAPP');
+            res.header('Access-Control-Allow-Credentials', true);
+            res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+            next();
+        });
 
         // Cors
         this.app.use(cors({
             origin: ['http://localhost:8080', 'http://ahuart.com', 'https://ahuart.com', 'http://www.ahuart.com', 'https://www.ahuart.com'],
-            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
             credentials: true
         }))
 

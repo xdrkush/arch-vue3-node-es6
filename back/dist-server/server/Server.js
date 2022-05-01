@@ -25,6 +25,8 @@ var _cors = _interopRequireDefault(require("cors"));
 
 var _index = _interopRequireDefault(require("../router/index"));
 
+var _helmet = _interopRequireDefault(require("helmet"));
+
 require('../config/script_db');
 
 var Server = /*#__PURE__*/function () {
@@ -37,28 +39,23 @@ var Server = /*#__PURE__*/function () {
     key: "config",
     value: function config() {
       // Log
-      this.app.use((0, _morgan["default"])('dev'));
-      this.app.disable('x-powered-by'); // this.app.use("*", (req, res, next) => {
-      //     res.header("Access-Control-Allow-Origin", "*");
-      //     res.header(
-      //         "Access-Control-Allow-Headers",
-      //         "Origin, X-Requested-With, Content-Type, Accept"
-      //     );
-      //     next();
-      // });
-      // this.app.use((req, res, next) => {
-      //     res.header("Access-Control-Allow-Origin", req.header("origin"));
-      //     res.header(
-      //         "Access-Control-Allow-Headers",
-      //         "Origin, X-Requested-With, Content-Type, Accept"
-      //     );
-      //     next();
-      // });
-      // Cors
+      this.app.use((0, _morgan["default"])('dev')); // Helmet
+
+      this.app.use((0, _helmet["default"])()); // Config default
+
+      this.app.disable('x-powered-by'); // Headers
+
+      this.app.use(function (req, res, next) {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Autorization, X-WEBAPP');
+        res.header('Access-Control-Allow-Credentials', true);
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+        next();
+      }); // Cors
 
       this.app.use((0, _cors["default"])({
         origin: ['http://localhost:8080', 'http://ahuart.com', 'https://ahuart.com', 'http://www.ahuart.com', 'https://www.ahuart.com'],
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
         credentials: true
       })); // Parse Json (Body-Parser)
 

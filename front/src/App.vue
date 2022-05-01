@@ -1,12 +1,12 @@
 <template>
   <div>
     <q-inner-loading
-      :showing="visible"
+      :showing="!profileStore.getProfileLoaded"
       label="Chargement ..."
       label-class="text-primary"
       label-style="font-size: 1.5em"
     />
-    <div v-if="!visible" v-show="!visible">
+    <div v-if="profileStore.getProfileLoaded" v-show="profileStore.getProfileLoaded">
       <router-view />
     </div>
   </div>
@@ -14,29 +14,16 @@
 
 <script>
 import { defineComponent } from "vue";
-import { useRouter } from "vue-router";
-import { useMonitStore } from "./stores/monit.store";
 import { useProfileStore } from "./stores/profile.store";
-import { ref } from "vue";
 
 export default defineComponent({
   name: "App",
   setup() {
-    const monitStore = useMonitStore();
     const profileStore = useProfileStore();
-    profileStore.getProfileApi()
-
-    const Router = useRouter()
-    const visible = ref(true);
-
-    setTimeout(() => {
-      visible.value = false
-      
-    }, 2000);
+    if (!profileStore.getProfileLoaded) profileStore.getProfileApi();
 
     return {
-      monitStore,
-      visible,
+      profileStore
     };
   },
 });

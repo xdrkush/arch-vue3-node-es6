@@ -9,17 +9,18 @@ import store from '../stores'
 // "export default () => {}" function below (which runs individually
 // for each client)
 
-// const api = axios.create({
-//   baseURL: 'http://localhost:8088/api',
-//   timeout: 5000,
-//   headers: {
-//     'Authorization': "token",
-//     'Content-Type': 'application/json'
-//   }
-// })
+if (!localStorage.getItem('user_token')) localStorage.setItem('user_token', 'visitor')
+
+const URL = (process.env.NODE_ENV === 'development') ? process.env.URL_DEV : process.env.URL_PROD
 
 const api = axios.create({
-  baseURL: 'https://ahuart.com/api'
+  baseURL: URL.split('"').join(''),
+  timeout: 5000,
+  headers: {
+    'X-WEBAPP': localStorage.getItem('user_token'),
+    'Authorization': localStorage.getItem('user_token'),
+    'Content-Type': 'application/json'
+  }
 })
 
 export default boot(({ app, store }) => {
