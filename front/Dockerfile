@@ -16,12 +16,12 @@ RUN yarn global add @quasar/cli --silent
 COPY . ./
 
 # Production
-# RUN quasar build --force
-# FROM nginx as production-stage
-# EXPOSE 3000
-# RUN mkdir /app
-# COPY front.conf /etc/nginx/conf.d/default.conf
-# COPY --from=build-stage /app/dist/spa /app
+RUN quasar build --force
+FROM nginx as production-stage
+EXPOSE 3000
+RUN mkdir /app
+COPY front.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-stage /app/dist/spa /app
 
 # start app in container dev
-CMD ["quasar", "dev"]
+# CMD ["quasar", "dev"]

@@ -9,26 +9,26 @@ import UserControllers from './UserControllers'
 
 module.exports = {
     // TestControllers
-    GetTest: new TestControllers().get,
-    PostTest: new TestControllers().post,
+    GetTest: (req, res) => new TestControllers().get(req, res),
+    PostTest: (req, res) => new TestControllers().post(req, res),
 
     // MonitControllers
-    GetMonit: new MonitControllers().get,
+    GetMonit: (req, res) => new MonitControllers().get(req, res),
 
     // ProfileControllers
-    GetProfile: new ProfileControllers().get,
-    PostProfile: new ProfileControllers().post,
-    PutProfile: new ProfileControllers().put,
+    GetProfile: (req, res) => new ProfileControllers().get(req, res),
+    PostProfile: (req, res) => new ProfileControllers().post(req, res),
+    PutProfile: (req, res) => new ProfileControllers().put(req, res),
 
     // AuthControllers
-    LoginAuth: new AuthControllers().login,
-    RegisterAuth: new AuthControllers().create,
+    LoginAuth: (req, res) => new AuthControllers().login(req, res),
+    RegisterAuth: (req, res) => new AuthControllers().create(req, res),
 
     // UserControllers
-    PutAccount: new UserControllers().putAccount,
-    PutPassword: new UserControllers().putPassword,
-    CheckPassword: new UserControllers().checkPassword
+    PutAccount: (req, res) => new UserControllers().putAccount(req, res),
+    PutPassword: (req, res) => new UserControllers().putPassword(req, res),
+    CheckPassword: (req, res) => new UserControllers().checkPassword(req, res)
 
     // XXXControllers
-    // GetXXX: new XXXControllers().get,
+    // GetXXX: (req, res) => new XXXControllers().get,
 }

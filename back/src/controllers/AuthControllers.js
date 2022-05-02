@@ -3,7 +3,6 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
 import User from "../models/User.model.js";
 
-// Ramasse miette (clean de l'objet)
 const privateProps = new WeakMap();
 require('dotenv').config()
 

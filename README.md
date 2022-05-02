@@ -1,5 +1,5 @@
 # arch-vue3-node-es6
-architecture de base avec Quasar V2 (vue 3) et node js (express) en ES6
+Architecture de base avec Quasar V2 (vue 3) et node js (express) en ES6
 
 ## Pré-requis
   - NodeJS: v14.18.2 (yarn)
@@ -7,23 +7,26 @@ architecture de base avec Quasar V2 (vue 3) et node js (express) en ES6
   - nvm: https://github.com/nvm-sh/nvm#install--update-script
 
 ## Install & run
-Front (first terminal):
+Database: (first terminal):
 ```
-nvm i 14.18.2
+sudo mongod
+```
+
+Front: (second terminal):
+```
+nvm i 14
 cd ./front
-yarn
-quasar dev
+yarn && quasar dev
 ```
 
-Front (second terminal):
+Back (third terminal):
 ```
-nvm i 14.18.2
+nvm i 14
 cd ./back
-yarn
-yarn w:dev
+yarn && yarn w:dev
 ```
 
-## go to:
+## then go to:
 Front:
 ```
 http://localhost:8080
@@ -33,15 +36,10 @@ Back:
 http://localhost:8088
 ```
 
-# Docker
+# Or you can use Docker
 ## Run All (build global in progress)
 ```
 docker-compose up --build --remove-orphans
-```
-
-## Clear disk image docker
-```
-docker rm $(docker ps -a -q)
 ```
 
 ## Go to
@@ -49,11 +47,16 @@ docker rm $(docker ps -a -q)
 http://172.20.0.1
 ```
 
+/auth/login
 user: user
 password: user$
 
 info dans: `./back/src/config/script_db.js`
 
-Cette architecture sera encapsuler avec docker de la même manière que celle-ci:
-  - https://github.com/xdrkush/tuto-reactjs/tree/main/15-docker
 
+## Clear disk image docker
+```
+docker rm $(docker ps -a -q)
+```
+
+Enjoy'

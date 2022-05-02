@@ -1,5 +1,5 @@
 // Modules
-import express from 'express';
+import { Router } from 'express';
 
 // Controllers
 import {
@@ -17,18 +17,18 @@ import {
 
 // Middlewares
 import { TestMD } from '../middlewares/TestMiddleware';
-import { token } from '../middlewares/TestMiddleware';
+import { tokenVisitor } from '../middlewares/Header';
 
-const router = express.Router()
+const router = Router()
 
-router.use(token)
+router.use(tokenVisitor)
 
 router.route('/')
     .get(TestMD, GetTest)
     .post(PostTest)
 
 router.route('/landing')
-    .get(TestMD, GetMonit)
+    .get(GetMonit)
 
 router.route('/profile')
     .get(GetProfile)

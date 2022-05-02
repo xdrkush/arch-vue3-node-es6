@@ -8,6 +8,7 @@ import router from "../router/index";
 import helmet from "helmet";
 
 require('../config/script_db')
+require('dotenv').config()
 
 export default class Server {
     constructor(app) {
@@ -19,7 +20,7 @@ export default class Server {
         this.app.use(logger('dev'));
 
         // Helmet
-        this.app.use(helmet())
+        // this.app.use(helmet())
 
         // Config default
         this.app.disable('x-powered-by')
@@ -35,7 +36,10 @@ export default class Server {
 
         // Cors
         this.app.use(cors({
-            origin: ['http://localhost:8080', 'http://ahuart.com', 'https://ahuart.com', 'http://www.ahuart.com', 'https://www.ahuart.com'],
+            origin: [
+                'http://localhost:8080', 'http://domain.com', 'http://172.20.0.1',
+                'https://domain.com', 'http://www.domain.com', 'https://www.domain.com'
+            ],
             methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
             credentials: true
         }))

@@ -1,6 +1,6 @@
 
 // TestMD
-exports.token = (req, res, next) => {
-    console.log('HEADER', req.headers)
-    next()
+exports.tokenVisitor = (req, res, next) => {
+    if (req.headers["x-webapp"] === 'visitor') next()
+    else res.send("Error !!!") 
 }
