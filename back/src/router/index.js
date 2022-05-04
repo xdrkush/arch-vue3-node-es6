@@ -16,15 +16,19 @@ import {
 } from '../controllers';
 
 // Middlewares
-import { TestMD } from '../middlewares/TestMiddleware';
-import { tokenVisitor } from '../middlewares/Header';
+import {
+    // Constructor
+    isValid, isAdmin, isProp, isRoot,
+    // Function
+    tokenVisitor
+} from '../middlewares/index'
 
 const router = Router()
 
 router.use(tokenVisitor)
 
 router.route('/')
-    .get(TestMD, GetTest)
+    .get(GetTest)
     .post(PostTest)
 
 router.route('/landing')
@@ -32,18 +36,18 @@ router.route('/landing')
 
 router.route('/profile')
     .get(GetProfile)
-    .post(PostProfile)
-    .put(PutProfile)
+    .post(isValid, isAdmin, PostProfile)
+    .put(isValid, isAdmin, PutProfile)
 
 router.route('/auth')
     .put(LoginAuth)
     .post(RegisterAuth)
 
 router.route('/account')
-    .post(PutAccount)
-    .put(PutPassword)
+    .post(isValid, isAdmin, PutAccount)
+    .put(isValid, isAdmin, PutPassword)
 
 router.route('/check/password')
-    .put(CheckPassword)
+    .put(isValid, isAdmin, CheckPassword)
 
 module.exports = router

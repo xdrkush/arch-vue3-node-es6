@@ -12,7 +12,7 @@ export default class Connection {
             ? `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`
             : `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`
     }
-
+    
     databaseConnection() {
         try {
             console.log('Connection')

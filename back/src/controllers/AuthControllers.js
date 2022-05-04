@@ -33,7 +33,6 @@ export default class AuthControllers extends Connection {
     }
   }
 
-
   async login(req, res) {
     // console.log('POST Auth Login', req.body)
     const { mail, password } = req.body;
