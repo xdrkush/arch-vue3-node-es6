@@ -10,7 +10,8 @@ const { Schema } = mongoose
 const UserSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
     mail: {
         type: String,
@@ -78,6 +79,22 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     },
+    resetPasswordToken: {
+        type: String,
+        default: ""
+    },
+    resetPasswordExpires: {
+        type: String,
+        default: ""
+    },
+    created: {
+        type: Date,
+        default: Date.now()
+    },
+    updated: {
+        type: Date,
+        default: Date.now()
+    }
 })
 
 UserSchema.pre('save', function (next) {
@@ -87,6 +104,16 @@ UserSchema.pre('save', function (next) {
         user.password = encrypted
         next()
     })
+})
+
+UserSchema.pre('findOneAndUpdate', async function () {
+    this.updated = Date.now()
+})
+UserSchema.pre('save', async function () {
+    this.updated = Date.now()
+})
+UserSchema.pre('updateOne', async function () {
+    this.updated = Date.now()
 })
 
 module.exports = mongoose.model('User', UserSchema)

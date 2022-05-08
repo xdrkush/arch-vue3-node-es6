@@ -12,13 +12,15 @@ import {
     // Authenticate
     LoginAuth, RegisterAuth,
     // User
-    PutPassword, PutAccount, CheckPassword
+    PutPassword, PutAccount, CheckPassword,
+    // Session
+    GetSession, Logout
 } from '../controllers';
 
 // Middlewares
 import {
     // Constructor
-    isValid, isAdmin, isProp, isRoot,
+    // isValid, isAdmin, isProp, isRoot,
     // Function
     tokenVisitor
 } from '../middlewares/index'
@@ -29,25 +31,31 @@ router.use(tokenVisitor)
 
 router.route('/')
     .get(GetTest)
-    .post(PostTest)
+    // .post(isValid, isAdmin, PostTest)
 
 router.route('/landing')
     .get(GetMonit)
 
 router.route('/profile')
     .get(GetProfile)
-    .post(isValid, isAdmin, PostProfile)
-    .put(isValid, isAdmin, PutProfile)
+    // .post(isValid, isAdmin, PostProfile)
+    // .put(isValid, isAdmin, PutProfile)
 
+router.route('/session')
+    .get(GetSession)
+    
 router.route('/auth')
     .put(LoginAuth)
     .post(RegisterAuth)
 
+router.route('/logout')
+    .get(Logout)
+
 router.route('/account')
-    .post(isValid, isAdmin, PutAccount)
-    .put(isValid, isAdmin, PutPassword)
+    // .post(isValid, isAdmin, PutAccount)
+    // .put(isValid, isAdmin, PutPassword)
 
 router.route('/check/password')
-    .put(isValid, isAdmin, CheckPassword)
+    // .put(isValid, isAdmin, CheckPassword)
 
 module.exports = router

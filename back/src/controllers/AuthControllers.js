@@ -2,7 +2,8 @@ import Connection from "../config/ConnectionDB";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
 import User from "../models/User.model.js";
-
+import Session from "../models/Session.model.js";
+import { createToken, verifyToken } from "../utils"
 const privateProps = new WeakMap();
 require('dotenv').config()
 
@@ -38,9 +39,22 @@ export default class AuthControllers extends Connection {
     const { mail, password } = req.body;
 
     try {
+
       // for connect with name or email
-      const userAuthEmail = await User.findOne({ mail }),
-        userAuthPseudo = await User.findOne({ name: mail });
+      const userAuthEmail = await User.findOne({ mail }, [
+        "name",
+        "mail",
+        "phone",
+        "description",
+        "password"
+      ]),
+        userAuthPseudo = await User.findOne({ name: mail }, [
+          "name",
+          "mail",
+          "phone",
+          "description",
+          "password"
+        ]);
       let user;
 
       if (mail, password) user = userAuthEmail || userAuthPseudo;
@@ -48,22 +62,34 @@ export default class AuthControllers extends Connection {
       if (!user) return res.json({ error: "l' email ou le nom n'existe pas." });
 
       const match = await bcrypt.compare(password, user.password);
+      const decoded = verifyToken(req.headers['authorization'])
+      console.log('LOGIN :: ', decoded)
 
-      if (match) {
-        const token = jwt.sign({
-          name: user.name,
-          mail: user.mail,
-          phone: user.phone,
-          description: user.description,
-          loggedIn: match
-        }, process.env.JWT_TOKEN, {
-          expiresIn: "4h",
-        });
+      if (match && decoded) {
+        delete user.password
+        user.loggedIn = match
+
+        const date = Date.now()
+        const session = await Session.findById(decoded.session_id)
+        session.auth = match
+        session.user_id = user._id
+        session.validity = date + (10 * 60 * 1000)
+
+        // Create token
+        const token = createToken({
+          auth: match,
+          session_id: session._id,
+          ip: req.headers["ip-webapp"]
+        })
+        session.token = token
+        session.save()
+
+        // const token = createToken(user)
+        // console.log("token", user, req.headers, token, session)
 
         return res.send({
           status: "success",
           message: "Method Post User Controller",
-          loggedIn: match,
           token
         });
 

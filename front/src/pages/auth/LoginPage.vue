@@ -54,9 +54,9 @@ export default defineComponent({
       authStore.loginAuth(obj);
 
       setTimeout(() => {
-        if (authStore.getLoggedIn) Router.push({ path: "/admin" });
-        else Router.push({ path: "/auth/login" });
         visible.value = false;
+        if (authStore.getLoggedIn) Router.push({ path: "/admin" });
+        else Router.push({ path: "/admin" });
       }, 2000);
     };
 

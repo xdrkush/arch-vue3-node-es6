@@ -10,6 +10,9 @@
     <!-- Modal Edit Social -->
     <ModalSocial />
 
+    <!-- Modal Logout -->
+    <ModalLogout />
+
   </div>
 </template>
 
@@ -18,13 +21,15 @@ import { defineComponent } from "vue";
 import ModalAccount from './ModalAccount.vue'
 import ModalProfile from './ModalProfile.vue'
 import ModalSocial from './ModalSocial.vue'
+import ModalLogout from '../auth/ModalLogout.vue'
 
 export default defineComponent({
   name: "CardProfil",
   components: {
     ModalAccount,
     ModalProfile,
-    ModalSocial
+    ModalSocial,
+    ModalLogout
   },
   setup() {
     return {};

@@ -3,6 +3,7 @@ import MonitControllers from './MonitControllers'
 import ProfileControllers from './ProfileControllers'
 import AuthControllers from './AuthControllers'
 import UserControllers from './UserControllers'
+import SessionControllers from './SessionControllers'
 
 // Script for interact with DB
 // require('../config/script_db')
@@ -27,7 +28,11 @@ module.exports = {
     // UserControllers
     PutAccount: (req, res) => new UserControllers().putAccount(req, res),
     PutPassword: (req, res) => new UserControllers().putPassword(req, res),
-    CheckPassword: (req, res) => new UserControllers().checkPassword(req, res)
+    CheckPassword: (req, res) => new UserControllers().checkPassword(req, res),
+    
+    // SessionControllers
+    GetSession: (req, res) => new SessionControllers().get(req, res),
+    Logout: (req, res) => new SessionControllers().logout(req, res),
 
     // XXXControllers
     // GetXXX: (req, res) => new XXXControllers().get,

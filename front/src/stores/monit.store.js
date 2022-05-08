@@ -17,7 +17,7 @@ export const useMonitStore = defineStore('monit', {
           .get('/landing')
           .then(res => {
             setTimeout(() => {
-              // console.log('response getLandingStatus', res.data.landing)
+              console.log('response getLandingStatus', res.data.landing)
               this.landing = res.data.landing
               this.load = true
             }, 500)

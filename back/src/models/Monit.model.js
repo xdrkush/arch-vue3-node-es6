@@ -1,5 +1,5 @@
 /*
- * Model de 'Article'
+ * Model de 'Monit'
  ******************************/
 
 // Import de Mongoose
