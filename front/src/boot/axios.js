@@ -14,7 +14,6 @@ const api = axios.create({
   timeout: 5000,
   headers: {
     'X-WEBAPP': 'visitor',
-    'IP-WEBAPP': localStorage.getItem('ip'),
     'authorization': localStorage.getItem('user_token'),
     'Content-Type': 'application/json'
   }

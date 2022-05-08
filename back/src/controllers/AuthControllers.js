@@ -79,7 +79,7 @@ export default class AuthControllers extends Connection {
         const token = createToken({
           auth: match,
           session_id: session._id,
-          ip: req.headers["ip-webapp"]
+          ip: req.ip
         })
         session.token = token
         session.save()
