@@ -10,15 +10,12 @@
       v-if="profileStore.getProfileLoaded"
       v-show="profileStore.getProfileLoaded"
     >
-      <!-- <div v-if="authStore.getProfile">
-        {{}}
-      </div> -->
-      <!-- <div v-if="authStore.getTokenExp">
+      <div v-if="authStore.getTokenExp && authStore.getLoggedIn">
         <ModalTokenExp />
       </div>
-      <div v-if="authStore.getSoonSessionExpired">
+      <div v-if="authStore.getSoonSessionExpired && authStore.getLoggedIn">
         <ModalSession />
-      </div> -->
+      </div>
       <router-view />
     </div>
   </div>
@@ -28,21 +25,19 @@
 import { defineComponent } from "vue";
 import { useProfileStore } from "./stores/profile.store";
 import { useAuthStore } from "./stores/auth.store";
-// import ModalSession from "./components/auth/ModalSession.vue";
-// import ModalTokenExp from "./components/auth/ModalTokenExp.vue";
+import ModalSession from "./components/auth/ModalSession.vue";
+import ModalTokenExp from "./components/auth/ModalTokenExp.vue";
 
 export default defineComponent({
   name: "App",
-  components: { },
+  components: { ModalSession, ModalTokenExp},
   setup() {
     const authStore = useAuthStore();
     const profileStore = useProfileStore();
+    
     if (!profileStore.getProfileLoaded) profileStore.getProfileApi();
+    authStore.getSession();
 
-    // authStore.fetchIP();
-    setTimeout(() => authStore.getSession(), 700);
-
-    // console.log("APP", authStore.getLoggedIn);
     setInterval(() => authStore.getSession(), 1 * 60 * 1000);
 
     return {

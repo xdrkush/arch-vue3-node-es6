@@ -33,12 +33,14 @@ services:
       - DB_URL=$MONGODB_URL
       - DB_CLOUD=$MONGODB_CLOUD
       - DOCKER=$DOCKER
+      - DOMAIN=$DOMAIN
     stdin_open: true
     tty: true
 
   front:
     depends_on:
       - mongodb
+      - back
     stdin_open: true
     container_name: front_container
     build:

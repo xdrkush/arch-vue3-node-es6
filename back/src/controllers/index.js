@@ -33,7 +33,7 @@ module.exports = {
     // SessionControllers
     GetSession: (req, res) => new SessionControllers().get(req, res),
     Logout: (req, res) => new SessionControllers().logout(req, res),
-
+    ExtendSession : (req, res) => new SessionControllers().extendSession(req, res)
     // XXXControllers
     // GetXXX: (req, res) => new XXXControllers().get,
 }

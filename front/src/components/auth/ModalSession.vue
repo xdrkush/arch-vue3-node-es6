@@ -1,13 +1,6 @@
 <template>
   <div>
-    <!-- Modal Edit Social -->
-    <!-- <q-btn
-      label="Éditer vos réseaux sociaux"
-      class="q-ma-md"
-      color="primary"
-      icon="share"
-      @click="modalSession = true"
-    /> -->
+    <!-- Modal Session Soon Expired -->
     <q-dialog v-model="modalSession" persistent>
       <q-card style="min-width: 50vw">
         <q-card-section class="row items-center q-pb-none">
@@ -27,7 +20,7 @@
             <q-btn
               label="Extend session"
               color="primary"
-              @click="() => authStore.extendSession({ ...profile })"
+              @click="() => authStore.extendSession()"
             />
           </div>
         </q-card-section>

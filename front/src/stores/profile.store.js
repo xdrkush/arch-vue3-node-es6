@@ -15,13 +15,14 @@ export const useProfileStore = defineStore('profile', {
     getIP: (state) => state.ip,
   },
   actions: {
-    async getProfileApi() {
+    getProfileApi() {
+      const ls_token = localStorage.getItem('user_token')
       try {
-        await api
+        axios
           .get(URL.split('"').join('') + '/profile', {
             headers: {
               'X-WEBAPP': 'visitor',
-              'Authorization': localStorage.getItem('user_token'),
+              'Authorization': "Bearer " + ls_token,
               'Content-Type': 'application/json'
             }
           }).then(res => {

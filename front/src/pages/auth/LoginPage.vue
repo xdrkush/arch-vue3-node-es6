@@ -27,7 +27,7 @@
           label="Confirmez"
           class="q-ma-md"
           color="primary"
-          @click="loginSubmit({ ...form })"
+          @click="() => loginSubmit({ ...form })"
         />
       </div>
     </div>
@@ -46,6 +46,9 @@ export default defineComponent({
     const Router = useRouter();
     const form = ref({ mail: "", password: "" });
     let visible = ref(false);
+    authStore.getSession();
+
+    console.log('page login', authStore, authStore.getLoggedIn)
 
     if (authStore.getLoggedIn) Router.push({ path: "/admin" });
 
@@ -56,8 +59,7 @@ export default defineComponent({
       setTimeout(() => {
         visible.value = false;
         if (authStore.getLoggedIn) Router.push({ path: "/admin" });
-        else Router.push({ path: "/admin" });
-      }, 2000);
+      }, 2500);
     };
 
     return { form, loginSubmit, visible };

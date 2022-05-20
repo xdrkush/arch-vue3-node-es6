@@ -44,7 +44,7 @@ docker-compose up --build --remove-orphans
 
 ## Go to
 ```
-http://172.20.0.1
+http://localhost
 ```
 
 /auth/login
@@ -53,10 +53,17 @@ password: user$
 
 info dans: `./back/src/config/script_db.js`
 
-
 ## Clear disk image docker
 ```
 docker rm $(docker ps -a -q)
 ```
+
+## Utils
+Connect Robo3t for docker DB:
+  - Create Connexion
+  - Name: Choose Name / Address: localhost / Port: 27017
+  - Authentication: checked Perform autentication
+  - Database: admin / User Name: root / Password: 123456 / Auth mechanism: SCRAM-SHA1
+  - You can test the connexion at the bottom left
 
 Enjoy'

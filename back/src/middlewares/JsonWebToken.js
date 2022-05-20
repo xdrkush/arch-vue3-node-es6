@@ -1,22 +1,23 @@
-import Connection from "../config/ConnectionDB";
-import User from "../models/User.model";
-import Session from "../models/Session.model";
-import jwt from "jsonwebtoken";
-import { createToken } from "../utils"
-const privateProps = new WeakMap();
+// import Connection from "../config/ConnectionDB";
+// import User from "../models/User.model";
+// import Session from "../models/Session.model";
+// import jwt from "jsonwebtoken";
+// import { createToken } from "../utils"
+// const privateProps = new WeakMap();
 require('dotenv').config()
 
-export default class JsonWebToken extends Connection {
-    constructor() {
-        super();
-        privateProps.set(this.databaseConnection());
-    }
+export default class JsonWebToken {
+    // constructor() {
+        // super();
+        // privateProps.set(this.databaseConnection());
+    // }
 
     // TokenVisitor
-    async tokenVisitor(req, res, next) {
-        console.log('tokenVisitor', req.url, req.headers.authorization)
+    async checkHeader(req, res, next) {
+        console.log('MD header', req.headers.authorization)
+        if (req.headers.authorization.split(' ')[1]) req.token = req.headers.authorization.split(' ')[1];
         if (req.headers["x-webapp"]) next()
-        else res.status(403).send("Error !!!");
+        else res.status(418).send("Error !!!");
     }
 
     // // Token is valid

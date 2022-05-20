@@ -21,22 +21,24 @@ export const useAuthStore = defineStore('auth', {
     getTokenExp: (state) => state.tokenExp
   },
   actions: {
-    async loginAuth(form) {
-      // console.log('Store Login', form)
+    loginAuth(form) {
       try {
-        await api
-          .put('/auth', { ...form })
+        api.put('/auth', { ...form })
           .then(res => {
             console.log('res login', res.data)
             const { token } = res.data;
-            let value_t;
+            let decoded;
 
-            if (res.data.token) {
+            if (token) {
               localStorage.setItem("user_token", token);
-              value_t = jwt_decode(token)
+              decoded = jwt_decode(token)
             }
-            if (value_t.auth) this.loggedIn = value_t.auth
-            else this.loggedIn = false
+            if (decoded.auth) {
+              this.loggedIn = decoded.auth
+            } else {
+              this.loggedIn = false
+              window.reload()
+            }
           })
       } catch (error) {
         return error
@@ -44,54 +46,33 @@ export const useAuthStore = defineStore('auth', {
     },
 
     getSession() {
-      console.log('store auth getsession 1')
-
       try {
-        if (localStorage.getItem("user_token") === (undefined || 'undefined')) localStorage.setItem("user_token", "visitor")
-        if (!localStorage.getItem("ip") || !localStorage.getItem('user_token')) {
-          console.log('new visitor')
+        if (!localStorage.getItem("user_token")) {
+          localStorage.setItem("user_token", "visitor")
+        }
+        // if (!localStorage.getItem("ip") || !localStorage.getItem('user_token')) {
+        let ls_token = localStorage.getItem('user_token')
 
-          axios.get(URL.split('"').join('') + '/session', {
-            headers: {
-              'X-WEBAPP': 'visitor',
-              'authorization': localStorage.getItem('user_token'),
-              'Content-Type': 'application/json'
-            }
-          }).then(res => {
-            const { token } = res.data;
-            localStorage.setItem('user_token', token);
-            let decoded = jwt_decode(token);
+        api.get('/session', {
+          headers: {
+            'X-WEBAPP': 'visitor',
+            'authorization': "Bearer " + ls_token,
+            'Content-Type': 'application/json'
+          }
+        }).then(res => {
+          const { token, soonTokenExp } = res.data;
+          localStorage.setItem('user_token', (token) ? token : 'visitor');
+          let decoded = jwt_decode(token);
+
+          this.soonSessionExpired = soonTokenExp
+
+          if (res.data.tokenExp && decoded.auth) {
+            this.tokenExp = res.data.tokenExp
+          } else if (token && decoded.auth) {
             this.loggedIn = decoded.auth
             this.hostLoaded = true
-            console.log('res.data.session 2.1', res.data, decoded)
-          })
-
-        } else if (localStorage.getItem("ip") && localStorage.getItem("user_token")) {
-          console.log('old visitor')
-          axios.get(URL.split('"').join('') + '/session', {
-            headers: {
-              'X-WEBAPP': 'visitor',
-              'authorization': localStorage.getItem('user_token'),
-              'Content-Type': 'application/json'
-            }
-          }).then(res => {
-            const { token } = res.data
-            let decoded;
-
-            if (res.data.tokenExp) {
-              this.tokenExp = res.data.tokenExp
-              localStorage.removeItem('user_token')
-            } else {
-              localStorage.setItem('user_token', token)
-              decoded = jwt_decode(token)
-              this.loggedIn = decoded.auth
-              this.soonSessionExpired = res.data.soonTokenExp
-              this.hostLoaded = true
-            }
-            console.log('res.data.session 2.2', decoded)
-
-          })
-        }
+          }
+        })
       } catch (error) {
         return error
       }
@@ -99,10 +80,10 @@ export const useAuthStore = defineStore('auth', {
 
     logout() {
       try {
-        axios.get(URL.split('"').join('') + '/logout', {
+        api.get('/logout', {
           headers: {
             'X-WEBAPP': 'visitor',
-            'authorization': localStorage.getItem('user_token'),
+            'authorization': "Bearer " + localStorage.getItem('user_token'),
             'Content-Type': 'application/json'
           }
         })
@@ -119,20 +100,22 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    // extendSession() {
-    //   try {
-    //     api
-    //       .get('/session')
-    //       .then(res => {
-    //         console.log('response extend session', res.data)
-    //         localStorage.setItem('user_token', res.data.session.token)
-    //         this.soonSessionExpired = res.data.soonTokenExp
-    //         this.hostLoaded = true
-    //       })
-    //   } catch (error) {
-    //     return error
-    //   }
-    // }
+    extendSession() {
+      console.log('extendSession store')
+      try {
+        api
+          .get('/extendsession')
+          .then(res => {
+            const { token, soonTokenExp } = res.data
+            console.log('response extend session', res.data)
+            localStorage.setItem('user_token', token)
+            this.soonSessionExpired = soonTokenExp
+            this.hostLoaded = true
+          })
+      } catch (error) {
+        return error
+      }
+    }
   },
 });
 

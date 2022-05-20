@@ -1,13 +1,6 @@
 <template>
   <div>
-    <!-- Modal Edit Social -->
-    <!-- <q-btn
-      label="Éditer vos réseaux sociaux"
-      class="q-ma-md"
-      color="primary"
-      icon="share"
-      @click="modalExp = true"
-    /> -->
+    <!-- Modal Token Expired -->
     <q-dialog v-model="modalExp" persistent>
       <q-card style="min-width: 50vw">
         <q-card-section class="row items-center q-pb-none">

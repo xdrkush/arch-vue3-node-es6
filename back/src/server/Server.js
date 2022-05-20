@@ -37,8 +37,8 @@ export default class Server {
         // Cors
         this.app.use(cors({
             origin: [
-                'http://localhost:8080', 'http://domain.com', 'http://172.20.0.1',
-                'https://domain.com', 'http://www.domain.com', 'https://www.domain.com'
+                'http://localhost:8080', 'http://localhost', 'http://172.20.0.1',
+                `http://${process.env.DOMAIN}`, `https://${process.env.DOMAIN}`, `http://www.${process.env.DOMAIN}`, `https://www.${process.env.DOMAIN}`
             ],
             methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
             credentials: true
