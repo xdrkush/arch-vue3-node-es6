@@ -33,7 +33,7 @@ http://localhost:8080
 ```
 Back:
 ```
-http://localhost:8088
+http://localhost:8000
 ```
 
 # Or you can use Docker
