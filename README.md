@@ -6,7 +6,8 @@ Architecture de base avec Quasar V2 (vue 3) et node js (express) en ES6
   - QuasarJS: https://quasar.dev/start/quasar-cli
   - nvm: https://github.com/nvm-sh/nvm#install--update-script
 
-## Install & run
+#
+## Install & run
 Database: (first terminal):
 ```
 sudo mongod
@@ -58,6 +59,7 @@ info dans: `./back/src/config/script_db.js`
 docker rm $(docker ps -a -q)
 ```
 
+#
 ## Utils
 Connect Robo3t for docker DB:
   - Create Connexion
@@ -66,4 +68,5 @@ Connect Robo3t for docker DB:
   - Database: admin / User Name: root / Password: 123456 / Auth mechanism: SCRAM-SHA1
   - You can test the connexion at the bottom left
 
+#
 Enjoy'
