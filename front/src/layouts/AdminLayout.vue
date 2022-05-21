@@ -38,6 +38,7 @@
 import { defineComponent, ref } from "vue";
 import EssentialLink from "src/components/website/EssentialLink.vue";
 import { useAuthStore } from "../stores/auth.store";
+import { useMonitStore } from "../stores/monit.store";
 
 const linksList = [
   {
@@ -81,7 +82,10 @@ export default defineComponent({
 
   setup() {
     const authStore = useAuthStore();
+    const monitStore = useMonitStore();
     const leftDrawerOpen = ref(false);
+    
+    monitStore.getLandingStatus()
 
     return {
       authStore,

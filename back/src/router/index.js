@@ -6,7 +6,8 @@ import {
     // Test
     GetTest, PostTest,
     // Monit
-    GetMonit,
+    GetMonit, EditMonit,
+    GetPages, CreatePage, PutPage,
     // Profile
     GetProfile, PostProfile, PutProfile,
     // Authenticate
@@ -35,11 +36,19 @@ router.route('/')
 
 router.route('/landing')
     .get(GetMonit)
+    .put(EditMonit)
 
 router.route('/profile')
     .get(GetProfile)
     .post(PostProfile)
 // .put(isValid, isAdmin, PutProfile)
+
+router.route('/pages')
+    .get(GetPages)
+
+router.route('/page')
+    .post(CreatePage)
+    .put(PutPage)
 
 router.route('/session')
     .get(GetSession)

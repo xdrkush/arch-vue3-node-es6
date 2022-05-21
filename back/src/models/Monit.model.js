@@ -7,6 +7,14 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 const MonitSchema = new Schema({
+    actived: {
+        type: Boolean,
+        default: true
+    },
+    limited: {
+        type: Boolean,
+        default: true
+    },
     landing: {
         type: Boolean,
         default: true

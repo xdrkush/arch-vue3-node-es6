@@ -1,6 +1,8 @@
 import User from "../models/User.model";
 import Article from "../models/Article.model";
 import Monit from "../models/Monit.model";
+import Page from "../models/Page.model";
+import Section from "../models/Section.model";
 import bcrypt from "bcrypt";
 
 console.log('Script DB starter ...')
@@ -43,6 +45,52 @@ function run() {
             if (err) console.log(err)
             else console.log('create landing', data)
         })
+    })
+
+    // Create Page (Home, Contact)
+    Page.find({}, async (err, data) => {
+        if (data.length <= 0) {
+            await Page.create({
+                name: 'home',
+                icon: 'home',
+                title: 'home',
+                description: 'Description page home',
+                section: [{ name: 'default' }]
+            }, (err, data) => {
+                if (err) console.log(err)
+                else {
+                    console.log('create page home', data)
+                }
+            })
+            await Page.create({
+                name: 'contact',
+                icon: 'phone',
+                title: 'contact',
+                description: 'Description page contact',
+                section: [{ name: 'default' }]
+            }, (err, data) => {
+                if (err) console.log(err)
+                else {
+                    console.log('create page contact', data)
+                }
+            })
+        }
+    })
+
+    // Create Page (Home, Contact)
+    Section.find({}, async (err, data) => {
+        if (data.length <= 0) {
+            await Section.create({
+                name: 'default',
+                title: 'default',
+                description: 'Description section Default'
+            }, (err, data) => {
+                if (err) console.log(err)
+                else {
+                    console.log('create section default', data)
+                }
+            })
+        }
     })
 
     // edit User

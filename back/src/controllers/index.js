@@ -4,6 +4,7 @@ import ProfileControllers from './ProfileControllers'
 import AuthControllers from './AuthControllers'
 import UserControllers from './UserControllers'
 import SessionControllers from './SessionControllers'
+import PageControllers from './PageControllers'
 
 // Script for interact with DB
 // require('../config/script_db')
@@ -15,11 +16,17 @@ module.exports = {
 
     // MonitControllers
     GetMonit: (req, res) => new MonitControllers().get(req, res),
+    EditMonit: (req, res) => new MonitControllers().put(req, res),
 
     // ProfileControllers
     GetProfile: (req, res) => new ProfileControllers().get(req, res),
     PostProfile: (req, res) => new ProfileControllers().post(req, res),
     PutProfile: (req, res) => new ProfileControllers().put(req, res),
+
+    // PageControllers
+    GetPages: (req, res) => new PageControllers().get(req, res),
+    CreatePage: (req, res) => new PageControllers().post(req, res),
+    PutPage: (req, res) => new PageControllers().put(req, res),
 
     // AuthControllers
     LoginAuth: (req, res) => new AuthControllers().login(req, res),

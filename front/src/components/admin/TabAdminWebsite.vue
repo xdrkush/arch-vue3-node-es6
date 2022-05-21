@@ -6,9 +6,29 @@
       class="bg-primary text-white shadow-2"
       style="min-width: 70vw"
     >
-      <q-tab name="landing" icon="home" label="landing" />
-      <q-tab name="home" icon="home" label="home" />
-      <q-tab name="contact" icon="phone" label="contact" />
+      <!-- Template -->
+      <q-tab name="template" icon="palette" label="template" />
+
+      <!-- Landing Page -->
+      <q-tab
+        v-if="monitStore.getLanding"
+        name="landing"
+        icon="home"
+        label="landing"
+      />
+
+      <!-- For :: All Pages -->
+      <q-tab
+        v-else
+        :key="page"
+        v-for="page in monitStore.getPages"
+        :name="page.name"
+        :icon="page.icon"
+        :label="page.name"
+      />
+
+      <!-- Create Page -->
+      <ModalPage v-if="!monitStore.getLanding" />
     </q-tabs>
 
     <q-tab-panels
@@ -19,8 +39,31 @@
       transition-prev="jump-up"
       transition-next="jump-up"
     >
+      <!-- Template tab -->
+      <q-tab-panel name="template">
+        <q-list bordered class="rounded-borders">
+          <q-expansion-item
+            expand-separator
+            icon="perm_identity"
+            label="Template"
+            caption="Configuration themes"
+          >
+            <q-card>
+              <q-card-section>
+                <FormEdit
+                  :data="{
+                    title: 'title admin',
+                    description: 'description admin',
+                  }"
+                />
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+        </q-list>
+      </q-tab-panel>
 
-      <q-tab-panel name="landing">
+      <!-- Landing tab -->
+      <q-tab-panel v-if="monitStore.getLanding" name="landing">
         <q-list bordered class="rounded-borders">
           <q-expansion-item
             expand-separator
@@ -37,26 +80,48 @@
         </q-list>
       </q-tab-panel>
 
-      <q-tab-panel name="home">
+      <!-- All Pages tab -->
+      <q-tab-panel
+        v-else
+        :key="page"
+        v-for="page in monitStore.getPages"
+        :name="page.name"
+      >
+        <!-- Global Page -->
+        <q-expansion-item
+          expand-separator
+          icon="perm_identity"
+          :label="'Global ' + page.name"
+          caption="Configuration page"
+        >
+          <q-card>
+            <q-card-section>
+              <FormEdit :data="page" :fn="monitStore.editPage" />
+            </q-card-section>
+          </q-card>
+        </q-expansion-item>
+
+        <!-- List Section -->
         <q-list bordered class="rounded-borders">
           <q-expansion-item
             expand-separator
             icon="perm_identity"
             label="Header"
-            caption="edit"
+            caption="section"
           >
             <q-card>
               <q-card-section>
                 <Header />
-                <EditArray :data="sliders" />
+                <FormEdit
+                  :data="{
+                    title: 'title admin',
+                    description: 'description admin',
+                  }"
+                />
               </q-card-section>
             </q-card>
           </q-expansion-item>
         </q-list>
-      </q-tab-panel>
-
-      <q-tab-panel name="contact">
-        <div class="text-h4 q-mb-md">Contact</div>
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -65,26 +130,24 @@
 <script>
 import { ref } from "vue";
 import Header from "components/website/Header.vue";
-import EditArray from "components/admin/EditArray.vue";
-import LandingPage from "pages/website/LandingPage.vue"
-import { useMainStore } from "../../stores/rootState";
-import { useMonitStore } from '../../stores/monit.store';
+import FormEdit from "components/admin/FormEdit.vue";
+import LandingPage from "pages/website/LandingPage.vue";
+import ModalPage from "./ModalPage.vue";
+import { useMonitStore } from "../../stores/monit.store";
 
 export default {
   components: {
     Header,
-    EditArray,
-    LandingPage
+    FormEdit,
+    LandingPage,
+    ModalPage,
   },
   setup() {
-    const mainStore = useMainStore();
     const monitStore = useMonitStore();
-    // console.log("Admin Website mainStore", store);
 
     return {
-      tab: ref("home"),
+      tab: ref("template"),
       splitterModel: ref(20),
-      sliders: mainStore.sliders,
       monitStore
     };
   },

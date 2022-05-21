@@ -24,13 +24,19 @@ export default class MonitControllers extends Connection {
     }
   }
 
-  post(req, res) {
+  async put(req, res) {
     try {
+      const { landing } = req.body;
+      const monit = await Monit.findOne({ actived: true })
+      monit.landing = landing
+      monit.save()
+
       return res.send({
         status: "success",
-        message: "Method Post Test Controller",
+        landing: monit.landing,
+        message: "Method Put Monit Controller",
       });
-    } catch {
+    } catch (error) {
       throw error;
     }
   }

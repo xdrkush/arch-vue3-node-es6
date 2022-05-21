@@ -21,7 +21,7 @@ export const regenerateToken = (obj) => {
 }
 
 export const soonTokenExpired = (token) => {
-    const t_alert = (1 * 60 * 1000); // alert :: X Minute * X second * X milliseconds
+    const t_alert = (5 * 60 * 1000); // alert :: X Minute * X second * X milliseconds
     const decoded = verify(token, JWT_TOKEN)
     // console.log('soontTokenExpired 1', token, decoded)
 

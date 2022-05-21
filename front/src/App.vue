@@ -25,6 +25,7 @@
 import { defineComponent } from "vue";
 import { useProfileStore } from "./stores/profile.store";
 import { useAuthStore } from "./stores/auth.store";
+import { useMonitStore } from "./stores/monit.store";
 import ModalSession from "./components/auth/ModalSession.vue";
 import ModalTokenExp from "./components/auth/ModalTokenExp.vue";
 
@@ -34,9 +35,12 @@ export default defineComponent({
   setup() {
     const authStore = useAuthStore();
     const profileStore = useProfileStore();
+    const monitStore = useMonitStore();
     
     if (!profileStore.getProfileLoaded) profileStore.getProfileApi();
     authStore.getSession();
+
+    monitStore.getPagesAPI()
 
     setInterval(() => authStore.getSession(), 1 * 60 * 1000);
 
