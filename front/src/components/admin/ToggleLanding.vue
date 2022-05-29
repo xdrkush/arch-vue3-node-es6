@@ -1,11 +1,11 @@
 <template>
   <div class="q-py-md">
     <!-- <q-form class="q-gutter-md"> -->
-    <div class="bg-grey-2 q-pa-sm rounded-borders">
+    <div class="q-pa-sm rounded-borders">
       <q-toggle
         v-model="status"
         checked-icon="check"
-        color="red"
+        color="negative"
         @click="(e) => changeValue(status)"
         :label="`Landing is ${status}`"
         unchecked-icon="clear"

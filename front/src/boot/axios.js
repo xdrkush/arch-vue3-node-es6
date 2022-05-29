@@ -2,17 +2,19 @@ import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 import { URL } from '../utils'
 
+let ls_token = localStorage.getItem('user_token')
 
-if (!localStorage.getItem('user_token')) {
+if (!ls_token) {
   localStorage.setItem('user_token', 'visitor')
+  ls_token = localStorage.getItem('user_token')
 }
-  
+
 let api = axios.create({
   baseURL: URL.split('"').join(''),
   timeout: 5000,
   headers: {
     'X-WEBAPP': 'visitor',
-    'authorization': 'Bearer ' + localStorage.getItem('user_token'),
+    'authorization': 'Bearer ' + ls_token,
     'Content-Type': 'application/json'
   }
 })

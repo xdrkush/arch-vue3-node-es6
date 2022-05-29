@@ -9,7 +9,7 @@
       @click="modalAccount = true"
     />
     <q-dialog v-model="modalAccount">
-      <q-card style="min-width: 50vw">
+      <q-card style="min-width: 50vw" >
         <q-card-section class="row items-center q-pb-none">
           <div class="text-h6">
             {{
@@ -24,7 +24,6 @@
 
         <q-card-section v-if="!editPassword" class="q-pa-md">
           <div class="q-gutter-md text-center" style="width: 100%">
-
             <q-input outlined v-model="profile.name" label="Nom User (Login)" />
             <q-input outlined v-model="profile.mail" label="E-mail" />
             <p>Veuillez entrez votre mot de passe pour confirmer:</p>
@@ -53,13 +52,11 @@
               color="positive"
               @click="() => editAccountUserSubmit({ ...profile })"
             />
-            
           </div>
         </q-card-section>
 
         <q-card-section v-if="editPassword" class="q-pa-md">
           <div class="q-gutter-md text-center" style="width: 100%">
-
             <div v-if="!userStore.getCheckPasswordEditPassword">
               <p>Veuillez entrez votre mot de passe <strong>actuel</strong>,</p>
               <q-input
@@ -97,7 +94,7 @@
               >
                 <template v-slot:error>
                   min 8 characters, dont
-                  <span color="text-secondary">1 Majuscule</span> - 1 Minuscule
+                  <span >1 Majuscule</span> - 1 Minuscule
                   - 1 Numéro - 1 characters spécial
                 </template>
               </q-input>
@@ -145,7 +142,6 @@
                 @click="() => editPasswordUserSubmit({ ...profile })"
               />
             </div>
-
           </div>
         </q-card-section>
       </q-card>
@@ -154,6 +150,7 @@
 </template>
 
 <script>
+import { useQuasar } from "quasar";
 import { defineComponent, ref } from "vue";
 import { useProfileStore } from "../../stores/profile.store";
 import { useUserStore } from "../../stores/users.store";
@@ -161,6 +158,7 @@ import { useUserStore } from "../../stores/users.store";
 export default defineComponent({
   name: "ModalAccount",
   setup() {
+    const $q = useQuasar()
     const userStore = useUserStore();
     const profileStore = useProfileStore();
     if (!profileStore.getProfileLoaded) profileStore.getProfileApi();
@@ -174,17 +172,35 @@ export default defineComponent({
     const editPasswordUserSubmit = async (obj) => {
       obj.oldName = oldName;
       await userStore.editPasswordUserApi(obj);
+      $q.notify({
+        icon: "thumb_up",
+        caption: "Votre mot de passe à bien été éditer !",
+        message: "Success !",
+        color: "positive",
+      });
     };
 
     const editAccountUserSubmit = async (obj) => {
       obj.oldName = oldName;
       await userStore.editAccountUserApi(obj);
+      $q.notify({
+        icon: "thumb_up",
+        caption: "Votre compte à bien été éditer !",
+        message: "Success !",
+        color: "positive",
+      });
     };
 
     const checkPasswordSubmit = async (val, obj) => {
       obj.oldName = oldName;
       if (val === "account") await userStore.checkPasswordEditAccountApi(obj);
       if (val === "password") await userStore.checkPasswordEditPasswordApi(obj);
+      $q.notify({
+        icon: "thumb_up",
+        caption: "Votre mot de passe va être checker !",
+        message: "Success !",
+        color: "positive",
+      });
     };
 
     const isValid = (v1, v2) => v1 === v2;

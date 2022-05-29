@@ -39,6 +39,8 @@ export default class SessionControllers extends Connection {
     let H_webapp = req.ip;
     let H_agent = req.headers["user-agent"];
 
+    console.log('H_TOKEN', H_token)
+
     try {
       if ((H_token === "visitor") || H_token === (null || 'null' || undefined || 'undefined' || false)
         && H_webapp && H_agent) {

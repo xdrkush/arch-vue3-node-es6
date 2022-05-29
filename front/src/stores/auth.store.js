@@ -14,6 +14,7 @@ export const useAuthStore = defineStore('auth', {
     tokenExp: false
   }),
   getters: {
+    getSessionUx: (state) => state.session,
     getLoggedIn: (state) => state.loggedIn,
     getHostLoaded: (state) => state.hostLoaded,
     getIP: (state) => state.ip,
@@ -70,6 +71,7 @@ export const useAuthStore = defineStore('auth', {
             this.tokenExp = res.data.tokenExp
           } else if (token && decoded.auth) {
             this.loggedIn = decoded.auth
+            this.session = decoded
             this.hostLoaded = true
           }
         })

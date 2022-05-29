@@ -14,7 +14,12 @@
     >
       <div>
         <h4>Connectez-vous:</h4>
-        <q-input outlined v-model="form.mail" label="E-mail ou name" class="q-ma-md" />
+        <q-input
+          outlined
+          v-model="form.mail"
+          label="E-mail ou name"
+          class="q-ma-md"
+        />
         <q-input
           outlined
           class="q-ma-md"
@@ -35,6 +40,7 @@
 </template>
 
 <script>
+import { useQuasar } from "quasar";
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/auth.store";
@@ -42,13 +48,14 @@ import { useAuthStore } from "../../stores/auth.store";
 export default defineComponent({
   name: "LoginPage",
   setup() {
+    const $q = useQuasar();
     const authStore = useAuthStore();
     const Router = useRouter();
     const form = ref({ mail: "", password: "" });
     let visible = ref(false);
     authStore.getSession();
 
-    console.log('page login', authStore, authStore.getLoggedIn)
+    console.log("page login", authStore, authStore.getLoggedIn);
 
     if (authStore.getLoggedIn) Router.push({ path: "/admin" });
 
@@ -56,9 +63,33 @@ export default defineComponent({
       visible.value = true;
       authStore.loginAuth(obj);
 
+      $q.notify({
+        icon: "thumb_up",
+        caption: "En attente de connexion ...",
+        message: "Success !",
+        color: "positive",
+      });
+
       setTimeout(() => {
         visible.value = false;
-        if (authStore.getLoggedIn) Router.push({ path: "/admin" });
+        if (authStore.getLoggedIn) {
+          $q.notify({
+            icon: "thumb_up",
+            caption: "Login succes, vous allez être redirigez !",
+            message: "Success !",
+            color: "positive",
+          });
+          Router.push({ path: "/admin" });
+        } else {
+          $q.notify({
+            icon: "thumb_up",
+            caption: "Une erreur est survenu, veuillez rééssayer !",
+            message: "Error !",
+            color: "negative",
+          });
+          if(localStorage.getItem('user_token')) localStorage.removeItem('user_token')
+          location.reload('/')
+        }
       }, 2500);
     };
 

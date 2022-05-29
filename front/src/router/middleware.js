@@ -26,10 +26,17 @@ export function checkIsLoggedIn (from, to) {
 
 // Check Landing Page
 export function checkLandingPage (to, from) {
-    // console.log('Middleware checkLandingPage', landing, from, to)
-    const monitStore = useMonitStore()
-    const landing = monitStore.getLanding
+    // Error with the first load App.vue (getLanding is not loaded)
+    // corectif dans les layout avec beforeCreate
 
-    if (landing) return { path: '/landing' }
-    else return
+
+    // console.log('Middleware checkLandingPage', landing, from, to)
+    // const monitStore = useMonitStore()
+    // const landing = monitStore.getLanding
+    // console.log('middleware checkLanding', landing)
+
+    // if (landing) return { path: '/landing' }
+    // else return
+
+    return
 }

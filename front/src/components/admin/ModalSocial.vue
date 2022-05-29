@@ -9,7 +9,7 @@
       @click="modalSocial = true"
     />
     <q-dialog v-model="modalSocial">
-      <q-card style="min-width: 50vw">
+      <q-card style="min-width: 50vw" >
         <q-card-section class="row items-center q-pb-none">
           <div class="text-h6">Éditer vos réseaux ?</div>
           <q-space />
@@ -19,27 +19,32 @@
         <q-card-section class="q-pa-md">
           <div class="q-gutter-md text-center" style="width: 100%">
             <q-input
-              outlined style="width: 100%"
+              outlined
+              style="width: 100%"
               v-model="profile.social.facebook"
               label="Facebook: https://..."
             />
             <q-input
-              outlined style="width: 100%"
+              outlined
+              style="width: 100%"
               v-model="profile.social.linkedin"
               label="Linkedin: https://..."
             />
             <q-input
-              outlined style="width: 100%"
+              outlined
+              style="width: 100%"
               v-model="profile.social.twitter"
               label="Twitter: https://..."
             />
             <q-input
-              outlined style="width: 100%"
+              outlined
+              style="width: 100%"
               v-model="profile.social.youtube"
               label="Youtube: https://..."
             />
             <q-input
-              outlined style="width: 100%"
+              outlined
+              style="width: 100%"
               v-model="profile.social.instagram"
               label="Instagram: https://..."
             />
@@ -59,10 +64,12 @@
 <script>
 import { defineComponent, ref, computed } from "vue";
 import { useProfileStore } from "../../stores/profile.store";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "ModalSocial",
   setup() {
+    const $q = useQuasar();
     const profileStore = useProfileStore();
     if (!profileStore.getProfileLoaded) profileStore.getProfileApi();
     const oldName = profileStore.profile.name;
@@ -73,10 +80,18 @@ export default defineComponent({
     const editProfilSubmit = async (obj) => {
       obj.oldName = oldName;
       await profileStore.editProfileApi(obj);
+      $q.notify({
+        icon: "thumb_up",
+        caption: "Vos réseaux sociaux ont bien été éditer !",
+        message: "Success !",
+        color: "positive",
+      });
     };
 
     return {
-      editProfilSubmit, modalSocial, profile
+      editProfilSubmit,
+      modalSocial,
+      profile,
     };
   },
 });

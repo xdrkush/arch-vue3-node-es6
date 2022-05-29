@@ -3,7 +3,9 @@
     <q-page-container class="row items-center justify-center text-center">
       <!-- Main -->
 
-      <LandingPage />
+      <q-page-container>
+        <router-view />
+      </q-page-container>
 
       <!-- / Main -->
     </q-page-container>
@@ -12,14 +14,11 @@
 
 <script>
 import { defineComponent } from "vue";
-import LandingPage from "../pages/website/LandingPage.vue";
 
 export default defineComponent({
   name: "LandingLayout",
 
-  components: {
-    LandingPage,
-  },
+  components: {},
 
   setup() {
     return {};

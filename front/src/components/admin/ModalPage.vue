@@ -5,7 +5,7 @@
 
     <!-- Modal Page -->
     <q-dialog v-model="modalPage">
-      <q-card style="min-width: 50vw">
+      <q-card style="min-width: 50vw" >
         <q-card-section class="row items-center q-pb-none">
           <div class="text-h6">Creer une page ?</div>
           <q-space />
@@ -54,16 +54,25 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useMonitStore } from "../../stores/monit.store";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "modalPage",
   setup() {
     const monitStore = useMonitStore();
+    const $q = useQuasar()
     const modalPage = ref(false);
-    let page = ref({})
+    let page = ref({});
 
     const CreatePageSubmit = async (obj) => {
       await monitStore.createPage(obj);
+      modalPage.value = false;
+      $q.notify({
+        icon: "thumb_up",
+        caption: "Votre page à bien été créée !",
+        message: "Success !",
+        color: "positive",
+      });
     };
 
     return {

@@ -17,7 +17,8 @@ export default class MonitControllers extends Connection {
       return res.status(200).json({
         status: "success",
         message: "Method Get Monit Controller",
-        landing: dbMonit[0].landing
+        landing: dbMonit[0].landing,
+        theme: dbMonit[0].theme
       });
     } catch (error) {
       throw error;
@@ -34,6 +35,24 @@ export default class MonitControllers extends Connection {
       return res.send({
         status: "success",
         landing: monit.landing,
+        message: "Method Put Monit Controller",
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async editTheme(req, res) {
+    try {
+      console.log('edit theme', req.body)
+      const { theme } = req.body;
+      const monit = await Monit.findOne({ actived: true })
+      monit.theme = theme
+      monit.save()
+
+      return res.send({
+        status: "success",
+        dbTheme: monit.theme,
         message: "Method Put Monit Controller",
       });
     } catch (error) {

@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md">
-    <h2 class="q-ma-none">Admin Website</h2>
+    <h2 class="q-ma-none text-h2">Admin Website</h2>
     <p>(in progress ...)</p>
     <ToggleLanding />
     <TabAdminWebsite />

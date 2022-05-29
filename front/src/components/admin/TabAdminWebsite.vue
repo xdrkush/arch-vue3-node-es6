@@ -48,13 +48,11 @@
             label="Template"
             caption="Configuration themes"
           >
-            <q-card>
+            <q-card >
               <q-card-section>
                 <FormEdit
-                  :data="{
-                    title: 'title admin',
-                    description: 'description admin',
-                  }"
+                  :data="monitStore.getTheme"
+                  :editFn="monitStore.editThemeAPI"
                 />
               </q-card-section>
             </q-card>
@@ -71,9 +69,13 @@
             label="Landing Page"
             caption="edit"
           >
-            <q-card>
+            <q-card >
               <q-card-section>
                 <LandingPage />
+                <FormEdit
+                  :data="profileStore.getProfile"
+                  :editFn="profileStore.editProfileApi"
+                />
               </q-card-section>
             </q-card>
           </q-expansion-item>
@@ -94,9 +96,14 @@
           :label="'Global ' + page.name"
           caption="Configuration page"
         >
-          <q-card>
+          <q-card >
             <q-card-section>
-              <FormEdit :data="page" :fn="monitStore.editPage" />
+              <FormEdit
+                :data="page"
+                :editFn="monitStore.editPage"
+                :delete="true"
+                :deleteFn="monitStore.deletePage"
+              />
             </q-card-section>
           </q-card>
         </q-expansion-item>
@@ -106,22 +113,29 @@
           <q-expansion-item
             expand-separator
             icon="perm_identity"
-            label="Header"
+            :label="section.name"
             caption="section"
+            :key="section"
+            v-for="section in page.sections"
           >
-            <q-card>
+            <q-card >
               <q-card-section>
-                <Header />
+                <Preview :comp="section" />
                 <FormEdit
-                  :data="{
-                    title: 'title admin',
-                    description: 'description admin',
-                  }"
+                  :data="section"
+                  :pageofsection="page"
+                  :section="true"
+                  :editFn="monitStore.editSection"
+                  :delete="true"
+                  :deleteFn="monitStore.deleteSectionToPage"
                 />
               </q-card-section>
             </q-card>
           </q-expansion-item>
         </q-list>
+
+        <!-- Modal Add Section to page -->
+        <ModalSection :page="page" />
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -129,26 +143,31 @@
 
 <script>
 import { ref } from "vue";
-import Header from "components/website/Header.vue";
 import FormEdit from "components/admin/FormEdit.vue";
 import LandingPage from "pages/website/LandingPage.vue";
 import ModalPage from "./ModalPage.vue";
+import ModalSection from "./ModalSection.vue";
+import Preview from "./Preview";
 import { useMonitStore } from "../../stores/monit.store";
+import { useProfileStore } from "../../stores/profile.store";
 
 export default {
   components: {
-    Header,
     FormEdit,
     LandingPage,
     ModalPage,
+    ModalSection,
+    Preview,
   },
   setup() {
     const monitStore = useMonitStore();
+    const profileStore = useProfileStore();
 
     return {
       tab: ref("template"),
       splitterModel: ref(20),
-      monitStore
+      monitStore,
+      profileStore,
     };
   },
 };

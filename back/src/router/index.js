@@ -6,8 +6,9 @@ import {
     // Test
     GetTest, PostTest,
     // Monit
-    GetMonit, EditMonit,
-    GetPages, CreatePage, PutPage,
+    GetMonit, EditMonit, EditTheme,
+    GetPages, GetPage, CreatePage, PutPage, DeletePage,
+    GetSections, CreateSection, PutSection, AddSectionToPage, DeleteSectionToPage,
     // Profile
     GetProfile, PostProfile, PutProfile,
     // Authenticate
@@ -41,7 +42,10 @@ router.route('/landing')
 router.route('/profile')
     .get(GetProfile)
     .post(PostProfile)
-// .put(isValid, isAdmin, PutProfile)
+    .put(PutProfile)
+
+router.route('/theme')
+    .put(EditTheme)
 
 router.route('/pages')
     .get(GetPages)
@@ -49,6 +53,21 @@ router.route('/pages')
 router.route('/page')
     .post(CreatePage)
     .put(PutPage)
+
+router.route('/page/:name')
+    .get(GetPage)
+    .delete(DeletePage)
+
+router.route('/sectiontopage')
+    .post(AddSectionToPage)
+    .put(DeleteSectionToPage)
+
+router.route('/sections')
+    .get(GetSections)
+
+router.route('/section')
+    .post(CreateSection)
+    .put(PutSection)
 
 router.route('/session')
     .get(GetSession)
@@ -68,6 +87,6 @@ router.route('/account')
 // .put(isValid, isAdmin, PutPassword)
 
 router.route('/check/password')
-// .put(isValid, isAdmin, CheckPassword)
+    .put(CheckPassword)
 
 module.exports = router

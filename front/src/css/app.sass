@@ -8,15 +8,15 @@
     font-family: Montserrat
     src: url(./fonts/Montserrat-Regular.ttf)
 
-body
-    background-color: $light
+// body
+//     background-color: $light
 
-h1, h2, h3, h4, h5, h6, p, a
-    color: #2F1F34
+// h1, h2, h3, h4, h5, h6, p, a
+//     color: #2F1F34
 
 h1, h2, h3, h4, h5, h6
     font-family: 'Montserrat'
-    color: #2F1F34
+    // color: #2F1F34
 
 p
     font-family: 'Roboto'
@@ -31,23 +31,34 @@ p
 
 /* width */
 ::-webkit-scrollbar
-    width: 11px
-    border-left: 1px solid white
-    background: $light
+    width: 10px
+    border-left: 1px solid $primary
+    background: $dark
 
 /* Track */
 ::-webkit-scrollbar-track
-    background: $light
-    border-left: 1px solid $secondary
-    border-radius: 15px
+    background: #474747
+    border-left: 1px solid $primary
+    border-radius: 10px
 
 /* Handle */
 ::-webkit-scrollbar-thumb
-    background: $secondary
-    border-radius: 15px
-    border: solid 1px $dark
+    background: #a4a4a4
+    border-radius: 10px
+    border: solid 1px $primary
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover
-    background: $secondary
-    border: 1px solid white
+    background: $primary
+    border: 1px solid grey
+
+// Create variable text, ...
+.text-custom
+    color: $custom !important
+.bg-custom
+    background: $custom !important
+    
+.text-light
+    color: $light !important
+.bg-light
+    background: $light !important

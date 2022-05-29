@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { useQuasar } from "quasar";
 import { defineComponent, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/auth.store";
@@ -39,15 +40,22 @@ import { useAuthStore } from "../../stores/auth.store";
 export default defineComponent({
   name: "ModalLogout",
   setup() {
+    const $q = useQuasar();
     const authStore = useAuthStore();
-    const router = useRouter()
+    const router = useRouter();
     const modalLogout = ref(false);
 
     const logoutSession = () => {
       authStore.logout();
       setTimeout(() => router.push({ path: "/" }), 777);
-      localStorage.removeItem('user_token')
+      localStorage.removeItem("user_token");
       modalLogout.value = false;
+      $q.notify({
+        icon: "thumb_up",
+        caption: "Vous allez être déconnecter !",
+        message: "Success !",
+        color: "positive",
+      });
     };
 
     return {

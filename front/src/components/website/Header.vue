@@ -1,23 +1,200 @@
 <template>
-  <div class="q-pa-md">
-      <h2>{{ title }}</h2>
-      <p>{{ description }}</p>
+  <div>
+    <div class="q-gutter-md">
+      <q-carousel
+        v-model="slide"
+        ref="carousel"
+        transition-prev="scale"
+        transition-next="scale"
+        swipeable
+        animated
+        :autoplay="autoplay"
+        control-color="white"
+        height="90vh"
+        class="text-white"
+      >
+        <!-- Controls carousel (button) -->
+        <template v-slot:control>
+          <q-carousel-control position="left">
+            <q-btn
+              round
+              text-color="white"
+              size="xl"
+              icon="arrow_back_ios"
+              style="top: 45%"
+              @click="$refs.carousel.previous()"
+            />
+          </q-carousel-control>
+          <q-carousel-control position="right">
+            <q-btn
+              round
+              text-color="white"
+              size="xl"
+              icon="arrow_forward_ios"
+              style="top: 45%"
+              @click="$refs.carousel.next()"
+            />
+          </q-carousel-control>
+        </template>
+
+        <!-- Body (slide) -->
+        <q-carousel-slide
+          :key="slid.name" v-for="slid in parent.arch.array"
+          :name="slid.placement"
+          class="column no-wrap flex-center q-pa-none"
+          :img-src="slid.image"
+        >
+          <div class="gradient-vertical full-width full-height">
+            <div
+              class="elipse absolute-center"
+              :style="`background-color: ${opacityToHex(
+                getPaletteColor('primary'),
+                0.7
+              )}`"
+            ></div>
+            <div class="text-center absolute-center">
+              <h1 class="q-ma-none">
+                <strong>{{ slid.title }}</strong>
+              </h1>
+              <h2 class="q-ma-none q-mt-xl">{{ slid.subtitle }}</h2>
+            </div>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
+
+      <!-- Button Social -->
+      <q-item class="column absolute-top" style="width: 50px; top: 50vh">
+        <q-btn
+          round
+          class="q-ma-xs"
+          text-color="accent"
+          color="dark"
+          size="md"
+          icon="fa-brands fa-facebook-f"
+        />
+        <q-btn
+          round
+          class="q-ma-xs"
+          text-color="accent"
+          color="dark"
+          size="md"
+          icon="fa-brands fa-linkedin"
+        />
+        <q-btn
+          round
+          class="q-ma-xs"
+          text-color="accent"
+          color="dark"
+          size="md"
+          icon="fa-brands fa-twitter"
+        />
+        <q-btn
+          round
+          class="q-ma-xs"
+          text-color="accent"
+          color="dark"
+          size="md"
+          icon="fa-brands fa-instagram"
+        />
+      </q-item>
+
+    </div>
   </div>
 </template>
-
 <script>
 import { ref } from "vue";
-import { useMainStore } from "stores/rootState";
+import { colors } from "quasar";
+const { getPaletteColor, hexToRgb } = colors;
+
+const carouselDefault = [
+  {
+    placement: "1",
+    name: "montagne",
+    image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+    title: "Super Titre",
+    subtitle: "Super subtitle"
+  },
+  {
+    placement: "2",
+    name: "block",
+    image: "https://cdn.pixabay.com/photo/2016/05/09/17/26/background-texture-1382002_960_720.jpg",
+    title: "Super Titre",
+    subtitle: "Super subtitle"
+  },
+  {
+    placement: "3",
+    name: "architecture",
+    image: "https://cdn.pixabay.com/photo/2018/05/11/09/29/glass-3389935_960_720.jpg",
+    title: "Super Titre",
+    subtitle: "Super subtitle"
+  },
+  {
+    placement: "4",
+    name: "canna",
+    image: "https://i1.wp.com/greenacresgroupca.com/wp-content/uploads/2018/05/istock-835508564.jpg?fit=724%2C483&ssl=1",
+    title: "Super Titre",
+    subtitle: "Super subtitle"
+  },
+]
 
 export default {
   name: "HeaderHome",
-  setup() {
-    const mainStore = useMainStore();
-    // console.log("useMainStore", mainStore.sliders);
+  props: {
+    data: Object,
+  },
+  setup(props) {
+    const parent = ref(props.data);
+    const d = {
+      title: "Default Header",
+      description: "Default Description Header",
+    };
+
+    console.log("load header", hexToRgb("#a259c9"));
+
+    const opacityToHex = (color, opacity) => {
+      let c = hexToRgb(color);
+      return `rgba(${c.r},${c.g},${c.b},${opacity})`;
+    };
+
     return {
-      title: "Home",
-      description: 'Description'
+      d,
+      parent,
+      opacityToHex,
+      getPaletteColor,
+      carouselDefault,
+      autoplay: ref(true),
+      slide: ref("1"),
+      lorem:
+        "lorem  ipsume fze zlorem  ipsume fze zlorem  ipsume fze zlorem  ipsume fze zlorem  ipsume fze z",
     };
   },
 };
 </script>
+
+<style lang="scss">
+.elipse {
+  border: 1px solid $dark;
+  border-radius: 50%;
+  height: 80vw;
+  width: 80vw;
+  max-height: 500px;
+  max-width: 500px;
+  margin: auto;
+}
+
+.gradient-vertical {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.3),
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.3),
+    rgba(255, 255, 255, 0.3)
+  );
+  background-blend-mode: multiply, normal;
+}
+</style>  

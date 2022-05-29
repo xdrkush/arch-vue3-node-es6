@@ -5,6 +5,7 @@ import AuthControllers from './AuthControllers'
 import UserControllers from './UserControllers'
 import SessionControllers from './SessionControllers'
 import PageControllers from './PageControllers'
+import SectionControllers from './SectionControllers'
 
 // Script for interact with DB
 // require('../config/script_db')
@@ -17,6 +18,7 @@ module.exports = {
     // MonitControllers
     GetMonit: (req, res) => new MonitControllers().get(req, res),
     EditMonit: (req, res) => new MonitControllers().put(req, res),
+    EditTheme: (req, res) => new MonitControllers().editTheme(req, res),
 
     // ProfileControllers
     GetProfile: (req, res) => new ProfileControllers().get(req, res),
@@ -25,8 +27,17 @@ module.exports = {
 
     // PageControllers
     GetPages: (req, res) => new PageControllers().get(req, res),
+    GetPage: (req, res) => new PageControllers().getByName(req, res),
     CreatePage: (req, res) => new PageControllers().post(req, res),
     PutPage: (req, res) => new PageControllers().put(req, res),
+    DeletePage: (req, res) => new PageControllers().delete(req, res),
+
+    // SectionControllers
+    GetSections: (req, res) => new SectionControllers().get(req, res),
+    CreateSection: (req, res) => new SectionControllers().post(req, res),
+    PutSection: (req, res) => new SectionControllers().put(req, res),
+    AddSectionToPage: (req, res) => new SectionControllers().addSectionToPage(req, res),
+    DeleteSectionToPage: (req, res) => new SectionControllers().deleteSectionToPage(req, res),
 
     // AuthControllers
     LoginAuth: (req, res) => new AuthControllers().login(req, res),

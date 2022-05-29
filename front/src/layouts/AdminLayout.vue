@@ -11,14 +11,35 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Dashboard Admin </q-toolbar-title>
+        <q-toolbar-title>
+          Admin :: {{ profileStore.getProfile.nameCompany }}
+        </q-toolbar-title>
 
+        <q-space />
+
+        <q-btn
+          label="recharger (F5)"
+          icon="refresh"
+          color="accent"
+          class="q-mx-xs"
+          @click="forceToRefresh"
+        />
+        <q-btn
+          :icon="($q.dark.isActive) ? 'light_mode' : 'dark_mode'"
+          :color="$q.dark.isActive ? 'accent' : 'dark'"
+          class="q-mx-xs"
+          @click="($q.dark.isActive) ? $q.dark.set(false) : $q.dark.set(true)"
+        />
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+    >
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+        <q-item-label header> Dashboard Admin </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -39,36 +60,38 @@ import { defineComponent, ref } from "vue";
 import EssentialLink from "src/components/website/EssentialLink.vue";
 import { useAuthStore } from "../stores/auth.store";
 import { useMonitStore } from "../stores/monit.store";
+import { useProfileStore } from "../stores/profile.store";
+import { setCssVar } from "quasar";
 
 const linksList = [
   {
     title: "Home",
     caption: "home",
-    icon: "code",
+    icon: "visibility",
     link: "/",
   },
   {
     title: "Dashboard",
     caption: "Check your stats",
-    icon: "code",
+    icon: "apps",
     link: "/admin",
   },
   {
     title: "Profil",
     caption: "Edit your profil",
-    icon: "code",
+    icon: "person",
     link: "/admin/profil",
   },
   {
     title: "Article",
     caption: "Edit your article",
-    icon: "code",
+    icon: "add",
     link: "/admin/article",
   },
   {
     title: "Website",
     caption: "Edit your site",
-    icon: "code",
+    icon: "edit",
     link: "/admin/website",
   },
 ];
@@ -83,16 +106,33 @@ export default defineComponent({
   setup() {
     const authStore = useAuthStore();
     const monitStore = useMonitStore();
+    const profileStore = useProfileStore();
+
     const leftDrawerOpen = ref(false);
-    
-    monitStore.getLandingStatus()
+    const theme = ref(monitStore.getTheme);
+
+    monitStore.getLandingStatus();
+
+    setCssVar("primary", theme.value.color.primary);
+    setCssVar("secondary", theme.value.color.secondary);
+    setCssVar("accent", theme.value.color.accent);
+    setCssVar("positive", theme.value.color.positive);
+    setCssVar("negative", theme.value.color.negative);
+    setCssVar("warning", theme.value.color.warning);
+    setCssVar("info", theme.value.color.info);
+    setCssVar("dark", theme.value.color.dark);
+    setCssVar("light", theme.value.color.light);
+    setCssVar("secondary", theme.value.color.secondary);
 
     return {
-      authStore,
+      authStore, monitStore, profileStore,
       essentialLinks: linksList,
       leftDrawerOpen,
+      forceToRefresh() {
+        location.reload();
+      },
       toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
+        leftDrawerOpen.value = !leftDrawerOpen.value
       },
     };
   },

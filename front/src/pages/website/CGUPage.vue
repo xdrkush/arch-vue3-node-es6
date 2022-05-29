@@ -1,5 +1,5 @@
 <template>
-  <q-page class="">
+  <q-page>
     <h2>CGU Page</h2>
   </q-page>
 </template>

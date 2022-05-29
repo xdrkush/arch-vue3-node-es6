@@ -4,7 +4,7 @@
     style="min-height: 100vh"
   >
     <!-- Logo -->
-    <q-btn round color="secondary" class="q-mt-md shadow-8" width="256px">
+    <q-btn round color="accent" class="q-mt-md shadow-8" width="256px">
       <q-img :src="UnicornCircle" width="220px" />
     </q-btn>
 
@@ -19,8 +19,17 @@
       {{ user.description }}
     </p>
 
+    <p
+      class="bg-accent shadow-4 q-ma-none q-pa-none q-my-md"
+      style="min-width: 300px; width: 80vw; max-width: 720px; height: 2px"
+    ></p>
     <!-- Title Coming soon ! -->
     <h5 class="coming_soon q-ma-none q-mt-md">Coming Soon ...</h5>
+
+    <p
+      class="bg-accent shadow-4 q-ma-none q-pa-none q-my-xs"
+      style="min-width: 300px; width: 80vw; max-width: 720px; height: 2px"
+    ></p>
 
     <!-- Contact us -->
     <h6 class="q-ma-none q-my-md">En attendant contactez-nous</h6>
@@ -28,7 +37,14 @@
       <div class="row justify-center" style="width: 100%">
         <!-- Phone -->
         <p
-          class="q-my-xs q-ma-none col-md-6 col-xs-12 text-body row justify-center items-center"
+          class="
+            q-my-xs q-ma-none
+            col-md-6 col-xs-12
+            text-body
+            row
+            justify-center
+            items-center
+          "
           @click="
             () =>
               copyToClipboard(user.phone)
@@ -37,7 +53,7 @@
                     icon: 'fa-solid fa-phone',
                     caption: 'copié',
                     message: user.phone,
-                    color: 'secondary',
+                    color: 'primary',
                   });
                 })
                 .catch()
@@ -45,7 +61,7 @@
         >
           <q-btn
             round
-            color="secondary"
+            color="primary"
             size="md"
             icon="fa-solid fa-phone"
             class="q-mx-md"
@@ -54,7 +70,14 @@
         </p>
         <!-- Mail -->
         <p
-          class="q-my-xs q-ma-none col-md-6 col-xs-12 text-body row justify-center items-center"
+          class="
+            q-my-xs q-ma-none
+            col-md-6 col-xs-12
+            text-body
+            row
+            justify-center
+            items-center
+          "
           @click="
             () =>
               copyToClipboard(user.mail)
@@ -63,7 +86,7 @@
                     icon: 'fa-solid fa-at',
                     caption: 'copié',
                     message: user.mail,
-                    color: 'secondary',
+                    color: 'primary',
                   });
                 })
                 .catch()
@@ -71,7 +94,7 @@
         >
           <q-btn
             round
-            color="secondary"
+            color="primary"
             size="md"
             icon="fa-solid fa-at"
             class="q-mx-md"
@@ -90,7 +113,7 @@
                   icon: 'fa-solid fa-location-dot',
                   caption: 'copié',
                   message: user.address,
-                  color: 'secondary',
+                  color: 'primary',
                 });
               })
               .catch()
@@ -98,7 +121,7 @@
       >
         <q-btn
           round
-          color="secondary"
+          color="primary"
           size="md"
           icon="fa-solid fa-location-dot"
           class="q-mx-md"
@@ -107,14 +130,10 @@
       </p>
     </div>
 
-    <p
-      class="bg-secondary shadow-4 q-my-xs"
-      style="min-width: 300px; width: 80vw; max-width: 720px; height: 2px"
-    ></p>
     <h6 class="q-ma-none q-my-md">Suivez-nous sur les réseaux:</h6>
     <q-carousel
       v-model="slide"
-      class="q-pa-xs bg-secondary shadow-8 q-my-xs"
+      class="q-pa-xs bg-accent shadow-8 q-my-xs"
       transition-prev="slide-right"
       transition-next="slide-left"
       swipeable
@@ -124,7 +143,7 @@
       style="min-width: 300px; width: 80vw; max-width: 720px"
       height="auto"
     >
-      <q-carousel-slide :name="1" class="column no-wrap bg-secondary">
+      <q-carousel-slide :name="1" class="column no-wrap bg-primary">
         <div
           class="
             row
@@ -135,11 +154,20 @@
             no-wrap
           "
         >
-          <q-btn
+          <!-- <q-btn
             round
             v-if="user.social.facebook"
             @click="() => openURL(user.social.facebook)"
             color="primary"
+            size="md"
+            icon="fa-brands fa-facebook"
+          /> -->
+          <q-btn
+            round
+            tag="a"
+            :href="user.social.facebook"
+            v-if="user.social.facebook"
+            text-color="accent"
             size="md"
             icon="fa-brands fa-facebook"
           />
@@ -147,7 +175,7 @@
             round
             v-if="user.social.twitter"
             @click="() => openURL(user.social.twitter)"
-            color="primary"
+            text-color="accent"
             size="md"
             icon="fa-brands fa-twitter"
           />
@@ -155,7 +183,7 @@
             round
             v-if="user.social.linkedin"
             @click="() => openURL(user.social.linkedin)"
-            color="primary"
+            text-color="accent"
             size="md"
             icon="fa-brands fa-linkedin"
           />
@@ -163,7 +191,7 @@
             round
             v-if="user.social.youtube"
             @click="() => openURL(user.social.youtube)"
-            color="primary"
+            text-color="accent"
             size="md"
             icon="fa-brands fa-youtube"
           />
@@ -171,7 +199,7 @@
             round
             v-if="user.social.instagram"
             @click="() => openURL(user.social.instagram)"
-            color="primary"
+            text-color="accent"
             size="md"
             icon="fa-brands fa-instagram"
           />
@@ -179,7 +207,7 @@
       </q-carousel-slide>
       <!-- <q-carousel-slide
         :name="2"
-        class="column no-wrap bg-secondary rounded-borders"
+        class="column no-wrap bg-primary rounded-borders"
       >
         <div
           class="

@@ -20,7 +20,7 @@
             <q-btn
               label="Extend session"
               color="primary"
-              @click="() => authStore.extendSession()"
+              @click="() => extendSession()"
             />
           </div>
         </q-card-section>
@@ -30,13 +30,15 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from "vue";
+import { useQuasar } from "quasar";
+import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/auth.store";
 
 export default defineComponent({
   name: "ModalSession",
   setup() {
+    const $q = useQuasar();
     const authStore = useAuthStore();
     const router = useRouter();
     const modalSession = ref(true);
@@ -48,10 +50,21 @@ export default defineComponent({
       modalSession.value = false;
     };
 
+    const extendSession = () => {
+      authStore.extendSession()
+      $q.notify({
+        icon: "thumb_up",
+        caption: `Votre session à été prolonger !`,
+        message: "Success !",
+        color: "positive",
+      });
+    }
+
     return {
       authStore,
       modalSession,
-      logoutSession
+      logoutSession,
+      extendSession
     };
   },
 });

@@ -3,14 +3,18 @@
  ******************************/
 
 // Import de Mongoose
-import mongoose from 'mongoose'
-const { Schema } = mongoose
+import mongoose, { SchemaTypes } from 'mongoose';
+const { Schema } = mongoose;
+
+// Import Model for relation (populate)
+import Section from './Section.model';
 
 const PageSchema = new Schema({
     name: {
         type: String,
         default: "",
-        required: true
+        required: true,
+        unique: true
     },
     icon: {
         type: String,
@@ -27,9 +31,9 @@ const PageSchema = new Schema({
         default: "",
         required: true
     },
-    section: [{
-        type: Object,
-        default: {}
+    sections: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Section'
     }],
     isArchived: {
         type: Boolean,

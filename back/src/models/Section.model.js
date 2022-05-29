@@ -17,6 +17,11 @@ const SectionSchema = new Schema({
         required: true,
         default: "home",
     },
+    page_id: {
+        type: String,
+        required: true,
+        default: "home",
+    },
     placement: {
         type: Number,
         required: true,
@@ -24,8 +29,8 @@ const SectionSchema = new Schema({
     },
     name: {
         type: String,
-        default: "defaultName",
-        required: true
+        required: true,
+        unique: true,
     },
     title: {
         type: String,
@@ -39,10 +44,6 @@ const SectionSchema = new Schema({
     },
     arch: {
         type: Object,
-        default: {
-            title: "Title Default",
-            description: "Desctiption default, ..."
-        }
     },
     isArchived: {
         type: Boolean,
