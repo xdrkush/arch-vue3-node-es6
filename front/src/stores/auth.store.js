@@ -26,7 +26,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         api.put('/auth', { ...form })
           .then(res => {
-            console.log('res login', res.data)
+            // console.log('res login', res.data)
             const { token } = res.data;
             let decoded;
 
@@ -90,7 +90,7 @@ export const useAuthStore = defineStore('auth', {
           }
         })
           .then(res => {
-            console.log('res LOGOUT', res.data)
+            // console.log('res LOGOUT', res.data)
             if (res.data.success) {
               this.loggedIn = false
               localStorage.removeItem('user_token')
@@ -103,13 +103,13 @@ export const useAuthStore = defineStore('auth', {
     },
 
     extendSession() {
-      console.log('extendSession store')
+      // console.log('extendSession store')
       try {
         api
           .get('/extendsession')
           .then(res => {
             const { token, soonTokenExp } = res.data
-            console.log('response extend session', res.data)
+            // console.log('response extend session', res.data)
             localStorage.setItem('user_token', token)
             this.soonSessionExpired = soonTokenExp
             this.hostLoaded = true

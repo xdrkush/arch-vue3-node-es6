@@ -14,40 +14,16 @@
         <div v-else-if="row.key === 'type'" />
         <div v-else-if="row.key === 'page'" />
         <div v-else-if="row.key === 'isArchived'" />
+        <div v-else-if="row.key === 'social'" class="text-center">
+          <q-btn color="accent" class="q-ma-xs" @click="() => loadInput(row)">
+            {{ row.key }} : Edit yours link
+          </q-btn>
+        </div>
         <!-- Arch -->
         <div v-else-if="row.key === 'arch'" class="text-center">
           <q-btn color="accent" class="q-ma-xs" @click="() => loadInput(row)">
             {{ row.key }} : Contenu du composant
           </q-btn>
-          <!-- <div class="text-h4 q-pa-none"><strong>Arch:</strong></div> -->
-          <!-- <div class="row justify-center"> -->
-          <!-- Desctruct OBJ 'arch' -->
-          <!-- <div :key="childObj.key" v-for="childObj in arrayObjEnt(row.value)"> -->
-          <!-- Btn classic for String -->
-          <!-- <q-btn
-                v-if="childObj.key !== 'array'"
-                color="accent"
-                class="q-ma-xs"
-                @click="() => loadInput(row)"
-              >
-                {{ childObj.key }} : {{ childObj.value }}
-              </q-btn> -->
-          <!-- For Array -->
-          <!-- <div v-else>
-                <div class="row justify-center">
-                  <q-btn
-                    :key="childArr.name"
-                    v-for="childArr in childObj.value"
-                    color="accent"
-                    class="q-ma-xs"
-                    @click="() => loadInput(row)"
-                  >
-                    ARR : {{ childArr.name }}
-                  </q-btn>
-                </div>
-              </div> -->
-          <!-- </div> -->
-          <!-- </div> -->
         </div>
         <!-- Color -->
         <div v-else-if="row.key === 'color'" class="text-center full-width">
@@ -102,7 +78,7 @@
       </q-btn>
 
       <!-- Button Submit Form -->
-      <q-btn type="submit" color="positive" icon="check"> Save </q-btn>
+      <q-btn type="submit" color="positive" icon="save"> Save </q-btn>
     </q-form>
 
     <div v-if="loadedInput">
@@ -116,39 +92,6 @@
           :label="loadedKey.key"
         />
       </div>
-
-      <!-- Color -->
-      <!-- <div
-        v-else-if="
-          loadedKey.key === 'primary' ||
-          loadedKey.key === 'secondary' ||
-          loadedKey.key === 'accent' ||
-          loadedKey.key === 'dark' ||
-          loadedKey.key === 'light' ||
-          loadedKey.key === 'positive' ||
-          loadedKey.key === 'negative' ||
-          loadedKey.key === 'info' ||
-          loadedKey.key === 'warning'
-        "
-        class="row justify-center"
-      >
-        <div>
-          <q-badge color="grey-3" text-color="black" class="q-mb-sm">
-            {{ loadedKey.key }}
-          </q-badge>
-
-          <q-color
-            :model-value="item['color'][loadedKey.key]"
-            @change="
-              (val) => {
-                item['color'][loadedKey.key] = val;
-                setCssVar(loadedKey.key, val);
-              }
-            "
-            style="min-width: 320px"
-          />
-        </div>
-      </div> -->
 
       <!-- Key Arch -->
       <div v-else-if="loadedKey.key === 'arch'">
@@ -168,32 +111,196 @@
           </div>
 
           <!-- Array -->
-          <div
-            v-else-if="typeof arch.value === 'object'"
-            :key="itm.key"
-            v-for="(itm, index) in arch.value"
-          >
-            <q-separator />
-            <p> <strong> {{ itm.name }} </strong> </p>
+          <div v-else-if="typeof arch.value === 'object'" class="text-center">
             <div
-              class="q-pa-xs"
-              :key="obj.value.name"
-              v-for="obj in arrayObjEnt(itm)"
+              :key="itm.key"
+              v-for="(itm, index) in arch.value"
+              class="text-center"
             >
-              <q-input
-                v-model="item[loadedKey.key][arch.key][index][obj.key]"
-                square filled
-                :label="obj.key"
-              />
+              <q-separator />
+              <div class="row justify-center">
+                <q-expansion-item
+                  expand-separator
+                  icon="edit"
+                  :label="itm.name + ' : ' + index"
+                  color="accent"
+                  :caption="itm.title"
+                >
+                  <q-card>
+                    <q-card-section class="row justify-around">
+                      <div
+                        class="q-pa-xs"
+                        :key="obj.value.name"
+                        v-for="obj in arrayObjEnt(itm)"
+                      >
+                        <div class="row">
+                          <q-input
+                            v-model="
+                              item[loadedKey.key][arch.key][index][obj.key]
+                            "
+                            square
+                            filled
+                            :label="obj.key"
+                          />
+                          <q-btn
+                            v-if="obj.key === 'image'"
+                            icon="photo"
+                            @click="() => openURL('https://pixabay.com/fr/')"
+                          >
+                            <q-tooltip
+                              anchor="bottom middle"
+                              style="max-width: 420px"
+                              class="text-center"
+                              self="top middle"
+                              :offset="[10, 10]"
+                            >
+                              <strong>
+                                Vous pouvez directement rechercher dans une des
+                                nombreuses librairies d'images gratuite en ligne
+                                tel que, Pixabay, Unsplash, Pexels,
+                                ShutterStock, ... un clic droit puis copier
+                                l'adresse de l'image enfin coller le dans le
+                                champs.
+                              </strong>
+                            </q-tooltip>
+                          </q-btn>
+                          <q-btn
+                            v-if="obj.key === 'image'"
+                            icon="upload"
+                            @click="() => openURL('https://www.zupimages.net/')"
+                          >
+                            <q-tooltip
+                              anchor="bottom middle"
+                              style="max-width: 420px"
+                              class="text-center"
+                              self="top middle"
+                              :offset="[10, 10]"
+                            >
+                              <strong>
+                                Nous vous demandons de stocker vos images sur un
+                                hébergeur puis de collez le liens.
+                              </strong>
+                            </q-tooltip>
+                          </q-btn>
+                          <q-btn
+                            v-if="obj.key === 'image'"
+                            icon="help"
+                            @click="() => openURL('https://pixabay.com/fr/')"
+                          >
+                            <q-tooltip
+                              anchor="bottom middle"
+                              style="max-width: 420px"
+                              class="text-center"
+                              self="top middle"
+                              :offset="[10, 10]"
+                            >
+                              <strong>
+                                Nous vous demandons de stocker vos images sur un
+                                hébergeur puis de collez le liens.
+                              </strong>
+                            </q-tooltip>
+                          </q-btn>
+                        </div>
+                      </div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+                <q-btn
+                  icon="close"
+                  color="negative"
+                  @click="
+                    () => {
+                      delete item[loadedKey.key][arch.key].splice(index, 1);
+                    }
+                  "
+                />
+              </div>
             </div>
+
+            <q-btn
+              label="add"
+              icon="add"
+              color="positive"
+              @click="
+                () => {
+                  item[loadedKey.key][arch.key][
+                    item[loadedKey.key][arch.key].length
+                  ] = {
+                    ...item[loadedKey.key][arch.key][
+                      item[loadedKey.key][arch.key].length - 1
+                    ],
+                    title: 'new-' + Date.now(),
+                    name: 'new-' + Date.now(),
+                  };
+                }
+              "
+            />
           </div>
+          <div v-else>Erreur Component</div>
+        </div>
+      </div>
+
+      <!-- Key Social -->
+      <div v-else-if="loadedKey.key === 'social'" class="text-center">
+        <div class="row justify-around">
+          <div
+            class="q-pa-xs row justify-center"
+            :key="childObj.key"
+            v-for="childObj in arrayObjEnt(item[loadedKey.key])"
+          >
+            <q-input
+              square
+              filled
+              v-model="item[loadedKey.key][childObj.key]"
+              :label="childObj.key"
+            />
+            <q-btn
+              icon="close"
+              color="negative"
+              @click="
+                () => {
+                  delete item[loadedKey.key][childObj.key];
+                }
+              "
+            />
+          </div>
+        </div>
+        <h5 class="q-pa-none q-ma-none">Ajouter un lien:</h5>
+        <div class="row justify-center">
+          <q-btn
+            :icon="'fa-brands fa-' + newKey"
+            color="primary"
+            text-color="accent"
+            label="fa-brands fa-"
+            @click="() => openURL('https://fontawesome.com/search?s=brands')"
+          />
+          <q-input
+            square
+            filled
+            v-model="newKey"
+            label="Nom du lien social"
+            placeholder="Twitter"
+          />
+          <q-input
+            square
+            filled
+            v-model="item[loadedKey.key][newKey]"
+            label="Entrez votre lien complet"
+            placeholder="https://twitter.com/nom"
+          />
+          <q-btn
+            label="add"
+            icon="add"
+            color="positive"
+            @click="() => item[loadedKey.key][newKey]"
+          />
         </div>
       </div>
 
       <!-- Type Object -->
       <div v-else-if="typeof loadedKey.value === 'object'">
         <div
-          class="q-pa-xs"
+          class="q-pa-xs row full-width"
           :key="childObj.key"
           v-for="childObj in arrayObjEnt(item[loadedKey.key])"
         >
@@ -203,6 +310,7 @@
             v-model="item[loadedKey.key][childObj.key]"
             :label="childObj.key"
           />
+          <q-btn icon="close" color="negative" />
         </div>
       </div>
 
@@ -233,6 +341,13 @@
           <template v-slot:prepend>
             <q-icon :name="loadedKey.value" />
           </template>
+          <template v-slot:option>
+          <q-item>
+            <q-item-section class="text-grey">
+              <q-icon :name="loadedKey.option" />
+            </q-item-section>
+          </q-item>
+        </template>
         </q-select>
       </div>
 
@@ -264,9 +379,10 @@
 <script>
 import { ref } from "vue";
 import { ICONS } from "../../utils";
-import { useQuasar } from "quasar";
+import { useQuasar, openURL } from "quasar";
 import { useMonitStore } from "src/stores/monit.store";
 import { setCssVar } from "quasar";
+import { arrayObjEnt, maxChar } from "../../utils";
 
 export default {
   name: "FormEdit",
@@ -287,14 +403,10 @@ export default {
     const loadedKey = ref({});
     const loadedInput = ref(false);
     const oldName = item.value.name;
-
-    let arrayObjEnt = (obj) =>
-      Object.entries(obj).map((arr, index) => {
-        return { key: arr[0], value: arr[1] };
-      });
+    const newKey = ref("github");
 
     const loadInput = (data) => {
-      console.log("loadInput", typeof data, data);
+      // console.log("loadInput", typeof data, data);
       loadedInput.value = true;
       loadedKey.value = data;
       item[data.key] = data;
@@ -331,12 +443,12 @@ export default {
       });
     };
 
-    const maxChar = (value, limit) => value.length <= limit;
-
     return {
       maxChar,
       item,
       props,
+      newKey,
+      openURL,
       arrayObjEnt,
       loadedInput,
       loadedKey,

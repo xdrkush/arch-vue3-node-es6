@@ -1,7 +1,21 @@
 <template>
-  <div class="q-pa-md row justify-around items-center" style="height: 80vh">
+  <div class="row justify-around items-center" style="height: 100vh">
+    <iframe
+      width="100%"
+      height="100%"
+      frameborder="0"
+      scrolling="no"
+      marginheight="0"
+      marginwidth="0"
+      src="https://www.openstreetmap.org/export/embed.html?bbox=-1.5576124191284182%2C47.19637604543882%2C-1.52984619140625%2C47.20961323782762&amp;layer=mapnik"
+      style="border: 1px solid black"
+    ></iframe>
     <div></div>
-    <q-card bordered class="my-card" style="min-width: 45vh">
+    <q-card
+      bordered
+      class="my-card absolute"
+      style="min-width: 45vh; right: 10%"
+    >
       <q-card-section>
         <div class="text-h4">
           <strong>{{ parent.title || title }}</strong>
@@ -22,7 +36,7 @@
             class="q-ma-none"
             v-model="form.name"
             placeholder="Davroot Tux"
-            :label="name"
+            label="name"
           />
         </div>
         <div>
@@ -60,7 +74,10 @@
           />
         </div>
 
-        <q-btn class="q-my-md full-width bg-primary text-secondary" label="envoyer" />
+        <q-btn
+          class="q-my-md full-width bg-primary text-accent"
+          label="envoyer"
+        />
 
         <div class="row">
           <q-btn

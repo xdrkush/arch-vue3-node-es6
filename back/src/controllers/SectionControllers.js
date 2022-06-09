@@ -58,6 +58,7 @@ export default class SectionControllers extends Connection {
             type: section.type,
             page: page.name,
             page_id: page._id,
+            arch: section.arch,
             title: section.title,
             description: section.description
         });
@@ -120,6 +121,32 @@ export default class SectionControllers extends Connection {
             return res.status(200).json({
                 status: "success",
                 message: "Method Delete section to page Controller",
+                dbSections: await Section.find({}),
+                dbPages: await Page.find({}).populate('sections')
+            });
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async orderSectionsToPage(req, res) {
+        const { page } = req.body;
+        const newOrder = [];
+
+        // Make newArray with new order sections
+        page.sections.forEach(async (s) => {
+            const s_db = await Section.findOne({name: s.name})
+            newOrder.push(s_db._id) 
+        })
+
+        const page_db = await Page.findOne({ name: page.name});
+        page_db.sections = newOrder;
+        page_db.save()
+
+        try {
+            return res.status(200).json({
+                status: "success",
+                message: "Method Order sections to page Controller",
                 dbSections: await Section.find({}),
                 dbPages: await Page.find({}).populate('sections')
             });

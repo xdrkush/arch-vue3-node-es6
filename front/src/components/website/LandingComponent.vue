@@ -53,7 +53,7 @@
                     icon: 'fa-solid fa-phone',
                     caption: 'copié',
                     message: user.phone,
-                    color: 'primary',
+                    color: 'info',
                   });
                 })
                 .catch()
@@ -86,7 +86,7 @@
                     icon: 'fa-solid fa-at',
                     caption: 'copié',
                     message: user.mail,
-                    color: 'primary',
+                    color: 'info',
                   });
                 })
                 .catch()
@@ -113,7 +113,7 @@
                   icon: 'fa-solid fa-location-dot',
                   caption: 'copié',
                   message: user.address,
-                  color: 'primary',
+                  color: 'info',
                 });
               })
               .catch()
@@ -144,87 +144,20 @@
       height="auto"
     >
       <q-carousel-slide :name="1" class="column no-wrap bg-primary">
-        <div
-          class="
-            row
-            fit
-            justify-around
-            items-center
-            q-gutter-xs q-col-gutter
-            no-wrap
-          "
-        >
-          <!-- <q-btn
-            round
-            v-if="user.social.facebook"
-            @click="() => openURL(user.social.facebook)"
-            color="primary"
-            size="md"
-            icon="fa-brands fa-facebook"
-          /> -->
-          <q-btn
-            round
-            tag="a"
-            :href="user.social.facebook"
-            v-if="user.social.facebook"
-            text-color="accent"
-            size="md"
-            icon="fa-brands fa-facebook"
-          />
-          <q-btn
-            round
-            v-if="user.social.twitter"
-            @click="() => openURL(user.social.twitter)"
-            text-color="accent"
-            size="md"
-            icon="fa-brands fa-twitter"
-          />
-          <q-btn
-            round
-            v-if="user.social.linkedin"
-            @click="() => openURL(user.social.linkedin)"
-            text-color="accent"
-            size="md"
-            icon="fa-brands fa-linkedin"
-          />
-          <q-btn
-            round
-            v-if="user.social.youtube"
-            @click="() => openURL(user.social.youtube)"
-            text-color="accent"
-            size="md"
-            icon="fa-brands fa-youtube"
-          />
-          <q-btn
-            round
-            v-if="user.social.instagram"
-            @click="() => openURL(user.social.instagram)"
-            text-color="accent"
-            size="md"
-            icon="fa-brands fa-instagram"
-          />
+        <div class="row justify-around items-center no-wrap">
+          <div :key="social.key" v-for="social in arrayObjEnt(user.social)">
+            <q-btn
+              round
+              tag="a"
+              @click="() => openURL(social.value)"
+              :href="social.value"
+              text-color="accent"
+              size="md"
+              :icon="`fa-brands fa-${social.key}`"
+            />
+          </div>
         </div>
       </q-carousel-slide>
-      <!-- <q-carousel-slide
-        :name="2"
-        class="column no-wrap bg-primary rounded-borders"
-      >
-        <div
-          class="
-            row
-            fit
-            justify-around
-            items-center
-            q-gutter-xs q-col-gutter
-            no-wrap
-          "
-        >
-          <q-btn round color="primary" size="md" icon="fa-brands fa-facebook" />
-          <q-btn round color="primary" size="md" icon="fa-brands fa-twitter" />
-          <q-btn round color="primary" size="md" icon="fa-brands fa-linkedin" />
-          <q-btn round color="primary" size="md" icon="fa-brands fa-youtube" />
-        </div>
-      </q-carousel-slide> -->
     </q-carousel>
 
     <p class="q-ma-none q-pa-none">
@@ -238,14 +171,22 @@ import { ref } from "vue";
 import UnicornCircle from "../../assets/Unicorn-circle.svg";
 import { copyToClipboard } from "quasar";
 import { openURL } from "quasar";
+import { arrayObjEnt } from "../../utils";
 
 export default {
   name: "LandingComponents",
   props: ["data"],
   setup(props) {
-    // console.log("LandingComponent", props.data);
     const user = ref(props.data);
-    return { UnicornCircle, user, slide: ref(1), copyToClipboard, openURL };
+    // console.log('LandingComponents', user)
+    return {
+      UnicornCircle,
+      user,
+      slide: ref(1),
+      copyToClipboard,
+      openURL,
+      arrayObjEnt,
+    };
   },
 };
 </script>

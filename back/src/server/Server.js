@@ -7,7 +7,6 @@ import cors from "cors";
 import router from "../router/index";
 import helmet from "helmet";
 
-require('../config/script_db')
 require('dotenv').config()
 
 export default class Server {

@@ -4,6 +4,7 @@ import Server from './server/Server';
 
 // Import .env
 require('dotenv').config();
+require('./config/script_db')
 
 var app = express();
 

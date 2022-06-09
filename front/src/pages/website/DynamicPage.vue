@@ -1,16 +1,14 @@
 <template>
-  <q-page >
+  <q-page>
     <!-- Page Dynamic -->
 
     <!-- {{ monitStore.getPage }} -->
-
-    <div :key="section" v-for="section in monitStore.getPage.sections">
-    
-      <!-- Component Dynamic -->
-      <DynamicComponent :data="section" />
-
-    </div>
-
+    <!-- <div v-if="monitStore.getPage.sections"> -->
+      <div :key="section" v-for="section in monitStore.getPage.sections">
+        <!-- Component Dynamic -->
+        <DynamicComponent :data="section" />
+      </div>
+    <!-- </div> -->
   </q-page>
 </template>
 
@@ -27,7 +25,7 @@ export default defineComponent({
     const monitStore = useMonitStore();
     const route = useRoute();
 
-    console.log('Dynamic Page', monitStore.getPage)
+    // console.log("Dynamic Page", monitStore.getPage);
 
     monitStore.getPageAPI(route.path.replace("/", ""));
 
@@ -38,12 +36,11 @@ export default defineComponent({
       deep: true,
       handler(to, from) {
         const monitStore = useMonitStore();
-        console.log('Watch dynamic page', from, to)
-        if (to.fullPath === '/') {
-          console.log('watch page home condition')
+        // console.log("Watch dynamic page", from, to);
+        if (to.fullPath === "/") {
+          // console.log("watch page home condition");
           monitStore.getPageAPI("home");
-        }
-        else monitStore.getPageAPI(to.path.replace("/", ""));
+        } else monitStore.getPageAPI(to.path.replace("/", ""));
       },
     },
   },

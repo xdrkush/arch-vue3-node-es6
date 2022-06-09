@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:14 as build-stage
+FROM node:14.19.3 as build-stage
 
 # set working directory
 WORKDIR /app

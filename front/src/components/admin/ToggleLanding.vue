@@ -28,7 +28,7 @@ export default {
     const status = monitStore.getLanding;
 
     let changeValue = (value) => {
-      console.log("changeValue", value);
+      // console.log("changeValue", value);
       monitStore.editStatusLanding(value)
       $q.notify({
         icon:  (value) ? "done" : "close",

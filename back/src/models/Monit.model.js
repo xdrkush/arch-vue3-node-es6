@@ -23,16 +23,16 @@ const MonitSchema = new Schema({
         type: Object,
         default: {
             color: {
-                primary: "#2F1F34",
-                secondary: "#26A69A",
-                accent: "#9C27B0",
-                dark: "#1D1D1D",
-                light: "#bde8e3",
-                positive: "#21BA45",
-                negative: "#C10015",
-                info: "#31CCEC",
-                warning: "#F2C037",
-                custom: "#1976D2"
+                primary : "#461075",
+                secondary : "#228f5e",
+                accent : "#93b827",
+                dark : "#39434a",
+                light : "#0ec9b4",
+                positive : "#49cc68",
+                negative : "#ad3947",
+                info : "#189fba",
+                warning : "#ba9223",
+                custom : "#1976D2"
             },
             icon: {
                 name: '',

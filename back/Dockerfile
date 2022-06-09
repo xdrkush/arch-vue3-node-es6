@@ -1,5 +1,5 @@
 # pull official base image*
-FROM node:14
+FROM node:14.19.3
 
 # set working directory
 WORKDIR /usr/src/app

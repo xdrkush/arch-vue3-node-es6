@@ -32,7 +32,7 @@ export default defineComponent({
     const Router = useRouter();
 
     setTimeout(() => {
-      console.log("redirection token expired");
+      // console.log("redirection token expired");
       if (authStore.getTokenExp === true) authStore.getSession()
       Router.push({ path: "/" });
       modalExp.value = false;

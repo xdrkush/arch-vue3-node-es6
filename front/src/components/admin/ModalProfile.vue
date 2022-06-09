@@ -122,7 +122,7 @@ export default defineComponent({
       await profileStore.editProfileApi(obj);
       $q.notify({
         icon: "thumb_up",
-        caption: "Votre profile à bien été créée !",
+        caption: "Votre profile à bien été édité !",
         message: "Success !",
         color: "positive",
       });

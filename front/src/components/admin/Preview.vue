@@ -32,7 +32,7 @@ export default defineComponent({
   setup(props) {
     const component = ref(props.comp);
 
-    console.log('preview', component.value)
+    // console.log('preview', component.value)
 
     return {
       component,

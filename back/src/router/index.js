@@ -8,7 +8,7 @@ import {
     // Monit
     GetMonit, EditMonit, EditTheme,
     GetPages, GetPage, CreatePage, PutPage, DeletePage,
-    GetSections, CreateSection, PutSection, AddSectionToPage, DeleteSectionToPage,
+    GetSections, CreateSection, PutSection, AddSectionToPage, DeleteSectionToPage, OrderSectionsToPage,
     // Profile
     GetProfile, PostProfile, PutProfile,
     // Authenticate
@@ -61,6 +61,9 @@ router.route('/page/:name')
 router.route('/sectiontopage')
     .post(AddSectionToPage)
     .put(DeleteSectionToPage)
+
+router.route('/ordersectiontopage')
+    .put(OrderSectionsToPage)
 
 router.route('/sections')
     .get(GetSections)

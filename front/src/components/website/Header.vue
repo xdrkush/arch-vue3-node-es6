@@ -1,141 +1,137 @@
 <template>
-  <div>
-    <div class="q-gutter-md">
-      <q-carousel
-        v-model="slide"
-        ref="carousel"
-        transition-prev="scale"
-        transition-next="scale"
-        swipeable
-        animated
-        :autoplay="autoplay"
-        control-color="white"
-        height="90vh"
-        class="text-white"
+  <div class="q-gutter-md" style="position: relative">
+    <q-carousel
+      v-model="slide"
+      ref="carousel"
+      transition-prev="scale"
+      transition-next="scale"
+      swipeable
+      animated
+      :autoplay="autoplay"
+      control-color="white"
+      height="90vh"
+      class="text-white"
+    >
+      <!-- Controls carousel (button) -->
+      <template v-slot:control>
+        <q-carousel-control position="left">
+          <q-btn
+            round
+            text-color="white"
+            size="xl"
+            icon="arrow_back_ios"
+            style="top: 45%"
+            @click="$refs.carousel.previous()"
+          />
+        </q-carousel-control>
+        <q-carousel-control position="right">
+          <q-btn
+            round
+            text-color="white"
+            size="xl"
+            icon="arrow_forward_ios"
+            style="top: 45%"
+            @click="$refs.carousel.next()"
+          />
+        </q-carousel-control>
+      </template>
+
+      <!-- Body (slide) -->
+      <q-carousel-slide
+        :key="slid.name"
+        v-for="slid in parent.arch.array"
+        :name="slid.placement"
+        class="column no-wrap flex-center q-pa-none"
+        :img-src="slid.image"
       >
-        <!-- Controls carousel (button) -->
-        <template v-slot:control>
-          <q-carousel-control position="left">
-            <q-btn
-              round
-              text-color="white"
-              size="xl"
-              icon="arrow_back_ios"
-              style="top: 45%"
-              @click="$refs.carousel.previous()"
-            />
-          </q-carousel-control>
-          <q-carousel-control position="right">
-            <q-btn
-              round
-              text-color="white"
-              size="xl"
-              icon="arrow_forward_ios"
-              style="top: 45%"
-              @click="$refs.carousel.next()"
-            />
-          </q-carousel-control>
-        </template>
-
-        <!-- Body (slide) -->
-        <q-carousel-slide
-          :key="slid.name" v-for="slid in parent.arch.array"
-          :name="slid.placement"
-          class="column no-wrap flex-center q-pa-none"
-          :img-src="slid.image"
-        >
-          <div class="gradient-vertical full-width full-height">
-            <div
-              class="elipse absolute-center"
-              :style="`background-color: ${opacityToHex(
-                getPaletteColor('primary'),
-                0.7
-              )}`"
-            ></div>
-            <div class="text-center absolute-center">
-              <h1 class="q-ma-none">
-                <strong>{{ slid.title }}</strong>
-              </h1>
-              <h2 class="q-ma-none q-mt-xl">{{ slid.subtitle }}</h2>
-            </div>
+        <div class="gradient-vertical full-width full-height">
+          <div
+            class="elipse absolute-center"
+            :style="`background-color: ${opacityToHex(
+              getPaletteColor('primary'),
+              0.7
+            )}`"
+          ></div>
+          <div class="text-center absolute-center">
+            <h1 class="q-ma-none">
+              <strong>{{ slid.title }}</strong>
+            </h1>
+            <h2 class="q-ma-none q-mt-xl">{{ slid.subtitle }}</h2>
           </div>
-        </q-carousel-slide>
-      </q-carousel>
+        </div>
+      </q-carousel-slide>
+    </q-carousel>
 
-      <!-- Button Social -->
-      <q-item class="column absolute-top" style="width: 50px; top: 50vh">
+    <!-- Button Social -->
+    <q-item class="column absolute-top" style="top: 50%">
+      <div
+        :key="social.key"
+        v-for="social in arrayObjEnt(profileStore.getProfile.social)"
+      >
         <q-btn
           round
+          tag="a"
+          v-if="social.value"
+          @click="() => openURL(social.value)"
+          :href="social.value"
           class="q-ma-xs"
           text-color="accent"
-          color="dark"
+          color="black"
           size="md"
-          icon="fa-brands fa-facebook-f"
+          :icon="`fa-brands fa-${social.key}`"
         />
-        <q-btn
-          round
-          class="q-ma-xs"
-          text-color="accent"
-          color="dark"
-          size="md"
-          icon="fa-brands fa-linkedin"
-        />
-        <q-btn
-          round
-          class="q-ma-xs"
-          text-color="accent"
-          color="dark"
-          size="md"
-          icon="fa-brands fa-twitter"
-        />
-        <q-btn
-          round
-          class="q-ma-xs"
-          text-color="accent"
-          color="dark"
-          size="md"
-          icon="fa-brands fa-instagram"
-        />
-      </q-item>
-
-    </div>
+      </div>
+    </q-item>
   </div>
 </template>
+
 <script>
 import { ref } from "vue";
 import { colors } from "quasar";
+import { useProfileStore } from "../../stores/profile.store";
+import { arrayObjEnt } from "../../utils";
+
 const { getPaletteColor, hexToRgb } = colors;
 
-const carouselDefault = [
-  {
-    placement: "1",
-    name: "montagne",
-    image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-    title: "Super Titre",
-    subtitle: "Super subtitle"
-  },
-  {
-    placement: "2",
-    name: "block",
-    image: "https://cdn.pixabay.com/photo/2016/05/09/17/26/background-texture-1382002_960_720.jpg",
-    title: "Super Titre",
-    subtitle: "Super subtitle"
-  },
-  {
-    placement: "3",
-    name: "architecture",
-    image: "https://cdn.pixabay.com/photo/2018/05/11/09/29/glass-3389935_960_720.jpg",
-    title: "Super Titre",
-    subtitle: "Super subtitle"
-  },
-  {
-    placement: "4",
-    name: "canna",
-    image: "https://i1.wp.com/greenacresgroupca.com/wp-content/uploads/2018/05/istock-835508564.jpg?fit=724%2C483&ssl=1",
-    title: "Super Titre",
-    subtitle: "Super subtitle"
-  },
-]
+const model = {
+  title: "title Default",
+  type: "header",
+  placement: "0",
+  array: [
+    {
+      placement: "1",
+      name: "montagne",
+      image:
+        "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+      title: "Super Titre",
+      subtitle: "Super subtitle",
+    },
+    {
+      placement: "2",
+      name: "block",
+      image:
+        "https://cdn.pixabay.com/photo/2016/05/09/17/26/background-texture-1382002_960_720.jpg",
+      title: "Super Titre",
+      subtitle: "Super subtitle",
+    },
+    {
+      placement: "3",
+      name: "architecture",
+      image:
+        "https://cdn.pixabay.com/photo/2018/05/11/09/29/glass-3389935_960_720.jpg",
+      title: "Super Titre",
+      subtitle: "Super subtitle",
+    },
+    {
+      placement: "4",
+      name: "canna",
+      image:
+        "https://i1.wp.com/greenacresgroupca.com/wp-content/uploads/2018/05/istock-835508564.jpg?fit=724%2C483&ssl=1",
+      title: "Super Titre",
+      subtitle: "Super subtitle",
+    },
+  ],
+};
 
 export default {
   name: "HeaderHome",
@@ -144,24 +140,20 @@ export default {
   },
   setup(props) {
     const parent = ref(props.data);
-    const d = {
-      title: "Default Header",
-      description: "Default Description Header",
-    };
-
-    console.log("load header", hexToRgb("#a259c9"));
-
+    const profileStore = useProfileStore();
     const opacityToHex = (color, opacity) => {
       let c = hexToRgb(color);
       return `rgba(${c.r},${c.g},${c.b},${opacity})`;
     };
 
+    // console.log("Header", parent);
+
     return {
-      d,
       parent,
       opacityToHex,
+      arrayObjEnt,
       getPaletteColor,
-      carouselDefault,
+      profileStore,
       autoplay: ref(true),
       slide: ref("1"),
       lorem:

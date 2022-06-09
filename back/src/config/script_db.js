@@ -24,11 +24,12 @@ function run() {
                 isAdmin: true,
                 description: "Skevent dleout danvez biz-yod rumm goz gar tabut bazh mil skrijañ, Menez Du dec'h ehan kreisteiz neud tad eil huanadiñ bed lizherenn. Lies gwinegr c'hoar-gaer. Houlenn Menez Mikael anv koumoul, broust brumenn daoust ha. Ret ki lazhañ dianav gwenn hor beg-douar arabat skubañ ken truez tre kar hon leue droug-mor, chom hennezh hag Bro-saoz. Ma fazi geot kein gwechall, rak mil c'hwezhañ e fri hor kae diwar-benn",
                 social: {
-                    facebook: "https://hsuk.ml/facebook",
+                    telegram: "https://hsuk.ml/telegram",
                     twitter: "https://hsuk.ml/twitter",
-                    linkedin: "https://hsuk.ml/linkedin",
-                    youtube: "https://hsuk.ml/youtube",
-                    instagram: "https://hsuk.ml/instagram"
+                    mastodon: "https://hsuk.ml/mastodon",
+                    bitcoin: "https://hsuk.ml/bitcoin",
+                    discord: "https://hsuk.ml/discord",
+                    github: "https://hsuk.ml/github"
                 }
             }, (err, data) => {
                 console.log('Create User isProp OK !!!', data)
@@ -52,16 +53,16 @@ function run() {
             landing: true,
             theme: {
                 color: {
-                    primary: "#5f1b85",
-                    secondary: "#ebe6f2",
-                    accent: "#93b827",
-                    dark: "#150429",
-                    light: "#206b62",
-                    positive: "#1e8f38",
-                    negative: "#8a0a19",
-                    info: "#5b868f",
-                    warning: "#b39952",
-                    custom: "#1976D2"
+                    primary : "#461075",
+                    secondary : "#228f5e",
+                    accent : "#93b827",
+                    dark : "#39434a",
+                    light : "#0ec9b4",
+                    positive : "#49cc68",
+                    negative : "#ad3947",
+                    info : "#189fba",
+                    warning : "#ba9223",
+                    custom : "#1976D2"
                 },
             }
         }, (err, data) => {
@@ -78,37 +79,37 @@ function run() {
                 page: 'home',
                 type: 'header',
                 name: 'header-' + Date.now(),
-                title: 'header default script',
+                title: 'Header default script',
                 description: 'Description section header Default script',
                 arch: {
                     array: [
                         {
                             placement: "1",
                             name: "montagne",
-                            image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
                             title: "Super Titre Default",
-                            subtitle: "Super subtitle"
+                            subtitle: "Super subtitle",
+                            image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
                         },
                         {
                             placement: "2",
                             name: "block",
-                            image: "https://cdn.pixabay.com/photo/2016/05/09/17/26/background-texture-1382002_960_720.jpg",
                             title: "Super Titre Default",
-                            subtitle: "Super subtitle"
+                            subtitle: "Super subtitle",
+                            image: "https://cdn.pixabay.com/photo/2016/05/09/17/26/background-texture-1382002_960_720.jpg",
                         },
                         {
                             placement: "3",
                             name: "architecture",
-                            image: "https://cdn.pixabay.com/photo/2018/05/11/09/29/glass-3389935_960_720.jpg",
                             title: "Super Titre Default",
-                            subtitle: "Super subtitle"
+                            subtitle: "Super subtitle",
+                            image: "https://cdn.pixabay.com/photo/2018/05/11/09/29/glass-3389935_960_720.jpg",
                         },
                         {
                             placement: "4",
                             name: "canna",
-                            image: "https://i1.wp.com/greenacresgroupca.com/wp-content/uploads/2018/05/istock-835508564.jpg?fit=724%2C483&ssl=1",
                             title: "Super Titre Default",
-                            subtitle: "Super subtitle"
+                            subtitle: "Super subtitle",
+                            image: "https://i1.wp.com/greenacresgroupca.com/wp-content/uploads/2018/05/istock-835508564.jpg?fit=724%2C483&ssl=1",
                         },
                     ]
 
@@ -119,10 +120,35 @@ function run() {
                 page: 'home',
                 type: 'list',
                 name: 'list-' + Date.now(),
-                title: 'list default script',
+                title: 'List default script',
                 description: 'Description section list Default script',
                 arch: {
-                    array: []
+                    array: [
+                        {
+                            placement: "1",
+                            name: "default1",
+                            title: "Titre default 1",
+                            subtitle: "Subtitle default 1",
+                            description: "description Hello Quasar js c'est de la balle default 1",
+                            image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+                        },
+                        {
+                            placement: "2",
+                            name: "default2",
+                            title: "Titre default 2",
+                            subtitle: "Subtitle default 2",
+                            description: "description Hello Quasar js c'est de la balle default 2",
+                            image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+                        },
+                        {
+                            placement: "3",
+                            name: "default3",
+                            title: "Titre default 3",
+                            subtitle: "Subtitle default 3",
+                            description: "description Hello Quasar js c'est de la balle default 3",
+                            image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+                        }
+                    ]
                 }
             })
 
@@ -130,8 +156,8 @@ function run() {
                 page: 'contact',
                 type: 'contact',
                 name: 'contact-' + Date.now(),
-                title: 'contact default script',
-                description: 'Description section contact Default script',
+                title: 'Contactez-nous',
+                description: 'Nous vous répondrons dès que possible,',
                 arch: {
                     array: []
                 }

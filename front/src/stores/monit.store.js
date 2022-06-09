@@ -55,7 +55,7 @@ export const useMonitStore = defineStore('monit', {
         await api
           .get('/landing')
           .then(res => {
-            console.log('response getLandingStatus', res.data.landing)
+            // console.log('response getLandingStatus', res.data.landing)
             this.landing = res.data.landing;
             this.theme = res.data.theme;
             this.load = true;
@@ -65,12 +65,12 @@ export const useMonitStore = defineStore('monit', {
       }
     },
     async editStatusLanding(bool) {
-      console.log('bool', bool)
+      // console.log('bool', bool)
       try {
         await api
           .put('/landing', { landing: bool })
           .then(res => {
-            console.log('response editStatusLanding', res.data.landing)
+            // console.log('response editStatusLanding', res.data.landing)
             this.landing = res.data.landing
             this.load = true
           })
@@ -79,12 +79,12 @@ export const useMonitStore = defineStore('monit', {
       }
     },
     async editThemeAPI(form) {
-      console.log('edit theme', form)
+      // console.log('edit theme', form)
       try {
         await api
           .put('/theme', { theme: form })
           .then(res => {
-            console.log('response edit theme', res.data)
+            // console.log('response edit theme', res.data)
             this.theme = res.data.dbTheme
             this.load = true
           })
@@ -93,12 +93,12 @@ export const useMonitStore = defineStore('monit', {
       }
     },
     async getPagesAPI() {
-      console.log('get pages store')
+      // console.log('get pages store')
       try {
         await api
           .get('/pages')
           .then(res => {
-            console.log('response get Pages', res.data)
+            // console.log('response get Pages', res.data)
             this.pages = res.data.dbPages
             this.load = true
           })
@@ -107,7 +107,7 @@ export const useMonitStore = defineStore('monit', {
       }
     },
     async getPageAPI(name) {
-      console.log('get page store', (new RegExp("[a-zA]").test(name)), name)
+      // console.log('get page store', (new RegExp("[a-zA]").test(name)), name)
       if (!new RegExp("[a-zA]").test(name)) name = "home"
       try {
         await api
@@ -122,12 +122,12 @@ export const useMonitStore = defineStore('monit', {
       }
     },
     async createPage(form) {
-      console.log('create page', form)
+      // console.log('create page', form)
       try {
         await api
           .post('/page', { page: form })
           .then(res => {
-            console.log('response create Page', res.data.landing)
+            // console.log('response create Page', res.data.landing)
             this.pages = res.data.dbPages
             this.load = true
           })
@@ -136,12 +136,12 @@ export const useMonitStore = defineStore('monit', {
       }
     },
     async editPage(form) {
-      console.log('edit page', form)
+      // console.log('edit page', form)
       try {
         await api
           .put('/page', { page: form })
           .then(res => {
-            console.log('response edit Page', res.data)
+            // console.log('response edit Page', res.data)
             this.pages = res.data.dbPages
             this.load = true
           })
@@ -150,12 +150,12 @@ export const useMonitStore = defineStore('monit', {
       }
     },
     async deletePage(form) {
-      console.log('delete page', form)
+      // console.log('delete page', form)
       try {
         await api
           .delete('/page/' + form.oldName)
           .then(res => {
-            console.log('response delete Page', res.data)
+            // console.log('response delete Page', res.data)
             this.pages = res.data.dbPages
             this.load = true
           })
@@ -164,12 +164,12 @@ export const useMonitStore = defineStore('monit', {
       }
     },
     async editSection(form) {
-      console.log('edit section', form)
+      // console.log('edit section', form)
       try {
         await api
           .put('/section', { page: form.page, section: form.section })
           .then(res => {
-            console.log('response edit Section', res.data)
+            // console.log('response edit Section', res.data)
             this.pages = res.data.dbPages
             this.load = true
           })
@@ -178,12 +178,12 @@ export const useMonitStore = defineStore('monit', {
       }
     },
     async getSectionsAPI() {
-      console.log('get sections')
+      // console.log('get sections')
       try {
         await api
           .get('/sections')
           .then(res => {
-            console.log('response get Sections', res.data)
+            // console.log('response get Sections', res.data)
             this.pages = res.data.dbPages
             this.sections = res.data.dbSections
             this.load = true
@@ -193,12 +193,12 @@ export const useMonitStore = defineStore('monit', {
       }
     },
     async addSectionToPage(form) {
-      console.log('add section to page', form)
+      // console.log('add section to page', form)
       try {
         await api
           .post('/sectiontopage', { page: form.page, section: form.section })
           .then(res => {
-            console.log('response add section to Page', res.data.landing)
+            // console.log('response add section to Page', res.data.landing)
             this.pages = res.data.dbPages
             this.sections = res.data.dbSections
             this.load = true
@@ -208,12 +208,12 @@ export const useMonitStore = defineStore('monit', {
       }
     },
     async deleteSectionToPage(form) {
-      console.log('delete section', form)
+      // console.log('delete section', form)
       try {
         await api
           .put('/sectiontopage', { page: form.page, section: form.section })
           .then(res => {
-            console.log('response delete Section to page', res.data)
+            // console.log('response delete Section to page', res.data)
             this.pages = res.data.dbPages
             this.load = true
           })
@@ -221,5 +221,18 @@ export const useMonitStore = defineStore('monit', {
         return error
       }
     },
+    async editOrderSectionPage(page) {
+      try {
+        await api
+          .put('/ordersectiontopage', { page })
+          .then(res => {
+            console.log('response order sections to page', res.data)
+            // this.pages = res.data.dbPages
+            this.load = true
+          })
+      } catch (error) {
+        return error
+      }
+    }
   },
 });

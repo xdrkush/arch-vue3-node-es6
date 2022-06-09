@@ -9,7 +9,7 @@
       @click="modalSocial = true"
     />
     <q-dialog v-model="modalSocial">
-      <q-card style="min-width: 50vw" >
+      <q-card style="min-width: 50vw">
         <q-card-section class="row items-center q-pb-none">
           <div class="text-h6">Éditer vos réseaux ?</div>
           <q-space />
@@ -18,36 +18,69 @@
 
         <q-card-section class="q-pa-md">
           <div class="q-gutter-md text-center" style="width: 100%">
-            <q-input
-              outlined
-              style="width: 100%"
-              v-model="profile.social.facebook"
-              label="Facebook: https://..."
-            />
-            <q-input
-              outlined
-              style="width: 100%"
-              v-model="profile.social.linkedin"
-              label="Linkedin: https://..."
-            />
-            <q-input
-              outlined
-              style="width: 100%"
-              v-model="profile.social.twitter"
-              label="Twitter: https://..."
-            />
-            <q-input
-              outlined
-              style="width: 100%"
-              v-model="profile.social.youtube"
-              label="Youtube: https://..."
-            />
-            <q-input
-              outlined
-              style="width: 100%"
-              v-model="profile.social.instagram"
-              label="Instagram: https://..."
-            />
+            <!-- Loop Input -->
+            <div
+              class="q-pa-xs row justify-center"
+              :key="childObj.key"
+              v-for="childObj in arrayObjEnt(profile.social)"
+            >
+              <q-btn
+                :icon="'fa-brands fa-' + childObj.key"
+                color="primary"
+                text-color="accent"
+                @click="() => openURL(childObj.value)"
+              />
+              <q-input
+                square
+                filled
+                v-model="profile.social[childObj.key]"
+                :label="childObj.key"
+              />
+              <q-btn
+                icon="close"
+                color="negative"
+                @click="
+                  () => {
+                    delete profile.social[childObj.key];
+                  }
+                "
+              />
+            </div>
+
+            <!-- New input -->
+            <h5 class="q-pa-none q-ma-none">Ajouter un lien:</h5>
+            <div class="row justify-center">
+              <q-btn
+                :icon="'fa-brands fa-' + newKey"
+                color="primary"
+                text-color="accent"
+                label="fa-brands fa-"
+                @click="
+                  () => openURL('https://fontawesome.com/search?s=brands')
+                "
+              />
+              <q-input
+                square
+                filled
+                v-model="newKey"
+                label="Nom du lien social"
+                placeholder="Twitter"
+              />
+              <q-input
+                square
+                filled
+                v-model="profile.social[newKey]"
+                label="Entrez votre lien complet"
+                placeholder="https://twitter.com/nom"
+              />
+              <q-btn
+                label="add"
+                icon="add"
+                color="positive"
+                @click="() => profile.social[newKey]"
+              />
+            </div>
+
             <q-btn label="Annulez" color="negative" />
             <q-btn
               label="Confirmez"
@@ -64,13 +97,16 @@
 <script>
 import { defineComponent, ref, computed } from "vue";
 import { useProfileStore } from "../../stores/profile.store";
-import { useQuasar } from "quasar";
+import { useQuasar, openURL } from "quasar";
+import { arrayObjEnt } from "../../utils";
 
 export default defineComponent({
   name: "ModalSocial",
   setup() {
     const $q = useQuasar();
     const profileStore = useProfileStore();
+    const newKey = ref("github");
+
     if (!profileStore.getProfileLoaded) profileStore.getProfileApi();
     const oldName = profileStore.profile.name;
 
@@ -82,7 +118,7 @@ export default defineComponent({
       await profileStore.editProfileApi(obj);
       $q.notify({
         icon: "thumb_up",
-        caption: "Vos réseaux sociaux ont bien été éditer !",
+        caption: "Vos réseaux sociaux ont bien été édité !",
         message: "Success !",
         color: "positive",
       });
@@ -91,7 +127,10 @@ export default defineComponent({
     return {
       editProfilSubmit,
       modalSocial,
+      arrayObjEnt,
       profile,
+      openURL,
+      newKey,
     };
   },
 });

@@ -70,7 +70,7 @@ export default defineComponent({
   beforeCreate() {
     const monitStore = useMonitStore();
     const router = useRouter();
-    console.log("beforeCreate MainLayout");
+    // console.log("beforeCreate MainLayout");
     if (monitStore.getLanding) router.push({ path: "/landing" });
   },
 

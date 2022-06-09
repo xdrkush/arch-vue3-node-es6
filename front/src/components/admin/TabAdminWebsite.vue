@@ -31,14 +31,7 @@
       <ModalPage v-if="!monitStore.getLanding" />
     </q-tabs>
 
-    <q-tab-panels
-      v-model="tab"
-      animated
-      swipeable
-      vertical
-      transition-prev="jump-up"
-      transition-next="jump-up"
-    >
+    <q-tab-panels v-model="tab" animated>
       <!-- Template tab -->
       <q-tab-panel name="template">
         <q-list bordered class="rounded-borders">
@@ -48,7 +41,7 @@
             label="Template"
             caption="Configuration themes"
           >
-            <q-card >
+            <q-card>
               <q-card-section>
                 <FormEdit
                   :data="monitStore.getTheme"
@@ -69,7 +62,7 @@
             label="Landing Page"
             caption="edit"
           >
-            <q-card >
+            <q-card>
               <q-card-section>
                 <LandingPage />
                 <FormEdit
@@ -96,7 +89,7 @@
           :label="'Global ' + page.name"
           caption="Configuration page"
         >
-          <q-card >
+          <q-card>
             <q-card-section>
               <FormEdit
                 :data="page"
@@ -108,34 +101,12 @@
           </q-card>
         </q-expansion-item>
 
-        <!-- List Section -->
-        <q-list bordered class="rounded-borders">
-          <q-expansion-item
-            expand-separator
-            icon="perm_identity"
-            :label="section.name"
-            caption="section"
-            :key="section"
-            v-for="section in page.sections"
-          >
-            <q-card >
-              <q-card-section>
-                <Preview :comp="section" />
-                <FormEdit
-                  :data="section"
-                  :pageofsection="page"
-                  :section="true"
-                  :editFn="monitStore.editSection"
-                  :delete="true"
-                  :deleteFn="monitStore.deleteSectionToPage"
-                />
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-        </q-list>
+        <!-- Test Drag order -->
+        <DragOrder :page="page" :array="page.sections" />
 
         <!-- Modal Add Section to page -->
         <ModalSection :page="page" />
+      
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -147,7 +118,7 @@ import FormEdit from "components/admin/FormEdit.vue";
 import LandingPage from "pages/website/LandingPage.vue";
 import ModalPage from "./ModalPage.vue";
 import ModalSection from "./ModalSection.vue";
-import Preview from "./Preview";
+import DragOrder from "./DragOrder.vue";
 import { useMonitStore } from "../../stores/monit.store";
 import { useProfileStore } from "../../stores/profile.store";
 
@@ -157,7 +128,7 @@ export default {
     LandingPage,
     ModalPage,
     ModalSection,
-    Preview,
+    DragOrder,
   },
   setup() {
     const monitStore = useMonitStore();

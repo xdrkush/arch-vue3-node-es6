@@ -38,6 +38,7 @@ module.exports = {
     PutSection: (req, res) => new SectionControllers().put(req, res),
     AddSectionToPage: (req, res) => new SectionControllers().addSectionToPage(req, res),
     DeleteSectionToPage: (req, res) => new SectionControllers().deleteSectionToPage(req, res),
+    OrderSectionsToPage: (req, res) => new SectionControllers().orderSectionsToPage(req,res),
 
     // AuthControllers
     LoginAuth: (req, res) => new AuthControllers().login(req, res),

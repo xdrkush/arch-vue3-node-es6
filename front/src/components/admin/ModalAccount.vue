@@ -199,7 +199,7 @@ export default defineComponent({
         icon: "thumb_up",
         caption: "Votre mot de passe va être checker !",
         message: "Success !",
-        color: "positive",
+        color: "info",
       });
     };
 

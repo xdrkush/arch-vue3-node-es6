@@ -55,7 +55,7 @@ export default defineComponent({
     let visible = ref(false);
     authStore.getSession();
 
-    console.log("page login", authStore, authStore.getLoggedIn);
+    // console.log("page login", authStore, authStore.getLoggedIn);
 
     if (authStore.getLoggedIn) Router.push({ path: "/admin" });
 
@@ -88,7 +88,7 @@ export default defineComponent({
             color: "negative",
           });
           if(localStorage.getItem('user_token')) localStorage.removeItem('user_token')
-          location.reload('/')
+          Router.push({ path: "/" });
         }
       }, 2500);
     };
