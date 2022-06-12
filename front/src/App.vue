@@ -17,7 +17,6 @@
         <ModalSession />
       </div>
       <router-view />
-
     </div>
   </div>
 </template>
@@ -29,7 +28,7 @@ import { useAuthStore } from "./stores/auth.store";
 import { useMonitStore } from "./stores/monit.store";
 import ModalSession from "./components/auth/ModalSession.vue";
 import ModalTokenExp from "./components/auth/ModalTokenExp.vue";
-import { useQuasar } from "quasar";
+import { useMeta, useQuasar } from "quasar";
 
 export default defineComponent({
   name: "App",
@@ -52,9 +51,16 @@ export default defineComponent({
     watch(
       () => $q.dark.isActive,
       (val) => {
-        console.log(val ? "On dark mode" : "On light mode");
+        // console.log(val ? "On dark mode" : "On light mode");
       }
     );
+
+    useMeta(() => {
+      return {
+        title: profileStore.getProfile.nameCompany,
+        description: profileStore.getProfile.description,
+      };
+    });
 
     return {
       profileStore,

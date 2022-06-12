@@ -1,5 +1,6 @@
 import Connection from "../config/ConnectionDB";
 import Page from "../models/Page.model.js";
+import Section from "../models/Section.model.js";
 
 // Ramasse miette (clean de l'objet)
 const privateProps = new WeakMap();
@@ -57,13 +58,11 @@ export default class PageControllers extends Connection {
         })
         newPage.save()
 
-        // console.log('create page', page, " || ", newPage)
-
         const dbPages = await Page.find({}, ['-_id', '-__v']).populate({
             path: 'sections',
             select: '-created -updated -_id -__v',
         })
-
+        
         try {
             return res.status(200).json({
                 status: "success",
@@ -97,6 +96,12 @@ export default class PageControllers extends Connection {
 
     async delete(req, res) {
         try {
+            const page = await Page.findOne({ name: req.params.name })
+
+            page.sections.forEach(async (s) => {
+                await Section.findByIdAndRemove(s)
+            })
+
             // console.log('delete page', req.params)
             await Page.deleteOne({ name: req.params.name })
 

@@ -53,35 +53,15 @@
             )}`"
           ></div>
           <div class="text-center absolute-center">
-            <h1 class="q-ma-none">
+            <h2 class="q-ma-none">
               <strong>{{ slid.title }}</strong>
-            </h1>
-            <h2 class="q-ma-none q-mt-xl">{{ slid.subtitle }}</h2>
+            </h2>
+            <h3 class="q-ma-none q-mt-xl">{{ slid.subtitle }}</h3>
           </div>
         </div>
       </q-carousel-slide>
     </q-carousel>
 
-    <!-- Button Social -->
-    <q-item class="column absolute-top" style="top: 50%">
-      <div
-        :key="social.key"
-        v-for="social in arrayObjEnt(profileStore.getProfile.social)"
-      >
-        <q-btn
-          round
-          tag="a"
-          v-if="social.value"
-          @click="() => openURL(social.value)"
-          :href="social.value"
-          class="q-ma-xs"
-          text-color="accent"
-          color="black"
-          size="md"
-          :icon="`fa-brands fa-${social.key}`"
-        />
-      </div>
-    </q-item>
   </div>
 </template>
 
@@ -89,7 +69,6 @@
 import { ref } from "vue";
 import { colors } from "quasar";
 import { useProfileStore } from "../../stores/profile.store";
-import { arrayObjEnt } from "../../utils";
 
 const { getPaletteColor, hexToRgb } = colors;
 
@@ -151,7 +130,6 @@ export default {
     return {
       parent,
       opacityToHex,
-      arrayObjEnt,
       getPaletteColor,
       profileStore,
       autoplay: ref(true),

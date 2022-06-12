@@ -6,7 +6,7 @@
     <div class="row justify-around q-gutter-xs">
       <div class="col-md-4 col-sm-12 col-xs-12 q-my-md q-mx-none" :key="item.title" v-for="item in parent.arch.array">
         <q-card class="q-ma-xs">
-          <q-responsive :ratio="1">
+          <q-responsive :ratio="16 / 9">
             <q-img
               :src="
                 item.image

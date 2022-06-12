@@ -8,116 +8,95 @@
       marginheight="0"
       marginwidth="0"
       src="https://www.openstreetmap.org/export/embed.html?bbox=-1.5576124191284182%2C47.19637604543882%2C-1.52984619140625%2C47.20961323782762&amp;layer=mapnik"
-      style="border: 1px solid black"
+      style="border: 1px solid black; margin-top: 0vh"
     ></iframe>
+
     <div></div>
-    <q-card
-      bordered
-      class="my-card absolute"
-      style="min-width: 45vh; right: 10%"
-    >
-      <q-card-section>
-        <div class="text-h4">
-          <strong>{{ parent.title || title }}</strong>
-        </div>
-        <p class="q-ma-none">
-          {{ parent.description || description }}
-        </p>
-      </q-card-section>
 
-      <q-separator inset />
+    <q-card bordered class="absolute" style="min-width: 45vh">
+      <q-expansion-item
+        icon="mail"
+        switch-toggle-side
+        default-opened
+        :label="parent.title || title"
+        bordered
+      >
+        <q-card-section>
+          <div class="text-h4">
+            <strong>{{ parent.title || title }}</strong>
+          </div>
+          <p class="q-ma-none">
+            {{ parent.description || description }}
+          </p>
+        </q-card-section>
 
-      <q-card-section>
-        <div>
-          <p class="q-ma-xs"><strong>Nom & Prénom</strong></p>
-          <q-input
-            square
-            filled
-            class="q-ma-none"
-            v-model="form.name"
-            placeholder="Davroot Tux"
-            label="name"
-          />
-        </div>
-        <div>
-          <p class="q-ma-xs"><strong>Nom & Prénom</strong></p>
-          <q-input
-            square
-            filled
-            class="q-ma-none"
-            v-model="form.name"
-            placeholder="Davroot Tux"
-            label="Email"
-          />
-        </div>
-        <div>
-          <p class="q-ma-xs"><strong>Objet</strong></p>
-          <q-input
-            square
-            filled
-            class="q-ma-none"
-            v-model="form.name"
-            placeholder="Devis"
-            label="Objet"
-          />
-        </div>
-        <div>
-          <p class="q-ma-xs"><strong>Message</strong></p>
-          <q-input
-            v-model="form.message"
-            filled
-            square
-            class="col-10"
-            type="textarea"
-            placeholder="J’aimerais des renseignements"
-            label="Message"
-          />
-        </div>
+        <q-separator inset />
 
-        <q-btn
-          class="q-my-md full-width bg-primary text-accent"
-          label="envoyer"
-        />
+        <q-card-section>
+          <div>
+            <p class="q-ma-xs"><strong>Nom & Prénom</strong></p>
+            <q-input
+              square
+              filled
+              class="q-ma-none"
+              v-model="form.name"
+              placeholder="Davroot Tux"
+              label="name"
+            />
+          </div>
+          <div>
+            <p class="q-ma-xs"><strong>E-mail</strong></p>
+            <q-input
+              square
+              filled
+              class="q-ma-none"
+              v-model="form.mail"
+              placeholder="Davroot Tux"
+              label="Email"
+            />
+          </div>
+          <div>
+            <p class="q-ma-xs"><strong>Objet</strong></p>
+            <q-input
+              square
+              filled
+              class="q-ma-none"
+              v-model="form.object"
+              placeholder="Devis"
+              label="Objet"
+            />
+          </div>
+          <div>
+            <p class="q-ma-xs"><strong>Message</strong></p>
+            <q-input
+              v-model="form.message"
+              filled
+              square
+              class="col-10"
+              type="textarea"
+              placeholder="J’aimerais des renseignements"
+              label="Message"
+            />
+          </div>
 
-        <div class="row">
           <q-btn
-            round
+            class="q-my-md full-width bg-primary text-accent"
+            label="envoyer"
+          />
+
+          <!-- <div class="row">
+          <q-btn
             tag="a"
             color="primary"
             class="q-ma-xs"
             text-color="accent"
+            label="Reduire"
+            icon="minimize"
             size="md"
-            icon="fa-brands fa-twitter"
           />
-          <q-btn
-            round
-            tag="a"
-            color="primary"
-            class="q-ma-xs"
-            text-color="accent"
-            size="md"
-            icon="fa-brands fa-linkedin"
-          />
-          <q-btn
-            round
-            tag="a"
-            color="primary"
-            class="q-ma-xs"
-            text-color="accent"
-            size="md"
-            icon="fa-brands fa-facebook"
-          />
-          <q-btn
-            round
-            tag="a"
-            color="primary"
-            class="q-ma-xs"
-            text-color="accent"
-            size="md"
-            icon="fa-brands fa-instagram"
-          />
-        </div>
-      </q-card-section>
+        </div> -->
+        </q-card-section>
+      </q-expansion-item>
     </q-card>
   </div>
 </template>

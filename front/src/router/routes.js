@@ -1,6 +1,5 @@
 import { checkIsLoggedIn, checkLandingPage } from './middleware'
 
-
 const routes = [
   {
     path: "/landing",

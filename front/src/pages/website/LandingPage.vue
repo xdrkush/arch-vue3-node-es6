@@ -20,7 +20,7 @@ export default defineComponent({
   beforeCreate() {
     const monitStore = useMonitStore();
     const router = useRouter();
-    console.log("beforeCreate LandingLayout");
+    // console.log("beforeCreate LandingLayout");
     if (!monitStore.getLanding) router.push({ path: "/" });
   },
 

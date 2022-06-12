@@ -127,7 +127,7 @@ export const useMonitStore = defineStore('monit', {
         await api
           .post('/page', { page: form })
           .then(res => {
-            // console.log('response create Page', res.data.landing)
+            console.log('response create Page', res.data)
             this.pages = res.data.dbPages
             this.load = true
           })

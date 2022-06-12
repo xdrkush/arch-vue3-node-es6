@@ -14,14 +14,15 @@
         <div v-else-if="row.key === 'type'" />
         <div v-else-if="row.key === 'page'" />
         <div v-else-if="row.key === 'isArchived'" />
+        <!-- Social -->
         <div v-else-if="row.key === 'social'" class="text-center">
-          <q-btn color="accent" class="q-ma-xs" @click="() => loadInput(row)">
+          <q-btn color="accent" rounded class="q-ma-xs" @click="() => loadInput(row)">
             {{ row.key }} : Edit yours link
           </q-btn>
         </div>
         <!-- Arch -->
         <div v-else-if="row.key === 'arch'" class="text-center">
-          <q-btn color="accent" class="q-ma-xs" @click="() => loadInput(row)">
+          <q-btn color="accent" rounded class="q-ma-xs" @click="() => loadInput(row)">
             {{ row.key }} : Contenu du composant
           </q-btn>
         </div>
@@ -59,6 +60,7 @@
         <!-- Classic -->
         <q-btn
           v-else
+          rounded
           color="primary"
           class="q-ma-xs"
           @click="() => loadInput(row)"
@@ -89,6 +91,18 @@
           square
           filled
           v-model="item[loadedKey.key]"
+          :label="loadedKey.key"
+        />
+      </div>
+      
+      <!-- Textarea -->
+      <div v-else-if="loadedKey.key === 'description'">
+        <q-input
+          v-model="item[loadedKey.key]"
+          filled
+          square
+          class="col-10"
+          type="textarea"
           :label="loadedKey.key"
         />
       </div>
@@ -341,13 +355,26 @@
           <template v-slot:prepend>
             <q-icon :name="loadedKey.value" />
           </template>
-          <template v-slot:option>
-          <q-item>
-            <q-item-section class="text-grey">
-              <q-icon :name="loadedKey.option" />
-            </q-item-section>
-          </q-item>
-        </template>
+
+          <template v-slot:option="scope">
+            <q-item clickable @click="() => item[loadedKey.key] = scope.opt.value">
+              <q-item-section avatar>
+                <q-icon :name="scope.opt.value" />
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label>{{ scope.opt.value }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+
+          <template v-slot:after-options>
+            <q-item>
+              <q-item-section>
+                end ...
+              </q-item-section>
+            </q-item>
+          </template>
         </q-select>
       </div>
 
@@ -361,17 +388,6 @@
         />
       </div>
 
-      <!-- Textarea -->
-      <div v-else-if="loadedKey.key === 'description'">
-        <q-input
-          v-model="item[loadedKey.key]"
-          filled
-          square
-          class="col-10"
-          type="textarea"
-          :label="loadedKey.key"
-        />
-      </div>
     </div>
   </div>
 </template>

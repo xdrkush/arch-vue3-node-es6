@@ -12,7 +12,7 @@
     </div>
 
     <!-- Modal Section -->
-    <q-dialog v-model="modalSection" fullWidth>
+    <q-dialog v-model="modalSection" full-width>
       <q-card style="min-width: 60%">
         <q-card-section class="row items-center q-pb-none">
           <div class="text-h6">Ajouter une section ?</div>
@@ -126,7 +126,6 @@ export default defineComponent({
         value: "list",
         type: "list",
         page: "home",
-        type: "list",
         name: "list-" + Date.now(),
         title: "List default script",
         description: "Description section list Default script",
@@ -165,7 +164,86 @@ export default defineComponent({
           ],
         },
       },
-      { label: "Contact", value: "contact", type: "contact" },
+      {
+        label: "List16-9",
+        value: "list16-9",
+        type: "list16-9",
+        page: "home",
+        name: "list-" + Date.now(),
+        title: "List default script",
+        description: "Description section list Default script",
+        arch: {
+          array: [
+            {
+              placement: "1",
+              name: "default1",
+              title: "Titre default 1",
+              subtitle: "Subtitle default 1",
+              description:
+                "description Hello Quasar js c'est de la balle default 1",
+              image:
+                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+            },
+            {
+              placement: "2",
+              name: "default2",
+              title: "Titre default 2",
+              subtitle: "Subtitle default 2",
+              description:
+                "description Hello Quasar js c'est de la balle default 2",
+              image:
+                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+            },
+            {
+              placement: "3",
+              name: "default3",
+              title: "Titre default 3",
+              subtitle: "Subtitle default 3",
+              description:
+                "description Hello Quasar js c'est de la balle default 3",
+              image:
+                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+            },
+          ],
+        },
+      },
+      {
+        label: "ImageList",
+        value: "imageList",
+        type: "imageList",
+        page: "home",
+        name: "imagelist-" + Date.now(),
+        title: "Image List default",
+        description: "Description section ImageList Default script",
+        arch: {
+          array: [
+            {
+              id: 0,
+              placement: "1",
+              align: "left",
+              ratio: 16 / 9,
+              name: "default1",
+              title: "Super titre image 01",
+              description: "Super description image 01 ...",
+              image:
+                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+            },
+            {
+              id: 1,
+              placement: "2",              
+              align: "right",
+              ratio: 16 / 9,
+              name: "default1",
+              title: "Super titre image 02",
+              description: "Super description image 02 ...",
+              image:
+                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+            },
+          ],
+        },
+      },
+      { label: "Contact Map", value: "contact", type: "contact" },
+      { label: "Contact Simple", value: "contact2", type: "contact2" },
     ];
     let preview = ref(options[0]);
 
@@ -173,7 +251,10 @@ export default defineComponent({
 
     const AddSectionToPage = async (section) => {
       // console.log('addSectionToPage', section, pageLoad.value)
-      await monitStore.addSectionToPage({ section, page: { ...pageLoad.value } });
+      await monitStore.addSectionToPage({
+        section,
+        page: { ...pageLoad.value },
+      });
       $q.notify({
         icon: "thumb_up",
         caption: `section: ${section.name}, ajouter sur la page: ${pageLoad.value.name}`,

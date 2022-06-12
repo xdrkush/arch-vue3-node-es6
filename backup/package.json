@@ -1,0 +1,16 @@
+{
+  "name": "backup",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "hsuk",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "node-cron": "^3.0.1",
+    "uuid": "^8.3.2"
+  }
+}

@@ -4,7 +4,13 @@
     style="min-height: 100vh"
   >
     <!-- Logo -->
-    <q-btn round color="accent" class="q-mt-md shadow-8" width="256px">
+    <q-btn
+      round
+      :color="$q.dark.isActive ? 'accent' : 'accent'"
+      class="q-mt-md shadow-8"
+      width="256px"
+      @click="$q.dark.isActive ? $q.dark.set(false) : $q.dark.set(true)"
+    >
       <q-img :src="UnicornCircle" width="220px" />
     </q-btn>
 
@@ -65,10 +71,13 @@
             size="md"
             icon="fa-solid fa-phone"
             class="q-mx-md"
+            tag="a"
+            :href="'tel:' + user.phone.replace('.', '')"
           />
           <strong>{{ user.phone }}</strong>
         </p>
         <!-- Mail -->
+
         <p
           class="
             q-my-xs q-ma-none
@@ -98,6 +107,8 @@
             size="md"
             icon="fa-solid fa-at"
             class="q-mx-md"
+            tag="a"
+            :href="'mailto:' + user.mail"
           />
           <strong>{{ user.mail }}</strong>
         </p>
