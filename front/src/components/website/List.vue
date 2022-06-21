@@ -1,7 +1,7 @@
 <template>
-  <div class="q-my-xl text-center q-pa-md">
+  <div class="q-my-xl text-center q-pa-md q-mx-auto" style="max-width: 1280px">
     <h2 class="q-my-md">{{ parent.title || title }}</h2>
-    <h6 class="q-my-xl"> {{ parent.description || description }} </h6>
+    <h6 class="q-mb-md q-mt-xs"> {{ parent.description || description }} </h6>
 
     <div class="row justify-around q-gutter-xs">
       <div class="col-md-4 col-sm-12 col-xs-12 q-my-md q-mx-none" :key="item.title" v-for="item in parent.arch.array">

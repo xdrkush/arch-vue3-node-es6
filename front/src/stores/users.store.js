@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import jwt_decode from "jwt-decode";
 import { api } from 'boot/axios'
 
 export const useUserStore = defineStore('user', {
@@ -14,24 +13,25 @@ export const useUserStore = defineStore('user', {
     getCheckPasswordEditPassword: (state) => state.checkPasswordEditPassword,
   },
   actions: {
-    async editAccountUserApi(form) {
+    editAccountUserApi(form) {
       // console.log('editAccountUserApi', form)
       try {
-        await api
+        api
           .post('/account', { ...form })
           .then(res => {
             setTimeout(() => {
               // console.log('response editAccountUserApi', res.data)
             }, 500)
           })
+          .catch(e => console.log(e))
       } catch (error) {
         return error
       }
     },
-    async checkPasswordEditAccountApi(form) {
+    checkPasswordEditAccountApi(form) {
       // console.log('STORE checkPassword', form)
       try {
-        await api
+        api
           .put('/check/password', { ...form })
           .then(res => {
             setTimeout(() => {
@@ -39,14 +39,15 @@ export const useUserStore = defineStore('user', {
               this.checkPasswordAccount = res.data.checked
             }, 500)
           })
+          .catch(e => console.log(e))
       } catch (error) {
         return error
       }
     },
-    async checkPasswordEditPasswordApi(form) {
+    checkPasswordEditPasswordApi(form) {
       // console.log('STORE checkPassword', form)
       try {
-        await api
+        api
           .put('/check/password', { ...form })
           .then(res => {
             setTimeout(() => {
@@ -54,20 +55,22 @@ export const useUserStore = defineStore('user', {
               this.checkPasswordEditPassword = res.data.checked
             }, 500)
           })
+          .catch(e => console.log(e))
       } catch (error) {
         return error
       }
     },
-    async editPasswordUserApi(form) {
+    editPasswordUserApi(form) {
       // console.log('editPasswordUserApi', form)
       try {
-        await api
+        api
           .put('/account', { ...form })
           .then(res => {
             setTimeout(() => {
               // console.log('response editPasswordUserApi', res.data)
             }, 500)
           })
+          .catch(e => console.log(e))
       } catch (error) {
         return error
       }

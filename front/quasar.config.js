@@ -8,9 +8,7 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js
 
-
 const ESLintPlugin = require('eslint-webpack-plugin')
-
 
 const { configure } = require('quasar/wrappers');
 const env = require('quasar-dotenv').config()
@@ -75,6 +73,8 @@ module.exports = configure(function (ctx) {
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       env: env,
 
+      // extendWebpack(cfg, { isServer, isClient }) { ... },
+
       chainWebpack(chain) {
         chain.plugin('eslint-webpack-plugin')
           .use(ESLintPlugin, [{ extensions: ['js', 'vue'] }])
@@ -106,7 +106,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Dialog', 'Notify', 'Meta']
+      plugins: ['Dialog', 'Notify', 'LocalStorage', 'SessionStorage', 'Meta']
     },
 
     // animations: 'all', // --- includes all animations
@@ -117,7 +117,7 @@ module.exports = configure(function (ctx) {
     ssr: {
       pwa: false,
 
-      // manualStoreHydration: true,
+      manualStoreHydration: true,
       // manualPostHydrationTrigger: true,
 
       prodPort: 3000, // The default port that the production server should use

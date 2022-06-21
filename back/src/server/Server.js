@@ -19,14 +19,16 @@ export default class Server {
         this.app.use(logger('dev'));
 
         // Helmet
-        // this.app.use(helmet())
+        this.app.use(helmet())
 
         // Config default
         this.app.disable('x-powered-by')
 
+        this.app.set('trust proxy', ['uniquelocal'])
+
         // Headers
         this.app.use((req, res, next) => {
-            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Origin', process.env.DOMAIN);
             res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Autorization, X-WEBAPP');
             res.header('Access-Control-Allow-Credentials', true);
             res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
@@ -36,10 +38,10 @@ export default class Server {
         // Cors
         this.app.use(cors({
             origin: [
-                'http://localhost:8080', 'http://localhost', 'http://172.20.0.1',
+                // 'http://localhost:8080', 'http://localhost:3000','http://localhost', 'http://172.20.0.1',
                 `http://${process.env.DOMAIN}`, `https://${process.env.DOMAIN}`, `http://www.${process.env.DOMAIN}`, `https://www.${process.env.DOMAIN}`
             ],
-            methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
             credentials: true
         }))
 

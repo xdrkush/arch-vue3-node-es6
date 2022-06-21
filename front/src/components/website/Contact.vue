@@ -1,38 +1,52 @@
 <template>
-  <div class="row justify-around items-center" style="height: 100vh">
-    <iframe
-      width="100%"
-      height="100%"
-      frameborder="0"
-      scrolling="no"
-      marginheight="0"
-      marginwidth="0"
-      src="https://www.openstreetmap.org/export/embed.html?bbox=-1.5576124191284182%2C47.19637604543882%2C-1.52984619140625%2C47.20961323782762&amp;layer=mapnik"
-      style="border: 1px solid black; margin-top: 0vh"
-    ></iframe>
+  <div class="row justify-around items-center" style="max-height: 90vh">
+    <!-- Map -->
+    <div
+      style="
+        border: 1px solid black;
+        margin-top: 0vh;
+        height: 90vh;
+        width: 100vw;
+      "
+    >
+      <iframe
+        width="100%"
+        height="100%"
+        frameborder="0"
+        scrolling="no"
+        marginheight="0"
+        marginwidth="0"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=-1.5576124191284182%2C47.19637604543882%2C-1.52984619140625%2C47.20961323782762&amp;layer=mapnik"
+      ></iframe>
+    </div>
 
     <div></div>
 
-    <q-card bordered class="absolute" style="min-width: 45vh">
-      <q-expansion-item
-        icon="mail"
-        switch-toggle-side
-        default-opened
-        :label="parent.title || title"
-        bordered
-      >
-        <q-card-section>
+    <!-- Card Formulaire expanded -->
+    <q-expansion-item
+      icon="mail"
+      switch-toggle-side
+      default-opened
+      bordered
+      expand-icon-class="text-white"
+      header-class="bg-accent text-white"
+      class="shadow-1 overflow-hidden absolute text-left row"
+      style="border-radius: 30px; max-width: 720px; top: 8vh; right: 5px"
+      :label="parent.title || title"
+    >
+      <q-card bordered class="col-sm-12 col-xs-12 col-12 text-left">
+        <!-- <q-card-section>
           <div class="text-h4">
             <strong>{{ parent.title || title }}</strong>
           </div>
           <p class="q-ma-none">
             {{ parent.description || description }}
           </p>
-        </q-card-section>
+        </q-card-section> -->
 
-        <q-separator inset />
+        <q-separator inset style="max-width: 720px; min-width: 90vw" />
 
-        <q-card-section>
+        <q-card-section style="border-radius: 30px; max-width: 720px;">
           <div>
             <p class="q-ma-xs"><strong>Nom & Prénom</strong></p>
             <q-input
@@ -78,11 +92,12 @@
               label="Message"
             />
           </div>
-
-          <q-btn
-            class="q-my-md full-width bg-primary text-accent"
-            label="envoyer"
-          />
+          <div class="text-center">
+            <q-btn
+              class="q-my-md bg-primary text-accent"
+              label="envoyer"
+            />
+          </div>
 
           <!-- <div class="row">
           <q-btn
@@ -96,8 +111,8 @@
           />
         </div> -->
         </q-card-section>
-      </q-expansion-item>
-    </q-card>
+      </q-card>
+    </q-expansion-item>
   </div>
 </template>
 

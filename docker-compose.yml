@@ -14,9 +14,7 @@ services:
       - db:/data/db
 
   back:
-    depends_on:
-      - mongodb
-    container_name: back_container
+    container_name: back_container_templater
     build:
       dockerfile: Dockerfile
       context: "./back"
@@ -39,33 +37,37 @@ services:
 
   front:
     depends_on:
-      - mongodb
       - back
-    stdin_open: true
-    container_name: front_container
+    container_name: front_container_templater
     build:
       dockerfile: Dockerfile
       context: ./front
     env_file: ./.env
+    ports:
+      - $FRONT_LOCAL_PORT:$PORT_FRONT
     volumes:
       - /app/node_modules
       - ./front:/var/www/html
     environment:
+      - PORT=$PORT_FRONT
       - CHOKIDAR_USEPOLLING=true
       - URL_PROD=$URL_PROD
       - URL_DEV=$URL_DEV
+    stdin_open: true
+    tty: true
 
   nginx:
     depends_on:
       - back
       - front
-    container_name: nginx_container
+    container_name: nginx_container_templater
     restart: unless-stopped
     build:
       dockerfile: Dockerfile
       context: ./nginx
     ports:
-      - "5554:80"
+      - "5555:80"
 
 volumes:
   db:
+

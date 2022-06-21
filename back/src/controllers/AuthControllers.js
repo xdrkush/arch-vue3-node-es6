@@ -39,19 +39,20 @@ export default class AuthControllers extends Connection {
     const { mail, password } = req.body;
     const exp = (10 * 60 * 1000);
     const date = Date.now();
+    const ip = req.headers['x-forwarded-for'] || 'NoIp-' + Date.now()
 
     console.log('login', req.body)
     try {
 
       // for connect with name or email
-      const userAuthEmail = await User.findOne({ mail }, [
+      const userAuthEmail = await User.findOne({ mail: mail.toLowerCase() }, [
         "name",
         "mail",
         "phone",
         "description",
         "password"
       ]),
-        userAuthPseudo = await User.findOne({ name: mail }, [
+        userAuthPseudo = await User.findOne({ name: mail.toLowerCase() }, [
           "name",
           "mail",
           "phone",
@@ -66,12 +67,12 @@ export default class AuthControllers extends Connection {
 
       const match = await bcrypt.compare(password, user.password);
 
+
       // à enlever quand ce sera moduler (désolé en attendant) et oui c'est dégueulasse !!!
       if (req.token === "visitor") {
-        const exp = (10 * 60 * 1000);
         const date = Date.now();
         const session = new Session({
-          ip: req.ip,
+          ip: ip,
           device: req.headers["user-agent"],
           validity: Math.floor(date + exp) // + 1 hour
         })
@@ -79,7 +80,7 @@ export default class AuthControllers extends Connection {
         // Create token
         const token = createToken({
           session_id: session._id,
-          ip: req.ip,
+          ip: ip,
           auth: match,
           exp: Math.floor((date + exp)),
           iat: Math.floor(date),
@@ -101,11 +102,14 @@ export default class AuthControllers extends Connection {
         session.user_id = user._id
         session.validity = date + exp
 
+        console.log('Auth', user)
+
         // Create token
         const token = createToken({
           session_id: session._id,
           auth: match,
-          ip: req.ip,
+          name: user.name,
+          ip: ip,
           exp: Math.floor((date + exp)),
           iat: Math.floor(date),
         })

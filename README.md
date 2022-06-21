@@ -59,7 +59,6 @@ info dans: `./back/src/config/script_db.js`
 docker rm $(docker ps -a -q)
 ```
 
-#
 ## Utils
 Connect Robo3t for docker DB:
   - Create Connexion

@@ -22,7 +22,7 @@ import {
 // Middlewares
 import {
     // Constructor
-    // isValid, isAdmin, isProp, isRoot,
+    isValid, isAdmin, isProp, isRoot, isPropOrIsRoot,
     // Function
     checkHeader
 } from '../middlewares/index'
@@ -33,44 +33,43 @@ router.use(checkHeader)
 
 router.route('/')
     .get(GetTest)
-// .post(isValid, isAdmin, PostTest)
 
 router.route('/landing')
     .get(GetMonit)
-    .put(EditMonit)
+    .put(isValid, isAdmin, isPropOrIsRoot, EditMonit)
 
 router.route('/profile')
     .get(GetProfile)
-    .post(PostProfile)
-    .put(PutProfile)
+    .post(isValid, isAdmin, isPropOrIsRoot, PostProfile)
+    .put(isValid, isAdmin, isPropOrIsRoot, PutProfile)
 
 router.route('/theme')
-    .put(EditTheme)
+    .put(isValid, isAdmin, isPropOrIsRoot, EditTheme)
 
 router.route('/pages')
     .get(GetPages)
 
 router.route('/page')
-    .post(CreatePage)
-    .put(PutPage)
+    .post(isValid, isAdmin, isPropOrIsRoot, CreatePage)
+    .put(isValid, isAdmin, isPropOrIsRoot, PutPage)
 
 router.route('/page/:name')
     .get(GetPage)
-    .delete(DeletePage)
+    .delete(isValid, isAdmin, isPropOrIsRoot, DeletePage)
 
 router.route('/sectiontopage')
-    .post(AddSectionToPage)
-    .put(DeleteSectionToPage)
+    .post(isValid, isAdmin, isPropOrIsRoot, AddSectionToPage)
+    .put(isValid, isAdmin, isPropOrIsRoot, DeleteSectionToPage)
 
 router.route('/ordersectiontopage')
-    .put(OrderSectionsToPage)
+    .put(isValid, isAdmin, isPropOrIsRoot, OrderSectionsToPage)
 
 router.route('/sections')
     .get(GetSections)
 
 router.route('/section')
-    .post(CreateSection)
-    .put(PutSection)
+    .post(isValid, isAdmin, isPropOrIsRoot, CreateSection)
+    .put(isValid, isAdmin, isPropOrIsRoot, PutSection)
 
 router.route('/session')
     .get(GetSession)
@@ -85,7 +84,7 @@ router.route('/auth')
 router.route('/logout')
     .get(Logout)
 
-router.route('/account')
+// router.route('/account')
 // .post(isValid, isAdmin, PutAccount)
 // .put(isValid, isAdmin, PutPassword)
 

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount } from "vue";
+import { ref } from "vue";
 import { useQuasar } from "quasar";
 import { useMonitStore } from "../../stores/monit.store";
 

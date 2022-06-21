@@ -131,25 +131,36 @@ export default class SectionControllers extends Connection {
 
     async orderSectionsToPage(req, res) {
         const { page } = req.body;
-        const newOrder = [];
 
         // Make newArray with new order sections
-        page.sections.forEach(async (s) => {
-            const s_db = await Section.findOne({name: s.name})
-            newOrder.push(s_db._id) 
-        })
+        const newOrder = (await Promise.all([...page.sections.map(async (item) => {
+            let obj = await Section.findOne({ name: item.name })
+            return obj._id.toString()
+        })]))
 
-        const page_db = await Page.findOne({ name: page.name});
-        page_db.sections = newOrder;
-        page_db.save()
+        const page_db = await Page.findOne({ name: page.name });
+        // console.log('OrderSectionToPage', page, page_db, newOrder)
 
         try {
-            return res.status(200).json({
+            // Save
+            if (newOrder.length === page_db.sections.length) {
+                page_db.sections = newOrder;
+                page_db.save()
+
+                return res.status(200).json({
+                    status: "success",
+                    message: "Method Order sections to page Controller",
+                    dbSections: await Section.find({}),
+                    dbPages: await Page.find({}).populate('sections')
+                });
+            }
+            else return res.status(203).json({
                 status: "success",
                 message: "Method Order sections to page Controller",
                 dbSections: await Section.find({}),
                 dbPages: await Page.find({}).populate('sections')
-            });
+            })
+
         } catch (error) {
             throw error;
         }

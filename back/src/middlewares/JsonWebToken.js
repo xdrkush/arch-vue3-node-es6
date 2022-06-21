@@ -1,65 +1,112 @@
-// import Connection from "../config/ConnectionDB";
-// import User from "../models/User.model";
-// import Session from "../models/Session.model";
-// import jwt from "jsonwebtoken";
-// import { createToken } from "../utils"
-// const privateProps = new WeakMap();
+import Connection from "../config/ConnectionDB";
+import User from "../models/User.model";
+import Session from "../models/Session.model";
+import jwt from "jsonwebtoken";
+import { createToken, verifyToken, soonTokenExpired, timeTokenExpired } from "../utils";
+const privateProps = new WeakMap();
 require('dotenv').config()
 
-export default class JsonWebToken {
-    // constructor() {
-        // super();
-        // privateProps.set(this.databaseConnection());
-    // }
+export default class JsonWebToken extends Connection {
+    constructor() {
+        super();
+        privateProps.set(this.databaseConnection());
+    }
 
     // TokenVisitor
     async checkHeader(req, res, next) {
-        console.log('MD header', req.headers.authorization)
-        if (req.headers.authorization.split(' ')[1]) req.token = req.headers.authorization.split(' ')[1];
-        if (req.headers["x-webapp"]) next()
+        console.log('MD header', req.ip, req.ips, req.url)
+        // console.log('MD header 2', req.headers)
+
+        // Check client
+        if (!req.headers["x-webapp"]) res.status(418).send("Error !!!")
+
+        // if (!req.headers.authorization.split(' ')[1] || req.headers.authorization.split(' ')[1] === 'null') {
+        
+        // Check Bearer < visitor || token >
+        else if (!req.headers.authorization.split(' ')[1]) {
+            console.log('PAS de headers.autorization <token>')
+            res.status(418).send("Error !!!")
+        }
+
+        // Check is OK
+        else if (req.headers["x-webapp"] && req.headers.authorization.split(' ')[1]) {
+            console.log('OK headers.autorization <token>')
+            req.token = req.headers.authorization.split(' ')[1];
+            next()
+        }
+
         else res.status(418).send("Error !!!");
     }
 
-    // // Token is valid
-    // async isValid(req, res, next) {
-    //     // console.log('MD isValid', req.headers)
-    //     const isValid = jwt.verify(req.headers.authorization, process.env.JWT_TOKEN);
-    //     // const isValid = jwt.decode(req.headers.authorization);
-    //     console.log('isValid', isValid, isValid.header, isValid.payload)
-    //     if (!isValid) return res.status(403).send('Error')
-    //     else {
-    //         req.token = isValid
-    //         return next();
-    //     }
-    // }
+    // Token is valid
+    async isValid(req, res, next) {
+        const isValid = verifyToken(req.token);
+        const tokenExp = timeTokenExpired(req.token)
 
-    // // isAdmin
-    // async isAdmin(req, res, next) {
-    //     console.log('MD isAdmin', req.token)
-    //     if (!req.token.loggedIn || req.token.loggedIn !== true) return res.send('Error')
+        console.log('MD ISVALID', req.token, isValid)
 
-    //     const user = await User.findOne({ name: req.token.name, isAdmin: true })
-    //     if (!user) return res.status(403).send('Error')
-    //     else return next()
-    // }
+        if (!isValid || tokenExp) return res.status(403).send('Error')
+        else {
+            req.token = isValid
+            return next();
+        }
+    }
 
-    // // isProp
-    // async isProp(req, res, next) {
-    //     console.log('MD isProp', req.token)
-    //     if (!req.token.loggedIn || req.token.loggedIn !== true) return res.send('Error')
+    // isAdmin
+    async isAdmin(req, res, next) {
+        const { auth, session_id } = req.token;
+        const session = await Session.findById(session_id)
 
-    //     const user = await User.findOne({ name: req.token.name, isAdmin: true, isProp: true })
-    //     if (!user) return res.status(403).send('Error')
-    //     else return next()
-    // }
+        if (!auth || auth !== true || !session) return res.status(403).send('Error')
 
-    // // isRoot
-    // async isRoot(req, res, next) {
-    //     console.log('MD isRoot', req.token)
-    //     if (!req.token.loggedIn || req.token.loggedIn !== true) return res.send('Error')
+        const user = await User.findById(session.user_id)
 
-    //     const user = await User.findOne({ name: req.token.name, isAdmin: true, isRoot: true })
-    //     if (!user) return res.status(403).send('Error')
-    //     else return next()
-    // }
+        // console.log('MD ADMIN', req.token, session, user)
+
+        if (!user || !user.isAdmin) return res.status(403).send('Error')
+        else if (user.isAdmin) return next() // next()
+        else return res.status(403).send('Error')
+    }
+
+    // isProp
+    async isProp(req, res, next) {
+        const { auth, session_id } = req.token;
+        const session = await Session.findById(session_id)
+
+        if (!auth || auth !== true || !session) return res.status(403).send('Error')
+
+        const user = await User.findById(session.user_id)
+
+        if (!user || !user.isProp) return res.status(403).send('Error')
+        else if (user.isProp) return next() // next()
+        else return res.status(403).send('Error')
+    }
+
+    // isPropOrIsRoot
+    async isPropOrIsRoot(req, res, next) {
+        const { auth, session_id } = req.token;
+        const session = await Session.findById(session_id)
+
+        if (!auth || auth !== true || !session) return res.status(403).send('Error')
+
+        const user = await User.findById(session.user_id)
+
+        if (!user) return res.status(403).send('Error')
+        else if (user.isProp || user.isRoot) return next() // next()
+        else return res.status(403).send('Error')
+    }
+
+    // isRoot
+    async isRoot(req, res, next) {
+        const { auth, session_id } = req.token;
+        const session = await Session.findById(session_id)
+
+        if (!auth || auth !== true || !session) return res.status(403).send('Error')
+
+        const user = await User.findById(session.user_id)
+
+        if (!user || !user.isRoot) return res.status(403).send('Error')
+        else if (user.isRoot) return next() // next()
+        else return res.status(403).send('Error')
+    }
 }

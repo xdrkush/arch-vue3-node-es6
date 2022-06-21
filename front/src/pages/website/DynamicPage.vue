@@ -1,45 +1,85 @@
 <template>
   <q-page>
     <!-- Page Dynamic -->
-
-    <!-- {{ monitStore.getPage }} -->
-    <!-- <div v-if="monitStore.getPage.sections"> -->
-    <div :key="section" v-for="section in monitStore.getPage.sections">
-      <!-- Component Dynamic -->
-      <DynamicComponent :data="section" />
+    <div v-if="monitStore.getPage.sections">
+      <div :key="section" v-for="section in monitStore.getPage.sections">
+        <!-- Component Dynamic -->
+        <DynamicComponent :data="section" />
+      </div>
     </div>
-    <!-- </div> -->
   </q-page>
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { useMeta, createMetaMixin } from "quasar";
+import { defineComponent, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useMonitStore } from "../../stores/monit.store";
+import { useProfileStore } from "../../stores/profile.store";
 import DynamicComponent from "./DynamicComponent";
+import meta from "../../boot/meta";
 
 export default defineComponent({
   name: "DynamicPage",
   components: { DynamicComponent },
+
+  // mixins: [
+  //   createMetaMixin(function () {
+  //     return meta({
+  //       title: "Davroot",
+  //       description: "Ma super description ...",
+  //       route: "Oops",
+  //     });
+  //   }),
+  // ],
+
   setup() {
     const monitStore = useMonitStore();
+    // const { getPage, getPageAPI } = monitStore;
     const route = useRoute();
 
-    monitStore.getPageAPI(route.path.replace("/", ""));
+    // console.log("dynamicPage", getPage, route);
+
+    onMounted(async () => {
+      if (route.fullPath === "/") {
+        monitStore.getPageAPI("home");
+      } else {
+        monitStore.getPageAPI(route.path.replace("/p/", ""));
+      }
+    });
+
+    // watch(
+    //   () => monitStore.getPage,
+    //   (val) => {
+    //     // console.log("watch getPage", getPage);
+    //   }
+    // );
 
     return { monitStore };
   },
+
   watch: {
     $route: {
       deep: true,
       handler(to, from) {
         const monitStore = useMonitStore();
+        // const profileStore = useProfileStore();
 
         if (to.fullPath === "/") {
           monitStore.getPageAPI("home");
         } else {
-          monitStore.getPageAPI(to.path.replace("/", ""));
+          monitStore.getPageAPI(to.path.replace("/p/", ""));
         }
+
+        // console.log("meta dynamics");
+        // Meta Default
+        // useMeta(() => {
+        //   return meta({
+        //     title: profileStore.getProfile.nameCompany,
+        //     description: profileStore.getProfile.description,
+        //     route: to.fullPath,
+        //   });
+        // });
       },
     },
   },

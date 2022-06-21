@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
+        <q-toolbar-title v-if="profileStore.getProfile.nameCompany">
           Admin :: {{ profileStore.getProfile.nameCompany }}
         </q-toolbar-title>
 
@@ -22,24 +22,23 @@
           icon="refresh"
           color="accent"
           class="q-mx-xs"
+          disabled
           @click="forceToRefresh"
         />
         <q-btn
-          :icon="($q.dark.isActive) ? 'light_mode' : 'dark_mode'"
+          :icon="$q.dark.isActive ? 'light_mode' : 'dark_mode'"
           :color="$q.dark.isActive ? 'accent' : 'dark'"
           class="q-mx-xs"
-          @click="($q.dark.isActive) ? $q.dark.set(false) : $q.dark.set(true)"
+          @click="$q.dark.isActive ? $q.dark.set(false) : $q.dark.set(true)"
         />
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Dashboard Admin </q-item-label>
+        <q-item-label header>
+          Dashboard Admin :: <strong>{{ authStore.getUser.name }}</strong>
+        </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -56,12 +55,12 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch, onMounted, beforeMount } from "vue";
 import EssentialLink from "src/components/website/EssentialLink.vue";
 import { useAuthStore } from "../stores/auth.store";
 import { useMonitStore } from "../stores/monit.store";
 import { useProfileStore } from "../stores/profile.store";
-import { setCssVar } from "quasar";
+import { useRouter } from "vue-router";
 
 const linksList = [
   {
@@ -107,32 +106,33 @@ export default defineComponent({
     const authStore = useAuthStore();
     const monitStore = useMonitStore();
     const profileStore = useProfileStore();
+    const router = useRouter();
 
     const leftDrawerOpen = ref(false);
-    const theme = ref(monitStore.getTheme);
 
-    monitStore.getLandingStatus();
+    onMounted(() => {
+      if (!authStore.getLoggedIn) router.push({ path: "/auth/login" });
+    })
 
-    setCssVar("primary", theme.value.color.primary);
-    setCssVar("secondary", theme.value.color.secondary);
-    setCssVar("accent", theme.value.color.accent);
-    setCssVar("positive", theme.value.color.positive);
-    setCssVar("negative", theme.value.color.negative);
-    setCssVar("warning", theme.value.color.warning);
-    setCssVar("info", theme.value.color.info);
-    setCssVar("dark", theme.value.color.dark);
-    setCssVar("light", theme.value.color.light);
-    setCssVar("secondary", theme.value.color.secondary);
+    // Check isLoggedIn
+    watch(
+      () => authStore.getLoggedIn,
+      (val) => {
+        if (!authStore.getLoggedIn) router.push({ path: "/" });
+      }
+    );
 
     return {
-      authStore, monitStore, profileStore,
+      authStore,
+      monitStore,
+      profileStore,
       essentialLinks: linksList,
       leftDrawerOpen,
       forceToRefresh() {
         location.reload();
       },
       toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value
+        leftDrawerOpen.value = !leftDrawerOpen.value;
       },
     };
   },

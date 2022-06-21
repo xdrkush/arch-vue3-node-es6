@@ -1,3 +1,4 @@
+
 // app global css in Sass form
 
 @font-face
@@ -53,12 +54,25 @@ p
     border: 1px solid grey
 
 // Create variable text, ...
+    
 .text-custom
-    color: $custom !important
+    color: $custom
 .bg-custom
-    background: $custom !important
+    background: $custom
     
 .text-light
-    color: $light !important
+    color: $light
 .bg-light
-    background: $light !important
+    background: $light
+
+/* Dark-Mode
+ * ********* */
+
+.body--light 
+    background: $light
+
+.body--dark
+    background: $dark
+    h1, h2, h3, h4, h5, h6, p
+        color: $light
+

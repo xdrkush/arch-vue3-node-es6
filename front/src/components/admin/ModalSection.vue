@@ -13,7 +13,7 @@
 
     <!-- Modal Section -->
     <q-dialog v-model="modalSection" full-width>
-      <q-card style="min-width: 60%">
+      <q-card style="min-width: 60%; min-height: 92vh">
         <q-card-section class="row items-center q-pb-none">
           <div class="text-h6">Ajouter une section ?</div>
           <q-space />
@@ -22,30 +22,45 @@
 
         <q-card-section class="q-pa-md">
           <div class="q-gutter-md" style="width: 100%">
+            <div class="row q-my-xs justify-around">
+              <div class="q-gutter-md">
+                <q-select
+                  style="min-width: 250px"
+                  filled
+                  v-model="preview"
+                  :options="options"
+                  options-cover
+                  stack-label
+                  @change="onChange($event)"
+                  label="Standard"
+                />
+              </div>
+
+              <q-space />
+
+              <div class="text-center">
+                <q-btn label="Annulez" color="negative" class="q-mx-xs" />
+                <q-btn
+                  class="q-mx-xs"
+                  label="Confirmez"
+                  color="primary"
+                  @click="() => AddSectionToPage({ ...preview })"
+                />
+              </div>
+            </div>
+
             <!-- Components Preview -->
-            <div>
-              <Preview :comp="preview" />
-            </div>
 
-            <div class="q-gutter-md">
-              <q-select
-                filled
-                v-model="preview"
-                :options="options"
-                options-cover
-                stack-label
-                @change="onChange($event)"
-                label="Standard"
-              />
-            </div>
+            <div class="row justify-around">
 
-            <div class="text-center">
-              <q-btn label="Annulez" color="negative" />
-              <q-btn
-                label="Confirmez"
-                color="primary"
-                @click="() => AddSectionToPage({ ...preview })"
-              />
+              <q-responsive class="col-md-8 col-sm-12 q-px-md" :ratio="16 / 9" style="height: 100px">
+                <Preview :comp="preview"/>
+              </q-responsive>
+
+              <!-- Format mobile -->
+              <!-- <q-responsive class="col-md-4 col-sm-12 q-px-md" :ratio="1" style="max-width: 320px;  max-height: 450px">
+                <Preview :comp="preview" />
+              </q-responsive> -->
             </div>
           </div>
         </q-card-section>
@@ -230,7 +245,7 @@ export default defineComponent({
             },
             {
               id: 1,
-              placement: "2",              
+              placement: "2",
               align: "right",
               ratio: 16 / 9,
               name: "default1",
