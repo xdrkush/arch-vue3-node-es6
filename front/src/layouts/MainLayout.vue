@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <!-- Navbar -->
-    <q-header v-if="!getLanding" elevated>
+    <q-header elevated>
       <q-toolbar>
         <q-item clickable tag="a" to="/">
           <q-avatar>
@@ -9,7 +9,9 @@
           </q-avatar>
         </q-item>
 
-        <q-toolbar-title> {{ getProfile.nameCompany }} </q-toolbar-title>
+        <q-toolbar-title v-if="profileStore.getProfile.nameCompany">
+          {{ profileStore.getProfile.nameCompany }}
+        </q-toolbar-title>
 
         <q-btn
           class="q-ma-xs lt-sm"
@@ -17,14 +19,18 @@
           icon="menu"
           @click="drawer = !drawer"
         />
-        <div class="q-pa-none gt-xs" :key="page" v-for="page in getPages">
+        <div
+          class="q-pa-none gt-xs"
+          :key="page"
+          v-for="page in monitStore.getPages"
+        >
           <q-btn
             v-if="page.name !== 'home'"
             stretch
             flat
             tag="a"
             class="text-white"
-            @click="() => this.$router.push({ path: page.name.toLowerCase() })"
+            :to="'/p/' + page.name.toLowerCase()"
             :label="page.name"
             :icon="page.icon"
             color="accent"
@@ -52,14 +58,14 @@
             @click="$q.dark.isActive ? $q.dark.set(false) : $q.dark.set(true)"
           />
 
-          <q-item-label header> {{ getProfile.nameCompany }} </q-item-label>
+          <!-- <q-item-label header> {{ profileStore.getProfile.nameCompany }} </q-item-label> -->
 
           <q-item
             clickable
             tag="a"
-            :to="page.name"
+            :to="'/p/' + page.name"
             :key="page"
-            v-for="page in getPages"
+            v-for="page in monitStore.getPages"
           >
             <q-item-section v-if="page.icon" avatar>
               <q-icon :name="page.icon" />
@@ -84,7 +90,7 @@
       label="Suivez-nous"
       expand-icon="share"
     >
-      <q-card class="text-center q-pa-xs">
+      <q-card class="text-center q-pa-xs" v-if="profileStore.getProfile.social">
         <div
           :key="index"
           v-for="(social, index) in arrayObjEnt(profileStore.getProfile.social)"
@@ -113,18 +119,20 @@
     </q-page-container>
 
     <!-- Footer -->
-    <q-footer v-if="!getLanding">
+    <q-footer>
       <q-toolbar class="row">
         <q-btn
+          v-if="profileStore.getProfile.phone"
           class="q-ma-xs gt-sm"
           color="accent"
-          :label="getProfile.phone"
+          :label="profileStore.getProfile.phone"
           icon="phone"
         />
         <q-btn
+          v-if="profileStore.getProfile.phone"
           class="q-ma-xs lt-md"
           tag="a"
-          :href="'tel:' + getProfile.phone.replace('.', '')"
+          :href="'tel:' + profileStore.getProfile.phone.replace('.', '')"
           color="accent"
           icon="phone"
         />
@@ -141,19 +149,21 @@
         <q-space />
 
         <q-btn
+          v-if="profileStore.getProfile.mail"
           class="q-ma-xs gt-sm"
           color="accent"
-          :label="getProfile.mail"
+          :label="profileStore.getProfile.mail"
           icon="mail"
           tag="a"
-          :href="'mailto:' + getProfile.mail"
+          :href="'mailto:' + profileStore.getProfile.mail"
         />
         <q-btn
+          v-if="profileStore.getProfile.mail"
           class="q-ma-xs lt-md"
           color="accent"
           icon="mail"
           tag="a"
-          :href="'mailto:' + getProfile.mail"
+          :href="'mailto:' + profileStore.getProfile.mail"
         />
         <q-btn
           :icon="$q.dark.isActive ? 'light_mode' : 'dark_mode'"
@@ -163,69 +173,37 @@
         />
       </q-toolbar>
     </q-footer>
-
   </q-layout>
 </template>
 
 <script>
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
+import { setCssVar } from "quasar";
 import { useMonitStore } from "src/stores/monit.store";
 import { useProfileStore } from "src/stores/profile.store";
-import { useRoute, useRouter } from "vue-router";
-import { setCssVar } from "quasar";
+import { useRouter } from "vue-router";
 import { arrayObjEnt } from "../utils";
-// import { useMeta } from "quasar";
 
 export default defineComponent({
   name: "MainLayout",
 
-  components: {},
-
-  beforeCreate() {
-    const monitStore = useMonitStore();
-    const router = useRouter();
-
-    if (monitStore.getLanding) router.push({ path: "/landing" });
-  },
-
   setup() {
     const monitStore = useMonitStore();
     const profileStore = useProfileStore();
-    // const route = useRoute();
+    const router = useRouter();
 
     const drawer = ref(false);
-    const theme = ref(monitStore.getTheme);
 
-    setCssVar("primary", theme.value.color.primary);
-    setCssVar("secondary", theme.value.color.secondary);
-    setCssVar("accent", theme.value.color.accent);
-    setCssVar("positive", theme.value.color.positive);
-    setCssVar("negative", theme.value.color.negative);
-    setCssVar("warning", theme.value.color.warning);
-    setCssVar("info", theme.value.color.info);
-    setCssVar("dark", theme.value.color.dark);
-    setCssVar("light", theme.value.color.light);
-    setCssVar("secondary", theme.value.color.secondary);
-
-    // watch(
-    //   () => route.fullPath,
-    //   (val) => {
-    //     console.log("$route value");
-    //     useMeta(() => {
-    //       return {
-    //         title: profileStore.getProfile.nameCompany + " : " + route.fullPath,
-    //         description: profileStore.getProfile.description
-    //       }
-    //     })
-    //   }
-    // );
+    onMounted(() => {
+      if (monitStore.getLanding) router.push({ path: "/landing" });
+    });
 
     return {
+      // Local
       drawer,
       arrayObjEnt,
-      getLanding: monitStore.getLanding,
-      getPages: monitStore.getPages,
-      getProfile: profileStore.getProfile,
+      // Store
+      monitStore,
       profileStore,
     };
   },

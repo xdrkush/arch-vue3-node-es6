@@ -69,13 +69,13 @@ export default {
 
       // store the id of the draggable element
       onDragStart(e, item, index) {
-        // console.log("dragStart", item, index);
+        console.log("dragStart", item, index);
         e.dataTransfer.setData("text", e.target.id);
         e.dataTransfer.dropEffect = "move";
       },
 
       onDragEnter(e) {
-        // console.log("dragEnter", e.target);
+        console.log("dragEnter", e.target);
         // don't drop on other draggables
         if (e.target.draggable !== true) {
           e.target.classList.add("drag-enter");
@@ -83,7 +83,7 @@ export default {
       },
 
       onDragLeave(e) {
-        // console.log("onDragLeave", e.target);
+        console.log("onDragLeave", e.target);
         e.target.classList.remove("drag-enter");
       },
 
@@ -93,7 +93,7 @@ export default {
       },
 
       onDrop(e) {
-        // console.log("onDrop", e.target);
+        console.log("onDrop", e.target);
         // Selected Parent match with draggedEl
         let target = e.target.parentNode.parentNode.parentNode.parentNode;
         e.preventDefault();

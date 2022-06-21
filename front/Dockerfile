@@ -1,27 +1,27 @@
 # pull official base image
-FROM node:14.19.3 as build-stage
+FROM node:14.19.3
 
 # set working directory
-WORKDIR /app
+WORKDIR /usr/src/front
 
 # add `/app/node_modules/.bin` to $PATH (to ecosystem of container)
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH /front/node_modules/.bin:$PATH
 
 # install app dependencies
-COPY ./package*.json ./
+COPY ./package*.json /usr/src/front/
 RUN yarn --silent
 RUN yarn global add @quasar/cli --silent
 
 # add app to container
-COPY . ./
+COPY . /usr/src/front
 
 # Production
-RUN quasar build --force
-FROM nginx as production-stage
-EXPOSE 3000
-RUN mkdir /app
-COPY front.conf /etc/nginx/conf.d/default.conf
-COPY --from=build-stage /app/dist/spa /app
+# FROM develop-stage as build-stage
+RUN quasar build -m ssr --force
 
-# start app in container dev
-# CMD ["quasar", "dev"]
+# FROM build-stage as production-stage
+# EXPOSE 3000
+# COPY front.conf /etc/nginx/conf.d/default.conf
+
+# start app in container (ssr)
+CMD ["node", "dist/ssr/index.js"]

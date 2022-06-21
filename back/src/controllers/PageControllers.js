@@ -30,13 +30,13 @@ export default class PageControllers extends Connection {
     }
 
     async getByName(req, res) {
-        console.log('get Page bye name', req.params)
         if (req.params.name.length <= 0) req.params.name = 'home'
         const dbPage = await Page.findOne({ name: req.params.name }, ['-_id', '-__v']).populate({
             path: 'sections',
             select: 'type name arch page page_id placement isArchived title description -_id __v',
         })
-
+        
+        console.log('get Page byName', req.params)
         try {
             return res.status(200).json({
                 status: "success",

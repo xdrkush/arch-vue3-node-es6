@@ -1,12 +1,13 @@
 <template>
   <div class="row justify-around items-center q-pa-md" style="min-height: 80vh;">
+  
     <div class="col-12 text-center">
       <h2 class="q-my-md">{{ parent.title || title }}</h2>
       <h6 class="q-mb-md q-mt-xs">{{ parent.description || description }}</h6>
     </div>
 
     <!-- Formulaire -->
-    <q-card bordered class="col-sm-7 col-xs-12">
+    <q-card bordered class="col-sm-12 col-xs-12" style="max-width: 720px">
       <q-card-section>
         <div>
           <p class="q-ma-xs"><strong>Nom & Prénom</strong></p>
@@ -63,13 +64,13 @@
     </q-card>
 
     <!-- Social -->
-    <div class="col-md-5 col-sm-12 text-center row justify-center">
-      <h4 class="q-ma-none col-12">Suivez-nous:</h4>
-      <div class="col-md-12 col-sm-4 col-xs-6" :key="social.key" v-for="social in arrayObjEnt(listSocial)">
+    <div class="col-md-12 col-sm-12 text-center row justify-center">
+      <h4 class="q-mb-none col-12">Suivez-nous:</h4>
+      <div class="col-sm-4 col-xs-6" :key="social.key" v-for="social in arrayObjEnt(listSocial)">
         <q-btn
           rounded
           tag="a"
-          class="q-ma-md q-px-md"
+          class="col-4 q-my-md q-px-md"
           @click="() => openURL(social.value)"
           :href="social.value"
           text-color="accent"

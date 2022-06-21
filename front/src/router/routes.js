@@ -14,10 +14,13 @@ const routes = [
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     // beforeEnter: [checkLandingPage],
+    meta: {
+      title: 'fezfezqfqezfqz'
+    },
     props: true,
     children: [
       { path: "", name: "HomePage", component: () => import("src/pages/website/DynamicPage.vue") },
-      { path: ":name", name: "DynamicPage", component: () => import("src/pages/website/DynamicPage.vue") },
+      { path: "p/:name", name: "DynamicPage", component: () => import("src/pages/website/DynamicPage.vue") },
       { path: "article", component: () => import("src/pages/articles/ArticlePage.vue") },
       { path: "article/:name", component: () => import("src/pages/articles/ArticleIDPage.vue") },
       { path: "cgu", component: () => import("src/pages/website/CGUPage.vue") },
@@ -26,7 +29,7 @@ const routes = [
 
   {
     path: "/auth",
-    component: () => import("layouts/LandingLayout.vue"),
+    component: () => import("layouts/AuthLayout.vue"),
     children: [
       { path: "login", component: () => import("src/pages/auth/LoginPage.vue") },
       { path: "lostPassword", component: () => import("src/pages/auth/LostPasswordPage.vue") },
@@ -60,7 +63,7 @@ const routes = [
   {
     path: "/:catchAll(.*)*",
     component: () => import("pages/ErrorNotFound.vue"),
-  },
+  }
 ];
 
 export default routes;

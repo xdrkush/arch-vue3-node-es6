@@ -14,20 +14,11 @@
 
 <script>
 import { defineComponent } from "vue";
-import { useMonitStore } from "src/stores/monit.store";
-import { useRouter } from "vue-router";
 
 export default defineComponent({
-  name: "LandingLayout",
+  name: "AuthLayout",
 
   components: {},
-
-  beforeCreate() {
-    const monitStore = useMonitStore();
-    const router = useRouter();
-
-    if (!monitStore.getLanding) router.push({ path: "/" });
-  },
 
   setup() {
     return {};

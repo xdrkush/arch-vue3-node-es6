@@ -34,7 +34,7 @@
               class="q-ma-xs"
               :key="childObj.key"
               v-for="childObj in arrayObjEnt(row.value)"
-              :color="childObj.key"
+              :style="'background-color: ' + getCssVar(childObj.key)"
               :label="childObj.key + ' : ' + childObj.value"
             >
               <q-popup-proxy
@@ -395,7 +395,7 @@
 <script>
 import { ref } from "vue";
 import { ICONS } from "../../utils";
-import { useQuasar, openURL } from "quasar";
+import { useQuasar, openURL, getCssVar } from "quasar";
 import { useMonitStore } from "src/stores/monit.store";
 import { setCssVar } from "quasar";
 import { arrayObjEnt, maxChar } from "../../utils";
@@ -474,6 +474,7 @@ export default {
       ICONS,
       monitStore,
       setCssVar,
+      getCssVar
     };
   },
 };

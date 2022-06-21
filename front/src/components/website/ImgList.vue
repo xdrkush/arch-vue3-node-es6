@@ -1,10 +1,10 @@
 <template>
-  <div class="q-my-xl text-center q-pa-md">
+  <div class="q-my-xl text-center q-pa-md q-mx-auto" style="max-width: 1280px">
     <h2 v-if="parent.title || title" class="q-my-md">
       {{ parent.title || title }}
     </h2>
 
-    <h6 v-if="parent.title || title" class="q-my-xl">
+    <h6 v-if="parent.title || title" class="q-mb-xl q-mt-xs">
       {{ parent.description || description }}
     </h6>
 
@@ -41,7 +41,6 @@
         >
           <q-img :src="obj.image" :ratio="obj.ratio" />
         </div>
-
       </div>
     </div>
   </div>

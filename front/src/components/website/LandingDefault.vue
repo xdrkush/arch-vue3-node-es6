@@ -68,6 +68,7 @@
           <q-btn
             round
             color="primary"
+            text-color="accent"
             size="md"
             icon="fa-solid fa-phone"
             class="q-mx-md"
@@ -104,6 +105,7 @@
           <q-btn
             round
             color="primary"
+            text-color="accent"
             size="md"
             icon="fa-solid fa-at"
             class="q-mx-md"
@@ -133,6 +135,7 @@
         <q-btn
           round
           color="primary"
+          text-color="accent"
           size="md"
           icon="fa-solid fa-location-dot"
           class="q-mx-md"
@@ -185,7 +188,7 @@ import { openURL } from "quasar";
 import { arrayObjEnt } from "../../utils";
 
 export default {
-  name: "LandingComponents",
+  name: "LandingDefault",
   props: ["data"],
   setup(props) {
     const user = ref(props.data);

@@ -1,12 +1,12 @@
 <template>
   <q-page>
-    <LandingComponent v-if="user" :data="user" />
+    <LandingDefault v-if="user" :data="user" />
   </q-page>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
-import LandingComponent from "components/website/LandingComponent";
+import LandingDefault from "components/website/LandingDefault";
 import { useProfileStore } from "../../stores/profile.store";
 import { useRouter } from "vue-router";
 import { useMonitStore } from "src/stores/monit.store";
@@ -14,7 +14,7 @@ import { useMonitStore } from "src/stores/monit.store";
 export default defineComponent({
   name: "IndexPage",
   components: {
-    LandingComponent,
+    LandingDefault,
   },
 
   beforeCreate() {

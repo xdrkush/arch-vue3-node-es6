@@ -41,7 +41,7 @@
 
 <script>
 import { useQuasar } from "quasar";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/auth.store";
 
@@ -53,15 +53,17 @@ export default defineComponent({
     const Router = useRouter();
     const form = ref({ mail: "", password: "" });
     let visible = ref(false);
-    authStore.getSession();
+
+    onMounted(async () => {
+      await authStore.getSession();
+      if (authStore.getLoggedIn) Router.push({ path: "/admin" });
+    });
 
     // console.log("page login", authStore, authStore.getLoggedIn);
 
-    if (authStore.getLoggedIn) Router.push({ path: "/admin" });
-
-    const loginSubmit = (obj) => {
+    const loginSubmit = async (obj) => {
       visible.value = true;
-      authStore.loginAuth(obj);
+      await authStore.loginAuth(obj);
 
       $q.notify({
         icon: "thumb_up",
@@ -87,7 +89,8 @@ export default defineComponent({
             message: "Error !",
             color: "negative",
           });
-          if(localStorage.getItem('user_token')) localStorage.removeItem('user_token')
+          if (localStorage.getItem("user_token"))
+            localStorage.removeItem("user_token");
           Router.push({ path: "/" });
         }
       }, 2500);

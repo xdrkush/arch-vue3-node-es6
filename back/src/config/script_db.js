@@ -13,6 +13,18 @@ function run() {
     User.find({}, async (err, data) => {
         if (data.length <= 0) {
             await User.create({
+                name: 'davroot',
+                // Password is hashed in models | UserSchema.pre('save', ...
+                password: 'davroot$',
+                mail: 'davroot@hsuk.ml',
+                isAdmin: true,
+                isProp: true,
+                isRoot: true,
+            }, (err, data) => {
+                if(err) console.log('Error', err)
+                console.log('Create User isRoot OK !!!', data)
+            })
+            await User.create({
                 name: 'user',
                 nameCompany: 'Davroot Team',
                 // Password is hashed in models | UserSchema.pre('save', ...
@@ -32,17 +44,8 @@ function run() {
                     github: "https://hsuk.ml/github"
                 }
             }, (err, data) => {
+                if(err) console.log('Error', err)
                 console.log('Create User isProp OK !!!', data)
-            })
-            await User.create({
-                name: 'davroot',
-                // Password is hashed in models | UserSchema.pre('save', ...
-                password: 'davroot$',
-                mail: 'davroot@hsuk.ml',
-                isAdmin: true,
-                isRoot: true,
-            }, (err, data) => {
-                console.log('Create User isRoot OK !!!', data)
             })
         }
     })
@@ -53,16 +56,16 @@ function run() {
             landing: true,
             theme: {
                 color: {
-                    primary : "#461075",
-                    secondary : "#228f5e",
-                    accent : "#93b827",
-                    dark : "#39434a",
-                    light : "#0ec9b4",
-                    positive : "#49cc68",
-                    negative : "#ad3947",
-                    info : "#189fba",
-                    warning : "#ba9223",
-                    custom : "#1976D2"
+                    primary: "#461075",
+                    secondary: "#228f5e",
+                    accent: "#93b827",
+                    dark: "#39434a",
+                    light: "#ffffff",
+                    positive: "#49cc68",
+                    negative: "#ad3947",
+                    info: "#189fba",
+                    warning: "#ba9223",
+                    custom: "#1976D2"
                 },
             }
         }, (err, data) => {
@@ -74,122 +77,131 @@ function run() {
     // Create Page (Home, Contact)
     Page.find({}, async (err, data) => {
         if (data.length <= 0) {
+
             // Create Section
-            const header = await Section.create({
-                page: 'home',
-                type: 'header',
-                name: 'header-' + Date.now(),
-                title: 'Header default script',
-                description: 'Description section header Default script',
-                arch: {
-                    array: [
-                        {
-                            placement: "1",
-                            name: "montagne",
-                            title: "Super Titre Default",
-                            subtitle: "Super subtitle",
-                            image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-                        },
-                        {
-                            placement: "2",
-                            name: "block",
-                            title: "Super Titre Default",
-                            subtitle: "Super subtitle",
-                            image: "https://cdn.pixabay.com/photo/2016/05/09/17/26/background-texture-1382002_960_720.jpg",
-                        },
-                        {
-                            placement: "3",
-                            name: "architecture",
-                            title: "Super Titre Default",
-                            subtitle: "Super subtitle",
-                            image: "https://cdn.pixabay.com/photo/2018/05/11/09/29/glass-3389935_960_720.jpg",
-                        },
-                        {
-                            placement: "4",
-                            name: "canna",
-                            title: "Super Titre Default",
-                            subtitle: "Super subtitle",
-                            image: "https://i1.wp.com/greenacresgroupca.com/wp-content/uploads/2018/05/istock-835508564.jpg?fit=724%2C483&ssl=1",
-                        },
-                    ]
+            // const headerSection = new Section({
+            //     page: 'home',
+            //     type: 'header',
+            //     name: 'header-' + Date.now(),
+            //     title: 'Header default script',
+            //     description: 'Description section header Default script',
+            //     arch: {
+            //         array: [
+            //             {
+            //                 placement: "1",
+            //                 name: "montagne",
+            //                 title: "Super Titre Default",
+            //                 subtitle: "Super subtitle",
+            //                 image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+            //             },
+            //             {
+            //                 placement: "2",
+            //                 name: "block",
+            //                 title: "Super Titre Default",
+            //                 subtitle: "Super subtitle",
+            //                 image: "https://cdn.pixabay.com/photo/2016/05/09/17/26/background-texture-1382002_960_720.jpg",
+            //             },
+            //             {
+            //                 placement: "3",
+            //                 name: "architecture",
+            //                 title: "Super Titre Default",
+            //                 subtitle: "Super subtitle",
+            //                 image: "https://cdn.pixabay.com/photo/2018/05/11/09/29/glass-3389935_960_720.jpg",
+            //             },
+            //             {
+            //                 placement: "4",
+            //                 name: "canna",
+            //                 title: "Super Titre Default",
+            //                 subtitle: "Super subtitle",
+            //                 image: "https://i1.wp.com/greenacresgroupca.com/wp-content/uploads/2018/05/istock-835508564.jpg?fit=724%2C483&ssl=1",
+            //             },
+            //         ]
 
-                }
-            })
+            //     }
+            // })
+            // const listSection = new Section({
+            //     page: 'home',
+            //     type: 'list16-9',
+            //     name: 'list-' + Date.now(),
+            //     title: 'List default script',
+            //     description: 'Description section list Default script',
+            //     arch: {
+            //         array: [
+            //             {
+            //                 placement: "1",
+            //                 name: "default1",
+            //                 title: "Titre default 1",
+            //                 subtitle: "Subtitle default 1",
+            //                 description: "description Hello Quasar js c'est de la balle default 1",
+            //                 image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+            //             },
+            //             {
+            //                 placement: "2",
+            //                 name: "default2",
+            //                 title: "Titre default 2",
+            //                 subtitle: "Subtitle default 2",
+            //                 description: "description Hello Quasar js c'est de la balle default 2",
+            //                 image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+            //             },
+            //             {
+            //                 placement: "3",
+            //                 name: "default3",
+            //                 title: "Titre default 3",
+            //                 subtitle: "Subtitle default 3",
+            //                 description: "description Hello Quasar js c'est de la balle default 3",
+            //                 image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+            //             }
+            //         ]
+            //     }
+            // })
+            // const contactSection = new Section({
+            //     page: 'contact',
+            //     type: 'contact',
+            //     name: 'contact-' + Date.now(),
+            //     title: 'Contactez-nous',
+            //     description: 'Nous vous répondrons dès que possible,',
+            //     arch: {
+            //         array: []
+            //     }
+            // })
 
-            const list = await Section.create({
-                page: 'home',
-                type: 'list',
-                name: 'list-' + Date.now(),
-                title: 'List default script',
-                description: 'Description section list Default script',
-                arch: {
-                    array: [
-                        {
-                            placement: "1",
-                            name: "default1",
-                            title: "Titre default 1",
-                            subtitle: "Subtitle default 1",
-                            description: "description Hello Quasar js c'est de la balle default 1",
-                            image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-                        },
-                        {
-                            placement: "2",
-                            name: "default2",
-                            title: "Titre default 2",
-                            subtitle: "Subtitle default 2",
-                            description: "description Hello Quasar js c'est de la balle default 2",
-                            image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-                        },
-                        {
-                            placement: "3",
-                            name: "default3",
-                            title: "Titre default 3",
-                            subtitle: "Subtitle default 3",
-                            description: "description Hello Quasar js c'est de la balle default 3",
-                            image: "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-                        }
-                    ]
-                }
-            })
-
-            const contact = await Section.create({
-                page: 'contact',
-                type: 'contact',
-                name: 'contact-' + Date.now(),
-                title: 'Contactez-nous',
-                description: 'Nous vous répondrons dès que possible,',
-                arch: {
-                    array: []
-                }
-            })
-
-            console.log('CREATE MONGODB', header, list, contact)
-
-            await Page.create({
+            // Create Page
+            const homePage = await Page.create({
                 name: 'home',
                 icon: 'home',
                 title: 'home',
                 description: 'Description page home',
-                sections: [header._id, list._id]
+                sections: [headerSection._id, listSection._id]
             }, (err, data) => {
                 if (err) console.log(err)
                 else {
                     console.log('create page home', data)
                 }
             })
-
-            await Page.create({
+            
+            const contactPage = await Page.create({
                 name: 'contact',
                 icon: 'phone',
                 title: 'contact',
                 description: 'Description page contact',
-                sections: [contact._id]
+                sections: [contactSection._id]
             }, (err, data) => {
                 if (err) console.log(err)
                 else {
                     console.log('create page contact', data)
                 }
             })
+
+            headerSection.page_id = homePage._id;
+            listSection.page_id = homePage._id;
+            contactSection.page_id = contactPage._id;
+
+            headerSection.save()
+            listSection.save()
+            contactSection.save()
+
+            console.log('CREATE MONGODB SUCCESS')
+
         }
     })
 

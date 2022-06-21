@@ -2,6 +2,7 @@ import { markRaw } from 'vue';
 import { store } from 'quasar/wrappers'
 import { createPinia } from 'pinia'
 import { router } from '../router/index'
+
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;

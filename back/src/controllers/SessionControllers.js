@@ -14,8 +14,12 @@ export default class SessionControllers extends Connection {
   createSession(req) {
     const exp = (10 * 60 * 1000);
     const date = Date.now();
+    const ip = req.headers['x-forwarded-for'] || req.ip || 'NoIp-' + Date.now()
+
+    console.log('Create Session', ip)
+
     const session = new Session({
-      ip: req.ip,
+      ip: ip,
       device: req.headers["user-agent"],
       validity: Math.floor(date + exp) // + 1 hour
     })
@@ -23,7 +27,7 @@ export default class SessionControllers extends Connection {
     // Create token
     const token = createToken({
       session_id: session._id,
-      ip: req.ip,
+      ip: ip,
       exp: Math.floor((date + exp)),
       iat: Math.floor(date),
     })
@@ -36,14 +40,16 @@ export default class SessionControllers extends Connection {
 
   async get(req, res) {
     let H_token = req.token;
-    let H_webapp = req.ip;
+    let H_webapp = req.headers['x-webapp'];
     let H_agent = req.headers["user-agent"];
 
-    console.log('H_TOKEN', H_token)
+    // console.log('H_TOKEN', H_token)
 
     try {
+      // Session Visitor
       if ((H_token === "visitor") || H_token === (null || 'null' || undefined || 'undefined' || false)
         && H_webapp && H_agent) {
+        console.log('Session visitor')
         const session = this.createSession(req)
 
         // New Session
@@ -51,19 +57,22 @@ export default class SessionControllers extends Connection {
 
       } else if (H_token !== undefined || 'undefined'
         || false || null) {
+        // console.log('Session exist')
         const soonTokenExp = soonTokenExpired(H_token)
         const tokenExp = timeTokenExpired(H_token)
         const decoded = verifyToken(H_token);
 
+        // Token Expired
         if (tokenExp) {
+          // console.log('Session expired')
           let session = this.createSession(req)
-          // Token Expired
           res.status(200).json({ message: 'token expired !', token: session.token, tokenExp })
 
+          // Token exist and is valid
         } else if (decoded) {
           let session = await Session.findById(decoded.session_id)
+          // console.log('Session decoded', decoded, session)
           if (!session) session = this.createSession(req)
-          // Token exist and is valid
           else res.status(200).json({ message: "Session Check OK", token: session.token, soonTokenExp })
         }
       } else res.status(200).json({ message: 'Error connexion !' })
@@ -79,16 +88,18 @@ export default class SessionControllers extends Connection {
       else {
         const decoded = verifyToken(token)
         const session = await Session.findById(decoded.session_id)
+        const ip = req.headers['x-forwarded-for'] || 'NoIp-' + Date.now();
+
         session.auth = false
         session.save()
 
         const newSession = this.createSession({
-          ip: req.ip,
+          ip: ip,
           headers: {
             "user-agent": req.headers["user-agent"]
           }
         })
-        
+
         res.status(200).json({ message: "Logout success !", token: newSession.token, success: true })
       }
     } catch (e) {

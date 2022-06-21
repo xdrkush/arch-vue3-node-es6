@@ -1,14 +1,23 @@
 <template>
-  <div class="text-dark">
+  <div>
     <q-inner-loading
-      :showing="!profileStore.getProfileLoaded"
+      :showing="
+        !profileStore.getProfile.nameCompany ||
+        !monitStore.getPages ||
+        !monitStore.getTheme.color ||
+        !monitStore.getPage
+      "
       label="Chargement..."
-      label-class="text-primary"
       label-style="font-size: 1.5em"
     />
     <div
-      v-if="profileStore.getProfileLoaded"
-      v-show="profileStore.getProfileLoaded"
+      v-if="
+        profileStore.getProfile.nameCompany &&
+        monitStore.getPages &&
+        monitStore.getTheme.color &&
+        monitStore.getPage
+      "
+      v-show="profileStore.getProfile"
     >
       <div v-if="authStore.getTokenExp && authStore.getLoggedIn">
         <ModalTokenExp />
@@ -22,18 +31,29 @@
 </template>
 
 <script>
-import { defineComponent, watch } from "vue";
+import { defineComponent, watch, ref, onMounted } from "vue";
 import { useProfileStore } from "./stores/profile.store";
 import { useAuthStore } from "./stores/auth.store";
 import { useMonitStore } from "./stores/monit.store";
 import ModalSession from "./components/auth/ModalSession.vue";
 import ModalTokenExp from "./components/auth/ModalTokenExp.vue";
-import { useMeta, useQuasar } from "quasar";
+import { useMeta, useQuasar, setCssVar, createMetaMixin } from "quasar";
+import meta from "./boot/meta.js";
 
 export default defineComponent({
   name: "App",
 
   components: { ModalSession, ModalTokenExp },
+
+  // mixins: [
+  //   createMetaMixin(function () {
+  //     return meta({
+  //       title: "Davroot",
+  //       description: "Ma super description ...",
+  //       route: "Oops",
+  //     });
+  //   }),
+  // ],
 
   setup() {
     const authStore = useAuthStore();
@@ -41,30 +61,63 @@ export default defineComponent({
     const monitStore = useMonitStore();
     const $q = useQuasar();
 
-    profileStore.getProfileApi();
-    authStore.getSession();
-    monitStore.getPagesAPI();
-    monitStore.getLandingStatus();
+    onMounted(() => {
+      profileStore.getProfileApi();
+      authStore.getSession();
+      monitStore.getPagesAPI();
+      monitStore.getLandingStatus();
+      console.log('onMounted APP', profileStore.getProfile.nameCompany)
+      // Check Session
+      setInterval(() => authStore.getSession(), 1 * 60 * 1000); // 1 minute
+    });
 
-    setInterval(() => authStore.getSession(), 1 * 60 * 1000);
-
+    // Watch Darkmode
     watch(
       () => $q.dark.isActive,
       (val) => {
         // console.log(val ? "On dark mode" : "On light mode");
+        $q.localStorage.set("darkmode", val);
       }
     );
 
-    useMeta(() => {
-      return {
-        title: profileStore.getProfile.nameCompany,
-        description: profileStore.getProfile.description,
-      };
-    });
+    console.log("APP", monitStore.getTheme);
+
+    // Meta Default
+    useMeta(
+      meta({
+        title: "Title setup",
+        description: "Description setup",
+        route: "Oops",
+      })
+    );
+
+    // Set theme with data on DB
+    watch(
+      () => monitStore.getTheme,
+      (val) => {
+        // console.log("W monitStore.getTheme", val, monitStore.getTheme, val.color.primary);
+        setCssVar("primary", val.color.primary);
+        setCssVar("secondary", val.color.secondary);
+        setCssVar("accent", val.color.accent);
+        setCssVar("positive", val.color.positive);
+        setCssVar("negative", val.color.negative);
+        setCssVar("warning", val.color.warning);
+        setCssVar("info", val.color.info);
+        setCssVar("dark", val.color.dark);
+        setCssVar("light", val.color.light);
+        setCssVar("bg-light", val.color.light);
+        setCssVar("text-light", val.color.light);
+        setCssVar("custom", val.color.custom);
+      }
+    );
+
+    // Check status darkmode (reload)
+    const storage_darkmode = $q.localStorage.getItem("darkmode") || false;
+    $q.dark.set(storage_darkmode);
 
     return {
-      profileStore,
-      authStore,
+      // Store
+      profileStore, authStore, monitStore,
     };
   },
 });
