@@ -32,13 +32,14 @@
     </q-tabs>
 
     <q-tab-panels v-model="tab" animated>
-      <!-- Template tab -->
+      <!-- Global tab -->
       <q-tab-panel name="template">
         <q-list bordered class="rounded-borders">
+
           <q-expansion-item
             expand-separator
             icon="perm_identity"
-            label="Template"
+            label="Template Colors"
             caption="Configuration themes"
           >
             <q-card>
@@ -50,6 +51,72 @@
               </q-card-section>
             </q-card>
           </q-expansion-item>
+
+          <q-expansion-item
+            expand-separator
+            icon="perm_identity"
+            label="Themes Global"
+            caption="Configuration themes"
+          >
+            <q-card>
+              <q-card-section>
+                <p>( border-radius, ... )</p>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+
+          <q-expansion-item
+            expand-separator
+            icon="perm_identity"
+            label="Navbar"
+            caption="Configuration themes"
+          >
+            <q-card>
+              <q-card-section>
+                <p>( border-radius, ... )</p>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+
+          <q-expansion-item
+            expand-separator
+            icon="perm_identity"
+            label="Sidebar"
+            caption="Configuration themes"
+          >
+            <q-card>
+              <q-card-section>
+                <p>( border-radius, ... )</p>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+
+          <q-expansion-item
+            expand-separator
+            icon="perm_identity"
+            label="Footer"
+            caption="Configuration themes"
+          >
+            <q-card>
+              <q-card-section>
+                <p>( border-radius, ... )</p>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+
+          <q-expansion-item
+            expand-separator
+            icon="perm_identity"
+            label="Modules"
+            caption="Configuration themes"
+          >
+            <q-card>
+              <q-card-section>
+                <p>( border-radius, ... )</p>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+
         </q-list>
       </q-tab-panel>
 

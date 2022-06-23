@@ -16,7 +16,7 @@ import {
     // User
     PutPassword, PutAccount, CheckPassword,
     // Session
-    GetSession, ExtendSession, Logout
+    GetSession, GetSessions, ExtendSession, Logout
 } from '../controllers';
 
 // Middlewares
@@ -73,6 +73,9 @@ router.route('/section')
 
 router.route('/session')
     .get(GetSession)
+
+router.route('/sessions')
+    .get(isValid, isAdmin, isPropOrIsRoot, GetSessions)
 
 router.route('/extendsession')
     .get(ExtendSession)

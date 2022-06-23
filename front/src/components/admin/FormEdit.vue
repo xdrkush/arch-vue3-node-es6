@@ -16,13 +16,23 @@
         <div v-else-if="row.key === 'isArchived'" />
         <!-- Social -->
         <div v-else-if="row.key === 'social'" class="text-center">
-          <q-btn color="accent" rounded class="q-ma-xs" @click="() => loadInput(row)">
+          <q-btn
+            color="accent"
+            rounded
+            class="q-ma-xs"
+            @click="() => loadInput(row)"
+          >
             {{ row.key }} : Edit yours link
           </q-btn>
         </div>
         <!-- Arch -->
         <div v-else-if="row.key === 'arch'" class="text-center">
-          <q-btn color="accent" rounded class="q-ma-xs" @click="() => loadInput(row)">
+          <q-btn
+            color="accent"
+            rounded
+            class="q-ma-xs"
+            @click="() => loadInput(row)"
+          >
             {{ row.key }} : Contenu du composant
           </q-btn>
         </div>
@@ -57,6 +67,7 @@
             </q-btn>
           </div>
         </div>
+
         <!-- Classic -->
         <q-btn
           v-else
@@ -94,7 +105,7 @@
           :label="loadedKey.key"
         />
       </div>
-      
+
       <!-- Textarea -->
       <div v-else-if="loadedKey.key === 'description'">
         <q-input
@@ -114,6 +125,7 @@
           :key="arch.key"
           v-for="arch in arrayObjEnt(loadedKey.value)"
         >
+
           <!-- String -->
           <div v-if="typeof arch.value === 'string'">
             <q-input
@@ -123,6 +135,8 @@
               :label="arch.key"
             />
           </div>
+
+          <!-- <div v-if="typeof arch.key === 'placement'" /> -->
 
           <!-- Array -->
           <div v-else-if="typeof arch.value === 'object'" class="text-center">
@@ -147,15 +161,50 @@
                         :key="obj.value.name"
                         v-for="obj in arrayObjEnt(itm)"
                       >
-                        <div class="row">
-                          <q-input
+                        <div v-if="obj.key === 'placement'" />
+
+                        <!-- Select Ratio -->
+                        <div v-else-if="obj.key === 'ratio'">
+                          <q-select
                             v-model="
                               item[loadedKey.key][arch.key][index][obj.key]
                             "
+                            :options="RATIO"
+                            option-value="value"
+                            option-label="label"
+                            emit-value
+                            map-options
                             square
                             filled
-                            :label="obj.key"
-                          />
+                          >
+                            <template v-slot:option="scope">
+                              <q-item
+                                clickable
+                                @click="
+                                  () =>
+                                    (item[loadedKey.key][arch.key][index][
+                                      obj.key
+                                    ] = scope.opt.value)
+                                "
+                              >
+                                <q-item-section>
+                                  <q-item-label>{{
+                                    scope.opt.value
+                                  }}</q-item-label>
+                                </q-item-section>
+                              </q-item>
+                            </template>
+
+                            <template v-slot:after-options>
+                              <q-item>
+                                <q-item-section> end ... </q-item-section>
+                              </q-item>
+                            </template>
+                          </q-select>
+                        </div>
+
+                        <!-- Image -->
+                        <div class="row" v-else-if="obj.key === 'image'">
                           <q-btn
                             v-if="obj.key === 'image'"
                             icon="photo"
@@ -214,11 +263,50 @@
                               </strong>
                             </q-tooltip>
                           </q-btn>
+
+                          <q-input
+                            v-model="
+                              item[loadedKey.key][arch.key][index][obj.key]
+                            "
+                            square
+                            filled
+                            :label="obj.key"
+                          />
                         </div>
+
+                        <!-- Textarea -->
+                        <div
+                          class="col-12 col-md-12 col-xs-12"
+                          v-else-if="obj.key === 'description'"
+                        >
+                          <q-input
+                            v-model="
+                              item[loadedKey.key][arch.key][index][obj.key]
+                            "
+                            filled
+                            square
+                            class="col-"
+                            type="textarea"
+                            :label="loadedKey.key"
+                          />
+                        </div>
+
+                        <!-- Text input -->
+                        <q-input
+                          v-else
+                          class="col-md-4 col-xs-12"
+                          v-model="
+                            item[loadedKey.key][arch.key][index][obj.key]
+                          "
+                          square
+                          filled
+                          :label="obj.key"
+                        />
                       </div>
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
+
                 <q-btn
                   icon="close"
                   color="negative"
@@ -357,7 +445,10 @@
           </template>
 
           <template v-slot:option="scope">
-            <q-item clickable @click="() => item[loadedKey.key] = scope.opt.value">
+            <q-item
+              clickable
+              @click="() => (item[loadedKey.key] = scope.opt.value)"
+            >
               <q-item-section avatar>
                 <q-icon :name="scope.opt.value" />
               </q-item-section>
@@ -370,9 +461,7 @@
 
           <template v-slot:after-options>
             <q-item>
-              <q-item-section>
-                end ...
-              </q-item-section>
+              <q-item-section> end ... </q-item-section>
             </q-item>
           </template>
         </q-select>
@@ -394,7 +483,7 @@
 
 <script>
 import { ref } from "vue";
-import { ICONS } from "../../utils";
+import { ICONS, RATIO } from "../../utils";
 import { useQuasar, openURL, getCssVar } from "quasar";
 import { useMonitStore } from "src/stores/monit.store";
 import { setCssVar } from "quasar";
@@ -472,9 +561,10 @@ export default {
       onSubmit,
       deleteOBJ,
       ICONS,
+      RATIO,
       monitStore,
       setCssVar,
-      getCssVar
+      getCssVar,
     };
   },
 };

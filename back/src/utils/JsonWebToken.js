@@ -40,11 +40,12 @@ export const timeTokenExpired = (token) => {
     // const expired = (10 * 1000); // alert :: X Minute * X second * X milliseconds
     const decoded = verify(token, JWT_TOKEN)
 
-    // console.log('timeTokenExpired',
-    //     "\n", Math.floor(Date.now()) > Math.floor(decoded.exp),
-    //     "\n", Math.floor(Date.now()), Math.floor(decoded.exp),
-    //     "\n", moment(Math.floor(Date.now())).toString(), moment(Math.floor(decoded.exp)).toString()
-    // )
+    console.log('timeTokenExpired',
+        "\n", Math.floor(Date.now()) > Math.floor(decoded.exp),
+        "\n", Math.floor(Date.now()),
+        "\n", Math.floor(decoded.exp),
+        "\n", moment(Math.floor(Date.now())).toString(), moment(Math.floor(decoded.exp)).toString()
+    )
 
     if (Math.floor(Date.now()) > Math.floor(decoded.exp)) return true;
     else return false

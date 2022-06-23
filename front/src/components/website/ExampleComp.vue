@@ -1,14 +1,11 @@
 <template>
   <div class="q-my-xl text-center">
-    <h2 class="q-my-md">{{ parent.title || title }}</h2>
-    <h6 class="q-my-xl"> {{ parent.description || description }} </h6>
+    <h2 class="q-my-md">{{ parent.title || model.title }}</h2>
+    <h6 class="q-my-xl">{{ parent.description || model.description }}</h6>
 
     <div class="row justify-around q-gutter-xs">
-
-        <!-- Your Code -->
-
+      <!-- Your Code -->
     </div>
-
   </div>
 </template>
 
@@ -24,8 +21,10 @@ export default {
     const parent = ref(props.data);
 
     return {
-      title: "Default Your Comp",
-      description: "Default Description Your Comp",
+      model: {
+        title: "Default Your Comp",
+        description: "Default Description Your Comp",
+      },
       parent,
     };
   },

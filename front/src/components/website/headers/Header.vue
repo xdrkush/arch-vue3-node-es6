@@ -68,7 +68,7 @@
 <script>
 import { ref } from "vue";
 import { colors } from "quasar";
-import { useProfileStore } from "../../stores/profile.store";
+import { useProfileStore } from "../../../stores/profile.store";
 
 const { getPaletteColor, hexToRgb } = colors;
 

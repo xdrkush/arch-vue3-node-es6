@@ -51,9 +51,9 @@ export const useAuthStore = defineStore('auth', {
 
     async getSession() {
       try {
-        if (!LocalStorage.getItem("user_token")) {
-          LocalStorage.set("user_token", "visitor")
-        }
+        // if (!LocalStorage.getItem("user_token")) {
+        //   LocalStorage.set("user_token", "visitor")
+        // }
 
         // console.log('before api getSession', api)
 
@@ -63,16 +63,18 @@ export const useAuthStore = defineStore('auth', {
         LocalStorage.set('user_token', (token) ? token : 'visitor');
         let decoded = jwt_decode(token);
 
-        console.log('session', decoded)
+        console.log('session', res.data)
 
         if (soonTokenExp) this.soonSessionExpired = soonTokenExp
 
         if (tokenExp === true) {
+          console.log('res session token expired')
           this.tokenExp = tokenExp
           this.loggedIn = false
           this.session = decoded
           this.hostLoaded = true
         } else if (token && decoded.auth) {
+          console.log('res session token not expired')
           this.user.name = decoded.name
           this.loggedIn = decoded.auth
           this.session = decoded

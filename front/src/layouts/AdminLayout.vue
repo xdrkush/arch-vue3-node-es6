@@ -3,9 +3,7 @@
     <q-header elevated class="bg-primary">
       <q-toolbar>
         <q-btn
-          flat
-          dense
-          round
+          flat dense round
           icon="menu"
           aria-label="Menu"
           @click="toggleLeftDrawer"
@@ -56,7 +54,7 @@
 
 <script>
 import { defineComponent, ref, watch, onMounted, beforeMount } from "vue";
-import EssentialLink from "src/components/website/EssentialLink.vue";
+import EssentialLink from "src/components/website/sidebars/EssentialLink.vue";
 import { useAuthStore } from "../stores/auth.store";
 import { useMonitStore } from "../stores/monit.store";
 import { useProfileStore } from "../stores/profile.store";
@@ -107,7 +105,6 @@ export default defineComponent({
     const monitStore = useMonitStore();
     const profileStore = useProfileStore();
     const router = useRouter();
-
     const leftDrawerOpen = ref(false);
 
     onMounted(() => {

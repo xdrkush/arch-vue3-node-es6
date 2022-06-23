@@ -52,9 +52,12 @@
             <!-- Components Preview -->
 
             <div class="row justify-around">
-
-              <q-responsive class="col-md-8 col-sm-12 q-px-md" :ratio="16 / 9" style="height: 100px">
-                <Preview :comp="preview"/>
+              <q-responsive
+                class="col-md-8 col-sm-12 q-px-md"
+                :ratio="16 / 9"
+                style="height: 100px"
+              >
+                <Preview :comp="preview" />
               </q-responsive>
 
               <!-- Format mobile -->
@@ -149,75 +152,35 @@ export default defineComponent({
             {
               placement: "1",
               name: "default1",
-              title: "Titre default 1",
+              title: "Card ratio 1:1",
               subtitle: "Subtitle default 1",
               description:
                 "description Hello Quasar js c'est de la balle default 1",
               image:
                 "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+              ratio: 1,
             },
             {
               placement: "2",
               name: "default2",
-              title: "Titre default 2",
+              title: "Card ratio 16/9",
               subtitle: "Subtitle default 2",
               description:
                 "description Hello Quasar js c'est de la balle default 2",
               image:
                 "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+              ratio: 16 / 9,
             },
             {
               placement: "3",
               name: "default3",
-              title: "Titre default 3",
+              title: "Card ratio 4/3",
               subtitle: "Subtitle default 3",
               description:
                 "description Hello Quasar js c'est de la balle default 3",
               image:
                 "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-            },
-          ],
-        },
-      },
-      {
-        label: "List16-9",
-        value: "list16-9",
-        type: "list16-9",
-        page: "home",
-        name: "list-" + Date.now(),
-        title: "List default script",
-        description: "Description section list Default script",
-        arch: {
-          array: [
-            {
-              placement: "1",
-              name: "default1",
-              title: "Titre default 1",
-              subtitle: "Subtitle default 1",
-              description:
-                "description Hello Quasar js c'est de la balle default 1",
-              image:
-                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-            },
-            {
-              placement: "2",
-              name: "default2",
-              title: "Titre default 2",
-              subtitle: "Subtitle default 2",
-              description:
-                "description Hello Quasar js c'est de la balle default 2",
-              image:
-                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-            },
-            {
-              placement: "3",
-              name: "default3",
-              title: "Titre default 3",
-              subtitle: "Subtitle default 3",
-              description:
-                "description Hello Quasar js c'est de la balle default 3",
-              image:
-                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
+              ratio: 14 / 3,
             },
           ],
         },

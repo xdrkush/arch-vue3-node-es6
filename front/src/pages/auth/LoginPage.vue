@@ -14,26 +14,35 @@
     >
       <div>
         <h4>Connectez-vous:</h4>
-        <q-input
-          outlined
-          v-model="form.mail"
-          label="E-mail ou name"
-          class="q-ma-md"
-        />
-        <q-input
-          outlined
-          class="q-ma-md"
-          v-model="form.password"
-          label="Password"
-          type="password"
-        />
-        <q-btn label="Mot de passe oublier ?" class="q-ma-md" color="warning" />
-        <q-btn
-          label="Confirmez"
-          class="q-ma-md"
-          color="primary"
-          @click="() => loginSubmit({ ...form })"
-        />
+        <q-form
+          class="q-my-md"
+          @submit="() => loginSubmit({ ...form })"
+        >
+          <q-input
+            outlined
+            v-model="form.mail"
+            label="E-mail ou name"
+            class="q-ma-md"
+          />
+          <q-input
+            outlined
+            class="q-ma-md"
+            v-model="form.password"
+            label="Password"
+            type="password"
+          />
+          <q-btn
+            label="Mot de passe oublier ?"
+            class="q-ma-md"
+            color="warning"
+          />
+          <q-btn
+            label="Confirmez"
+            type="submit"
+            class="q-ma-md"
+            color="primary"
+          />
+        </q-form>
       </div>
     </div>
   </q-page>
@@ -55,7 +64,7 @@ export default defineComponent({
     let visible = ref(false);
 
     onMounted(async () => {
-      await authStore.getSession();
+      // await authStore.getSession();
       if (authStore.getLoggedIn) Router.push({ path: "/admin" });
     });
 

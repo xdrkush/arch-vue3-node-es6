@@ -38,7 +38,6 @@ export default class AuthControllers extends Connection {
   async login(req, res) {
     const { mail, password } = req.body;
     const exp = (10 * 60 * 1000);
-    const date = Date.now();
     const ip = req.headers['x-forwarded-for'] || 'NoIp-' + Date.now()
 
     console.log('login', req.body)
@@ -67,14 +66,12 @@ export default class AuthControllers extends Connection {
 
       const match = await bcrypt.compare(password, user.password);
 
-
       // à enlever quand ce sera moduler (désolé en attendant) et oui c'est dégueulasse !!!
       if (req.token === "visitor") {
-        const date = Date.now();
         const session = new Session({
           ip: ip,
           device: req.headers["user-agent"],
-          validity: Math.floor(date + exp) // + 1 hour
+          validity: Math.floor(Date.now() + exp) // + 1 hour
         })
     
         // Create token
@@ -82,8 +79,8 @@ export default class AuthControllers extends Connection {
           session_id: session._id,
           ip: ip,
           auth: match,
-          exp: Math.floor((date + exp)),
-          iat: Math.floor(date),
+          exp: Math.floor((Date.now() + exp)),
+          iat: Math.floor(Date.now()),
         })
         session.token = token
         session.save()
@@ -100,7 +97,7 @@ export default class AuthControllers extends Connection {
         const session = await Session.findById(decoded.session_id)
         session.auth = match
         session.user_id = user._id
-        session.validity = date + exp
+        session.validity = Date.now() + exp
 
         console.log('Auth', user)
 
@@ -110,8 +107,8 @@ export default class AuthControllers extends Connection {
           auth: match,
           name: user.name,
           ip: ip,
-          exp: Math.floor((date + exp)),
-          iat: Math.floor(date),
+          exp: Math.floor((Date.now() + exp)),
+          iat: Math.floor(Date.now()),
         })
         session.token = token
         session.save()

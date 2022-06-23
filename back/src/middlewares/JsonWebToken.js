@@ -14,7 +14,7 @@ export default class JsonWebToken extends Connection {
 
     // TokenVisitor
     async checkHeader(req, res, next) {
-        console.log('MD header', req.ip, req.ips, req.url)
+        // console.log('MD header', req.ip, req.ips, req.url)
         // console.log('MD header 2', req.headers)
 
         // Check client
@@ -43,7 +43,7 @@ export default class JsonWebToken extends Connection {
         const isValid = verifyToken(req.token);
         const tokenExp = timeTokenExpired(req.token)
 
-        console.log('MD ISVALID', req.token, isValid)
+        // console.log('MD ISVALID')
 
         if (!isValid || tokenExp) return res.status(403).send('Error')
         else {

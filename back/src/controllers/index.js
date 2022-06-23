@@ -51,6 +51,7 @@ module.exports = {
     
     // SessionControllers
     GetSession: (req, res) => new SessionControllers().get(req, res),
+    GetSessions: (req, res) => new SessionControllers().getSessions(req, res),
     Logout: (req, res) => new SessionControllers().logout(req, res),
     ExtendSession : (req, res) => new SessionControllers().extendSession(req, res)
     // XXXControllers

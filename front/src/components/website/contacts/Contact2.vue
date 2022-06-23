@@ -87,8 +87,8 @@
 
 <script>
 import { ref } from "vue";
-import { useProfileStore } from "../../stores/profile.store";
-import { arrayObjEnt } from "../../utils";
+import { useProfileStore } from "../../../stores/profile.store";
+import { arrayObjEnt } from "../../../utils";
 
 export default {
   name: "Contact2Comp",

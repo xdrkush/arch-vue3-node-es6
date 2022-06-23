@@ -19,10 +19,10 @@
       "
       v-show="profileStore.getProfile"
     >
-      <div v-if="authStore.getTokenExp && authStore.getLoggedIn">
+      <div v-if="authStore.getTokenExp">
         <ModalTokenExp />
       </div>
-      <div v-if="authStore.getSoonSessionExpired && authStore.getLoggedIn">
+      <div v-if="authStore.getSoonSessionExpired">
         <ModalSession />
       </div>
       <router-view />
@@ -66,7 +66,6 @@ export default defineComponent({
       authStore.getSession();
       monitStore.getPagesAPI();
       monitStore.getLandingStatus();
-      console.log('onMounted APP', profileStore.getProfile.nameCompany)
       // Check Session
       setInterval(() => authStore.getSession(), 1 * 60 * 1000); // 1 minute
     });
@@ -79,8 +78,6 @@ export default defineComponent({
         $q.localStorage.set("darkmode", val);
       }
     );
-
-    console.log("APP", monitStore.getTheme);
 
     // Meta Default
     useMeta(

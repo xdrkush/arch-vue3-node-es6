@@ -1,46 +1,29 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <!-- Navbar -->
-    <q-header elevated>
-      <q-toolbar>
-        <q-item clickable tag="a" to="/">
-          <q-avatar>
-            <q-icon name="fa-solid fa-house" color="accent" />
-          </q-avatar>
-        </q-item>
-
-        <q-toolbar-title v-if="profileStore.getProfile.nameCompany">
-          {{ profileStore.getProfile.nameCompany }}
-        </q-toolbar-title>
-
-        <q-btn
-          class="q-ma-xs lt-sm"
-          color="accent"
-          icon="menu"
-          @click="drawer = !drawer"
-        />
-        <div
-          class="q-pa-none gt-xs"
-          :key="page"
-          v-for="page in monitStore.getPages"
-        >
-          <q-btn
-            v-if="page.name !== 'home'"
-            stretch
-            flat
-            tag="a"
-            class="text-white"
-            :to="'/p/' + page.name.toLowerCase()"
-            :label="page.name"
-            :icon="page.icon"
-            color="accent"
-          />
-        </div>
-      </q-toolbar>
-    </q-header>
+    <DynamicNavbar
+      :switchDrawer="switchDrawer"
+      :component="{
+        title: 'navbarDefault',
+        name: 'navbarDefault',
+        type: 'navbarDefault',
+      }"
+      :profile="profileStore.getProfile"
+      :pages="monitStore.getPages"
+    />
 
     <!-- Sidebar -->
-    <q-drawer
+    <DynamicSidebar
+      :drawer="drawer"
+      :component="{
+        title: 'sidebarDefault',
+        name: 'sidebarDefault',
+        type: 'sidebarDefault',
+      }"
+      :profile="profileStore.getProfile"
+      :pages="monitStore.getPages"
+    />
+    <!-- <q-drawer
       v-model="drawer"
       :width="200"
       :breakpoint="500"
@@ -58,7 +41,7 @@
             @click="$q.dark.isActive ? $q.dark.set(false) : $q.dark.set(true)"
           />
 
-          <!-- <q-item-label header> {{ profileStore.getProfile.nameCompany }} </q-item-label> -->
+          <q-item-label header> {{ profileStore.getProfile.nameCompany }} </q-item-label>
 
           <q-item
             clickable
@@ -77,41 +60,14 @@
           </q-item>
         </q-list>
       </q-scroll-area>
-    </q-drawer>
+    </q-drawer> -->
 
-    <!-- Button Social -->
-    <q-expansion-item
-      dense-toggle
-      dense
-      class="shadow-1 overflow-hidden fixed text-center"
-      style="border-radius: 30px; top: 9vh; z-index: 1; right: 5px"
-      header-class="bg-accent text-white"
-      expand-icon-class="text-white"
-      label="Suivez-nous"
-      expand-icon="share"
-    >
-      <q-card class="text-center q-pa-xs" v-if="profileStore.getProfile.social">
-        <div
-          :key="index"
-          v-for="(social, index) in arrayObjEnt(profileStore.getProfile.social)"
-        >
-          <q-btn
-            rounded
-            tag="a"
-            v-if="social.value"
-            @click="() => openURL(social.value)"
-            :href="social.value"
-            class="q-ma-xs"
-            text-color="accent"
-            color="black"
-            size="md"
-            :icon="`fa-brands fa-${social.key}`"
-            :label="social.key"
-            style="width: 96%"
-          />
-        </div>
-      </q-card>
-    </q-expansion-item>
+    <!-- Button Social (Modules) -->
+    <ButtonSocialFixedTop
+      :active="true"
+      :data="profileStore.getProfile.social"
+      :config="{}"
+    />
 
     <!-- Main (Body) -->
     <q-page-container>
@@ -119,7 +75,15 @@
     </q-page-container>
 
     <!-- Footer -->
-    <q-footer>
+    <DynamicFooter
+      :component="{
+        title: 'footerDefault',
+        name: 'footerDefault',
+        type: 'footerDefault',
+      }"
+      :profile="profileStore.getProfile"
+    />
+    <!-- <q-footer>
       <q-toolbar class="row">
         <q-btn
           v-if="profileStore.getProfile.phone"
@@ -172,27 +136,38 @@
           @click="$q.dark.isActive ? $q.dark.set(false) : $q.dark.set(true)"
         />
       </q-toolbar>
-    </q-footer>
+    </q-footer> -->
   </q-layout>
 </template>
 
 <script>
 import { defineComponent, onMounted, ref } from "vue";
-import { setCssVar } from "quasar";
 import { useMonitStore } from "src/stores/monit.store";
 import { useProfileStore } from "src/stores/profile.store";
 import { useRouter } from "vue-router";
 import { arrayObjEnt } from "../utils";
+import DynamicNavbar from "../components/website/navbars/DynamicNavbar.vue";
+import DynamicFooter from "../components/website/footers/DynamicFooter.vue";
+import DynamicSidebar from "../components/website/sidebars/DynamicSidebar.vue";
+import ButtonSocialFixedTop from "../modules/ButtonSocialFixedTop.vue";
 
 export default defineComponent({
   name: "MainLayout",
+
+  components: {
+    // Components
+    DynamicNavbar,
+    DynamicFooter,
+    DynamicSidebar,
+    // Modules
+    ButtonSocialFixedTop
+  },
 
   setup() {
     const monitStore = useMonitStore();
     const profileStore = useProfileStore();
     const router = useRouter();
-
-    const drawer = ref(false);
+    const drawer = ref(false)
 
     onMounted(() => {
       if (monitStore.getLanding) router.push({ path: "/landing" });
@@ -201,6 +176,10 @@ export default defineComponent({
     return {
       // Local
       drawer,
+      switchDrawer() {
+        console.log("SwitchDrawer", drawer.value);
+        drawer.value = !drawer.value;
+      },
       arrayObjEnt,
       // Store
       monitStore,

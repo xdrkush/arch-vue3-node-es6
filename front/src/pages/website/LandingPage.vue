@@ -6,7 +6,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import LandingDefault from "components/website/LandingDefault";
+import LandingDefault from "components/landings/LandingDefault";
 import { useProfileStore } from "../../stores/profile.store";
 import { useRouter } from "vue-router";
 import { useMonitStore } from "src/stores/monit.store";

@@ -14,7 +14,7 @@ export default class Connection {
     
     databaseConnection() {
         try {
-            console.log('Connection Mongoose')
+            // console.log('Connection Mongoose')
             const connect = mongoose.connect(this.mongo_uri, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true

@@ -6,9 +6,6 @@
     <div v-else-if="component.type === 'list'">
       <List :data="component" />
     </div>
-    <div v-else-if="component.type === 'list16-9'">
-      <List169 :data="component" />
-    </div>
     <div v-else-if="component.type === 'imageList'">
       <ImgList :data="component" />
     </div>
@@ -26,17 +23,16 @@
 
 <script>
 import { ref, defineComponent } from "vue";
-import Header from "../website/Header.vue";
-import List from "../website/List.vue";
-import List169 from "../website/List16-9.vue";
-import Contact from "../website/Contact.vue";
-import Contact2 from "../website/Contact2.vue";
-import ImgList from "../website/ImgList.vue";
+import Header from "../website/headers/Header.vue";
+import List from "../website/listcards/List.vue";
+import Contact from "../website/contacts/Contact.vue";
+import Contact2 from "../website/contacts/Contact2.vue";
+import ImgList from "../website/listimgs/ImgList.vue";
 
 export default defineComponent({
   name: "PreviewComp",
   components: {
-    Header, List, Contact, Contact2, List169, ImgList
+    Header, List, Contact, Contact2, ImgList
   },
   props: {
     comp: Object,
