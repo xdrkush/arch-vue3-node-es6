@@ -3,6 +3,13 @@
     <div v-if="component.type === 'footerDefault'">
       <FooterDefault
         :profile="profile"
+        :demo="demo"
+      />
+    </div>
+    <div v-else-if="component.type === 'footerSecond'">
+      <FooterSecond
+        :profile="profile"
+        :demo="demo"
       />
     </div>
     <div v-else>
@@ -14,6 +21,7 @@
 <script>
 import { defineComponent } from "vue";
 import FooterDefault from "./FooterDefault.vue";
+import FooterSecond from "./FooterSecond.vue";
 
 // const model = {
 //     profile: {
@@ -28,8 +36,8 @@ import FooterDefault from "./FooterDefault.vue";
 export default defineComponent({
   name: "PreviewComp",
   components: {
-    FooterDefault,
+    FooterDefault, FooterSecond
   },
-  props: [ "profile", "component" ],
+  props: [ "profile", "component", "demo" ],
 });
 </script>

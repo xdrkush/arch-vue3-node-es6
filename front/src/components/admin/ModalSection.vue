@@ -49,15 +49,29 @@
               </div>
             </div>
 
-            <!-- Components Preview -->
+            <!-- <FormEdit
+              :btnSave="false"
+              :data="preview"
+              :editFn="monitStore.editPage"
+              :delete="false"
+              :deleteFn="monitStore.deletePage"
+            /> -->
 
+            <div class="row justify-around" style="max-width: 10">
+              <FormEdit
+                :btnSave="false"
+                :data="preview"
+                :pageofsection="pageLoad.value"
+                :section="true"
+                :delete="false"
+              />
+            </div>
+
+            <!-- Components Preview -->
             <div class="row justify-around">
-              <q-responsive
-                class="col-md-8 col-sm-12 q-px-md"
-                :ratio="16 / 9"
-                style="height: 100px"
-              >
-                <Preview :comp="preview" />
+              <q-responsive class="col-md-8 col-sm-12 q-px-md" :ratio="16 / 9">
+                <!-- <Preview :comp="preview" /> -->
+                <DynamicComponent :data="preview" :demo="false" />
               </q-responsive>
 
               <!-- Format mobile -->
@@ -76,163 +90,40 @@
 import { useQuasar } from "quasar";
 import { defineComponent, ref } from "vue";
 import { useMonitStore } from "../../stores/monit.store";
-import Preview from "./Preview";
+import DynamicComponent from "../website/DynamicComponent.vue";
+import FormEdit from "./FormEdit.vue";
+import { model } from "../website/model";
 
 export default defineComponent({
   name: "modalSection",
 
   components: {
-    Preview,
+    DynamicComponent,
+    FormEdit,
   },
 
-  props: {
-    page: Object,
-  },
+  props: ["page"],
 
   setup(props) {
     const $q = useQuasar();
     const monitStore = useMonitStore();
+    
     const modalSection = ref(false);
     let pageLoad = ref({ ...props.page });
     let options = [
-      {
-        label: "Header",
-        value: "header",
-        type: "header",
-        arch: {
-          title: "title Default",
-          type: "header",
-          placement: "0",
-          array: [
-            {
-              placement: "1",
-              name: "montagne",
-              image:
-                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-              title: "Super Titre",
-              subtitle: "Super subtitle",
-            },
-            {
-              placement: "2",
-              name: "block",
-              image:
-                "https://cdn.pixabay.com/photo/2016/05/09/17/26/background-texture-1382002_960_720.jpg",
-              title: "Super Titre",
-              subtitle: "Super subtitle",
-            },
-            {
-              placement: "3",
-              name: "architecture",
-              image:
-                "https://cdn.pixabay.com/photo/2018/05/11/09/29/glass-3389935_960_720.jpg",
-              title: "Super Titre",
-              subtitle: "Super subtitle",
-            },
-            {
-              placement: "4",
-              name: "canna",
-              image:
-                "https://i1.wp.com/greenacresgroupca.com/wp-content/uploads/2018/05/istock-835508564.jpg?fit=724%2C483&ssl=1",
-              title: "Super Titre",
-              subtitle: "Super subtitle",
-            },
-          ],
-        },
-      },
-      {
-        label: "List",
-        value: "list",
-        type: "list",
-        page: "home",
-        name: "list-" + Date.now(),
-        title: "List default script",
-        description: "Description section list Default script",
-        arch: {
-          array: [
-            {
-              placement: "1",
-              name: "default1",
-              title: "Card ratio 1:1",
-              subtitle: "Subtitle default 1",
-              description:
-                "description Hello Quasar js c'est de la balle default 1",
-              image:
-                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-              ratio: 1,
-            },
-            {
-              placement: "2",
-              name: "default2",
-              title: "Card ratio 16/9",
-              subtitle: "Subtitle default 2",
-              description:
-                "description Hello Quasar js c'est de la balle default 2",
-              image:
-                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-              ratio: 16 / 9,
-            },
-            {
-              placement: "3",
-              name: "default3",
-              title: "Card ratio 4/3",
-              subtitle: "Subtitle default 3",
-              description:
-                "description Hello Quasar js c'est de la balle default 3",
-              image:
-                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-              ratio: 14 / 3,
-            },
-          ],
-        },
-      },
-      {
-        label: "ImageList",
-        value: "imageList",
-        type: "imageList",
-        page: "home",
-        name: "imagelist-" + Date.now(),
-        title: "Image List default",
-        description: "Description section ImageList Default script",
-        arch: {
-          array: [
-            {
-              id: 0,
-              placement: "1",
-              align: "left",
-              ratio: 16 / 9,
-              name: "default1",
-              title: "Super titre image 01",
-              description: "Super description image 01 ...",
-              image:
-                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-            },
-            {
-              id: 1,
-              placement: "2",
-              align: "right",
-              ratio: 16 / 9,
-              name: "default1",
-              title: "Super titre image 02",
-              description: "Super description image 02 ...",
-              image:
-                "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-            },
-          ],
-        },
-      },
-      { label: "Contact Map", value: "contact", type: "contact" },
-      { label: "Contact Simple", value: "contact2", type: "contact2" },
+      { ...model, label: "HeaderDefault", value: "headerDefault", type: "headerDefault" },
+      { ...model, label: "Header Slider", value: "headerSlider", type: "headerSlider" },
+      { ...model, label: "ListCardDefault", value: "listCardDefault", type: "listCardDefault" },
+      { ...model, label: "listImgDefault", value: "listImgDefault", type: "listImgDefault" },
+      { ...model, label: "bannerDefault", value: "bannerDefault", type: "bannerDefault" },
+      { ...model, label: "Contact Map", value: "contactMap", type: "contactMap" },
+      { ...model, label: "Contact Simple", value: "contactDefault", type: "contactDefault" },
     ];
     let preview = ref(options[0]);
 
-    // console.log("modalSection", pageLoad.value);
-
     const AddSectionToPage = async (section) => {
-      // console.log('addSectionToPage', section, pageLoad.value)
-      await monitStore.addSectionToPage({
-        section,
-        page: { ...pageLoad.value },
-      });
+      await monitStore.addSectionToPage({ section, page: { ...pageLoad.value }});
+
       $q.notify({
         icon: "thumb_up",
         caption: `section: ${section.name}, ajouter sur la page: ${pageLoad.value.name}`,
@@ -252,6 +143,7 @@ export default defineComponent({
       options,
       preview,
       onChange,
+      monitStore,
     };
   },
   watch: {

@@ -92,7 +92,6 @@ export default defineComponent({
     watch(
       () => monitStore.getTheme,
       (val) => {
-        // console.log("W monitStore.getTheme", val, monitStore.getTheme, val.color.primary);
         setCssVar("primary", val.color.primary);
         setCssVar("secondary", val.color.secondary);
         setCssVar("accent", val.color.accent);

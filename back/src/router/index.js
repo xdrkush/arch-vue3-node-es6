@@ -6,7 +6,7 @@ import {
     // Test
     GetTest, PostTest,
     // Monit
-    GetMonit, EditMonit, EditTheme,
+    GetMonit, EditMonit, EditTheme, EditThemes,
     GetPages, GetPage, CreatePage, PutPage, DeletePage,
     GetSections, CreateSection, PutSection, AddSectionToPage, DeleteSectionToPage, OrderSectionsToPage,
     // Profile
@@ -16,7 +16,7 @@ import {
     // User
     PutPassword, PutAccount, CheckPassword,
     // Session
-    GetSession, GetSessions, ExtendSession, Logout
+    GetSession, GetSessions, GetSessionsWithDelay, ExtendSession, Logout
 } from '../controllers';
 
 // Middlewares
@@ -76,6 +76,9 @@ router.route('/session')
 
 router.route('/sessions')
     .get(isValid, isAdmin, isPropOrIsRoot, GetSessions)
+
+router.route('/sessions/:delay')
+    .get(isValid, isAdmin, isPropOrIsRoot, GetSessionsWithDelay)
 
 router.route('/extendsession')
     .get(ExtendSession)

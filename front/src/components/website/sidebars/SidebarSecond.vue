@@ -17,7 +17,7 @@
             @click="$q.dark.isActive ? $q.dark.set(false) : $q.dark.set(true)"
           />
 
-          <q-item-label header> {{ profile.nameCompany }} </q-item-label>
+          <q-item-label header> {{ profile.nameCompany }} | second</q-item-label>
 
           <q-item
             clickable
@@ -44,7 +44,7 @@
 import { watch, ref } from "vue";
 
 export default {
-  name: "SidebarDefault",
+  name: "SidebarSecond",
 
   props: {
     profile: Object,

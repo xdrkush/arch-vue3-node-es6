@@ -1,7 +1,10 @@
 <template>
   <div>
     <div v-if="component.type === 'sidebarDefault'">
-      <SidebarDefault :profile="profile" :pages="pages" :drawer="drawer" />
+      <SidebarDefault :profile="profile" :pages="pages" :drawer="drawer" :demo="demo" />
+    </div>
+    <div v-else-if="component.type === 'sidebarSecond'">
+      <SidebarSecond :profile="profile" :pages="pages" :drawer="drawer" :demo="demo" />
     </div>
     <div v-else>
       <p>Une erreur de composant est survenu !</p>
@@ -12,6 +15,7 @@
 <script>
 import { defineComponent } from "vue";
 import SidebarDefault from "./SidebarDefault.vue";
+import SidebarSecond from "./SidebarSecond.vue";
 
 const model = {
   profile: {
@@ -41,10 +45,10 @@ export default defineComponent({
   name: "DynamicSidebar",
 
   components: {
-    SidebarDefault,
+    SidebarDefault, SidebarSecond
   },
 
-  props: ["profile", "pages", "drawer", "component"]
+  props: ["profile", "pages", "drawer", "component", "demo"]
 
 });
 </script>

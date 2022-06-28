@@ -21,14 +21,10 @@ export const useMonitStore = defineStore('monit', {
     async getLandingStatus() {
       try {
         const res = await api.get('/landing')
-        // console.log('res getLandingStatus', res)
-        // .then(res => {
-        // console.log('response getLandingStatus', res.data.landing)
+        console.log('response getLandingStatus', res.data)
         this.landing = res.data.landing;
         this.theme = res.data.theme;
         this.load = true;
-        // })
-        // .catch(e => { })
       } catch (error) {
         return error
       }
@@ -50,17 +46,11 @@ export const useMonitStore = defineStore('monit', {
       }
     },
 
-    editThemeAPI(form) {
-      // console.log('edit theme', form)
+    async editThemeAPI(form) {
       try {
-        api
-          .put('/theme', { theme: form })
-          .then(res => {
-            // console.log('response edit theme', res.data)
-            this.theme = res.data.dbTheme
-            this.load = true
-          })
-          .catch(e => { })
+        const res = await api.put('/theme', { theme: form })
+        this.theme = res.data.dbTheme
+        this.load = true
       } catch (error) {
         return error
       }
@@ -217,6 +207,6 @@ export const useMonitStore = defineStore('monit', {
       } catch (error) {
         return error
       }
-    }
+    },
   },
 });

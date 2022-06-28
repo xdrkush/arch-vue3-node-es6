@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Form -->
-    <q-form class="q-my-md row justify-around" @submit="onSubmit">
+    <q-form class="q-my-md row justify-around items-center" @submit="onSubmit">
       <div class="q-pa-xs" :key="row.key" v-for="row in arrayObjEnt(item)">
         <!-- <div v-if="obj.key === 'name'" /> -->
         <div v-if="row.key === '__v'" />
@@ -10,9 +10,18 @@
         <div v-else-if="row.key === 'updated'" />
         <div v-else-if="row.key === 'page_id'" />
         <div v-else-if="row.key === 'placement'" />
+        <div v-else-if="row.key === 'modules'" />
         <div v-else-if="row.key === 'mail'" />
         <div v-else-if="row.key === 'type'" />
+        <div v-else-if="row.key === 'key'" />
+        <div v-else-if="row.key === 'value'" />
+        <div v-else-if="row.key === 'name'" />
+        <div v-else-if="row.key === 'label'" />
         <div v-else-if="row.key === 'page'" />
+        <div v-else-if="row.key === 'navbar'" />
+        <div v-else-if="row.key === 'sidebar'" />
+        <div v-else-if="row.key === 'footer'" />
+        <div v-else-if="row.key === 'module'" />
         <div v-else-if="row.key === 'isArchived'" />
         <!-- Social -->
         <div v-else-if="row.key === 'social'" class="text-center">
@@ -37,9 +46,9 @@
           </q-btn>
         </div>
         <!-- Color -->
-        <div v-else-if="row.key === 'color'" class="text-center full-width">
+        <div v-else-if="row.key === 'color'" class="text-center">
           <div class="text-h4 q-pa-none"><strong>Color:</strong></div>
-          <div class="row justify-center">
+          <div class="row justify-center" style="max-width: 720px">
             <q-btn
               class="q-ma-xs"
               :key="childObj.key"
@@ -91,7 +100,15 @@
       </q-btn>
 
       <!-- Button Submit Form -->
-      <q-btn type="submit" color="positive" icon="save"> Save </q-btn>
+      <q-btn
+        v-if="btnSave"
+        type="submit"
+        color="positive"
+        icon="save"
+        style="max-height: 45px"
+      >
+        Save
+      </q-btn>
     </q-form>
 
     <div v-if="loadedInput">
@@ -125,7 +142,6 @@
           :key="arch.key"
           v-for="arch in arrayObjEnt(loadedKey.value)"
         >
-
           <!-- String -->
           <div v-if="typeof arch.value === 'string'">
             <q-input
@@ -272,6 +288,42 @@
                             filled
                             :label="obj.key"
                           />
+                        </div>
+
+                        <div v-else-if="obj.key === 'align'">
+                          <q-select
+                            v-model="
+                              item[loadedKey.key][arch.key][index][obj.key]
+                            "
+                            :options="[
+                              { id: 0, label: 'left', name: 'label', value: 'left' },
+                              { id: 1, label: 'right', name: 'label', value: 'right' },
+                            ]"
+                            option-value="value"
+                            option-label="label"
+                            emit-value
+                            map-options
+                            square
+                            filled
+                          >
+                            <template v-slot:option="scope">
+                              <q-item
+                                clickable
+                                @click="
+                                  () =>
+                                    (item[loadedKey.key][arch.key][index][
+                                      obj.key
+                                    ] = scope.opt.value)
+                                "
+                              >
+                                <q-item-section>
+                                  <q-item-label>
+                                    {{ scope.opt.value }}
+                                  </q-item-label>
+                                </q-item-section>
+                              </q-item>
+                            </template>
+                          </q-select>
                         </div>
 
                         <!-- Textarea -->
@@ -476,7 +528,6 @@
           :label="loadedKey.key"
         />
       </div>
-
     </div>
   </div>
 </template>
@@ -499,6 +550,7 @@ export default {
     editFn: Function,
     delete: Boolean,
     deleteFn: Function,
+    btnSave: Boolean,
   },
   setup(props) {
     const $q = useQuasar();

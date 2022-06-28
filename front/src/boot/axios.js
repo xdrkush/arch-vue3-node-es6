@@ -5,7 +5,7 @@ import { LocalStorage } from 'quasar'
 
 let ls_token = LocalStorage.getItem('user_token')
 
-console.log('BOOT axios', LocalStorage.getItem('user_token'), ls_token)
+// console.log('BOOT axios', LocalStorage.getItem('user_token'), ls_token)
 
 if (ls_token === 'null' || ls_token ===  null) {
   console.log('set token axios')
@@ -23,11 +23,6 @@ let api = axios.create({
     'Content-Type': 'application/json',
   },
   withCredentials: true,
-  // proxy: {
-  //   protocol: 'http',
-  //   host: '127.0.0.1',
-  //   port: 2045
-  // },
 })
 
 export default boot(({ app, store }) => {

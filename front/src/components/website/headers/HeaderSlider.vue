@@ -10,7 +10,7 @@
       :autoplay="autoplay"
       control-color="white"
       height="90vh"
-      class="text-white"
+      class="text-white shadow-10"
     >
       <!-- Controls carousel (button) -->
       <template v-slot:control>
@@ -40,7 +40,7 @@
       <q-carousel-slide
         :key="slid.name"
         v-for="slid in parent.arch.array"
-        :name="slid.placement"
+        :name="slid.name"
         class="column no-wrap flex-center q-pa-none"
         :img-src="slid.image"
       >
@@ -61,7 +61,6 @@
         </div>
       </q-carousel-slide>
     </q-carousel>
-
   </div>
 </template>
 
@@ -69,63 +68,19 @@
 import { ref } from "vue";
 import { colors } from "quasar";
 import { useProfileStore } from "../../../stores/profile.store";
-
 const { getPaletteColor, hexToRgb } = colors;
-
-const model = {
-  title: "title Default",
-  type: "header",
-  placement: "0",
-  array: [
-    {
-      placement: "1",
-      name: "montagne",
-      image:
-        "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-      title: "Super Titre",
-      subtitle: "Super subtitle",
-    },
-    {
-      placement: "2",
-      name: "block",
-      image:
-        "https://cdn.pixabay.com/photo/2016/05/09/17/26/background-texture-1382002_960_720.jpg",
-      title: "Super Titre",
-      subtitle: "Super subtitle",
-    },
-    {
-      placement: "3",
-      name: "architecture",
-      image:
-        "https://cdn.pixabay.com/photo/2018/05/11/09/29/glass-3389935_960_720.jpg",
-      title: "Super Titre",
-      subtitle: "Super subtitle",
-    },
-    {
-      placement: "4",
-      name: "canna",
-      image:
-        "https://i1.wp.com/greenacresgroupca.com/wp-content/uploads/2018/05/istock-835508564.jpg?fit=724%2C483&ssl=1",
-      title: "Super Titre",
-      subtitle: "Super subtitle",
-    },
-  ],
-};
+import { model } from "../model";
 
 export default {
-  name: "HeaderHome",
-  props: {
-    data: Object,
-  },
+  name: "HeaderSlider",
+  props: ['data', 'demo'],
   setup(props) {
-    const parent = ref(props.data);
+    const parent = ref(props.demo ? model : props.data);
     const profileStore = useProfileStore();
     const opacityToHex = (color, opacity) => {
       let c = hexToRgb(color);
       return `rgba(${c.r},${c.g},${c.b},${opacity})`;
     };
-
-    // console.log("Header", parent);
 
     return {
       parent,
@@ -133,7 +88,7 @@ export default {
       getPaletteColor,
       profileStore,
       autoplay: ref(true),
-      slide: ref("1"),
+      slide: ref(parent.value.arch.array[0].name),
       lorem:
         "lorem  ipsume fze zlorem  ipsume fze zlorem  ipsume fze zlorem  ipsume fze zlorem  ipsume fze z",
     };

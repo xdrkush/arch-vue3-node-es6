@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <q-header elevated>
+  <div :style=" demo ? 'position: relative' : ''">
+    <q-header reveal elevated :style=" demo ? 'position: relative; width: 100%;; left: 0; z-index: 0' : '' ">
       <q-toolbar>
         <q-item clickable tag="a" to="/">
           <q-avatar>
@@ -22,13 +22,13 @@
 
         <div class="q-pa-none gt-xs" :key="page" v-for="page in pages">
           <q-btn
-            v-if="page.name !== 'home'"
+            v-if="page.name !== 'home' || 'legals'"
             stretch
             flat
             tag="a"
             class="text-white"
             :to="'/p/' + page.name.toLowerCase()"
-            :label="page.name"
+            :label="page.title"
             :icon="page.icon"
             color="accent"
           />
@@ -42,7 +42,7 @@
 export default {
   name: "NavbarDefault",
 
-  props: ["profile", "pages", "switchDrawer"],
+  props: ["profile", "pages", "switchDrawer", "demo"],
 
 };
 </script>

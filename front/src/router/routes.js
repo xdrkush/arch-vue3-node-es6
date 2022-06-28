@@ -14,16 +14,12 @@ const routes = [
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     // beforeEnter: [checkLandingPage],
-    meta: {
-      title: 'fezfezqfqezfqz'
-    },
     props: true,
     children: [
       { path: "", name: "HomePage", component: () => import("src/pages/website/DynamicPage.vue") },
       { path: "p/:name", name: "DynamicPage", component: () => import("src/pages/website/DynamicPage.vue") },
       { path: "article", component: () => import("src/pages/articles/ArticlePage.vue") },
       { path: "article/:name", component: () => import("src/pages/articles/ArticleIDPage.vue") },
-      { path: "cgu", component: () => import("src/pages/website/CGUPage.vue") },
     ],
   },
 
@@ -40,20 +36,20 @@ const routes = [
   {
     path: "/admin",
     component: () => import("layouts/AdminLayout.vue"),
-    beforeEnter: [checkIsLoggedIn],
+    // beforeEnter: [checkIsLoggedIn],
     children: [
-      { path: "", component: () => import("src/pages/admin/AdminDashboardPage.vue") },
+      { path: "", beforeEnter: [checkIsLoggedIn], component: () => import("src/pages/admin/AdminDashboardPage.vue") },
       {
         path: "website",
-        component: () => import("src/pages/admin/AdminWebsitePage.vue"),
+        beforeEnter: [checkIsLoggedIn], component: () => import("src/pages/admin/AdminWebsitePage.vue"),
       },
       {
         path: "article",
-        component: () => import("src/pages/admin/AdminArticlePage.vue"),
+        beforeEnter: [checkIsLoggedIn], component: () => import("src/pages/admin/AdminArticlePage.vue"),
       },
       {
         path: "profil",
-        component: () => import("src/pages/admin/AdminProfilPage.vue"),
+        beforeEnter: [checkIsLoggedIn], component: () => import("src/pages/admin/AdminProfilPage.vue"),
       },
     ],
   },

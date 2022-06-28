@@ -1,7 +1,9 @@
 <template>
   <div class="q-my-xl text-center q-pa-md q-mx-auto" style="max-width: 1280px">
-    <h2 class="q-my-md">{{ parent.title || title }}</h2>
-    <h6 class="q-mb-md q-mt-xs">{{ parent.description || description }}</h6>
+    <h2 class="q-my-md">{{ parent.title }}</h2>
+    <h6 class="q-mb-md q-mt-xs">
+      {{ parent.description }}
+    </h6>
 
     <div class="row justify-around q-gutter-xs">
       <div
@@ -9,17 +11,14 @@
         :key="item.title"
         v-for="item in parent.arch.array"
       >
-        <q-card class="q-ma-xs">
+        <q-card class="q-ma-xs shadow-10">
           <q-responsive
             :ratio="
-              item.ratio === '16/9' 
-                ? 16 / 9 
-                : item.ratio === '4/3' 
-                  ? 4 / 3 
-                  : 1
+              item.ratio === '16/9' ? 16 / 9 : item.ratio === '4/3' ? 4 / 3 : 1
             "
           >
             <q-img
+              class="border-radius-inherit"
               :src="
                 item.image
                   ? item.image
@@ -41,18 +40,15 @@
 
 <script>
 import { ref } from "vue";
+import { model } from "../model";
 
 export default {
-  name: "ListComp",
-  props: {
-    data: Object,
-  },
+  name: "ListCardDefault",
+  props: ["data", "demo"],
   setup(props) {
-    const parent = ref(props.data);
+    const parent = ref(props.demo ? model : props.data);
 
     return {
-      title: "Default List",
-      description: "Default Description List",
       parent,
     };
   },

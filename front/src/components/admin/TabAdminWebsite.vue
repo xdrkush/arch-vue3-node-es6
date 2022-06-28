@@ -35,76 +35,35 @@
       <!-- Global tab -->
       <q-tab-panel name="template">
         <q-list bordered class="rounded-borders">
-
+          <!-- Gestion Template -->
           <q-expansion-item
             expand-separator
             icon="perm_identity"
-            label="Template Colors"
+            label="Template"
             caption="Configuration themes"
           >
             <q-card>
-              <q-card-section>
-                <FormEdit
-                  :data="monitStore.getTheme"
-                  :editFn="monitStore.editThemeAPI"
+              <q-card-section class="row justify-center">
+                <!-- Sidebar -->
+                <DynamicSidebar
+                  v-if="drawer"
+                  :drawer="drawer"
+                  :component="{
+                    title: 'sidebarDefault',
+                    name: 'sidebarDefault',
+                    type: 'sidebarDefault',
+                  }"
+                  :profile="profileStore.getProfile"
+                  :pages="monitStore.getPages"
+                  :demo="true"
                 />
+                <ModalLayout />
               </q-card-section>
             </q-card>
           </q-expansion-item>
 
-          <q-expansion-item
-            expand-separator
-            icon="perm_identity"
-            label="Themes Global"
-            caption="Configuration themes"
-          >
-            <q-card>
-              <q-card-section>
-                <p>( border-radius, ... )</p>
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-
-          <q-expansion-item
-            expand-separator
-            icon="perm_identity"
-            label="Navbar"
-            caption="Configuration themes"
-          >
-            <q-card>
-              <q-card-section>
-                <p>( border-radius, ... )</p>
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-
-          <q-expansion-item
-            expand-separator
-            icon="perm_identity"
-            label="Sidebar"
-            caption="Configuration themes"
-          >
-            <q-card>
-              <q-card-section>
-                <p>( border-radius, ... )</p>
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-
-          <q-expansion-item
-            expand-separator
-            icon="perm_identity"
-            label="Footer"
-            caption="Configuration themes"
-          >
-            <q-card>
-              <q-card-section>
-                <p>( border-radius, ... )</p>
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-
-          <q-expansion-item
+          <!-- Gestion Modules -->
+          <!-- <q-expansion-item
             expand-separator
             icon="perm_identity"
             label="Modules"
@@ -112,11 +71,10 @@
           >
             <q-card>
               <q-card-section>
-                <p>( border-radius, ... )</p>
+                <ModalModule />
               </q-card-section>
             </q-card>
-          </q-expansion-item>
-
+          </q-expansion-item> -->
         </q-list>
       </q-tab-panel>
 
@@ -133,6 +91,7 @@
               <q-card-section>
                 <LandingPage />
                 <FormEdit
+                  :btnSave="true"
                   :data="profileStore.getProfile"
                   :editFn="profileStore.editProfileApi"
                 />
@@ -159,6 +118,7 @@
           <q-card>
             <q-card-section>
               <FormEdit
+                :btnSave="true"
                 :data="page"
                 :editFn="monitStore.editPage"
                 :delete="true"
@@ -173,8 +133,8 @@
 
         <!-- Modal Add Section to page -->
         <ModalSection :page="page" />
-      
       </q-tab-panel>
+      
     </q-tab-panels>
   </div>
 </template>
@@ -188,6 +148,8 @@ import ModalSection from "./ModalSection.vue";
 import DragOrder from "./DragOrder.vue";
 import { useMonitStore } from "../../stores/monit.store";
 import { useProfileStore } from "../../stores/profile.store";
+// import ModalModule from "./ModalModule.vue";
+import ModalLayout from "./ModalLayout.vue";
 
 export default {
   components: {
@@ -196,14 +158,22 @@ export default {
     ModalPage,
     ModalSection,
     DragOrder,
+    // ModalModule,
+    ModalLayout,
   },
   setup() {
     const monitStore = useMonitStore();
     const profileStore = useProfileStore();
+    const drawer = ref(false);
 
     return {
+      drawer,
       tab: ref("template"),
       splitterModel: ref(20),
+      switchDrawer() {
+        console.log("SwitchDrawer", drawer.value);
+        drawer.value = !drawer.value;
+      },
       monitStore,
       profileStore,
     };

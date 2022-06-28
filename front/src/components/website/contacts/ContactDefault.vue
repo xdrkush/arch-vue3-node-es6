@@ -2,12 +2,12 @@
   <div class="row justify-around items-center q-pa-md" style="min-height: 80vh;">
   
     <div class="col-12 text-center">
-      <h2 class="q-my-md">{{ parent.title || title }}</h2>
-      <h6 class="q-mb-md q-mt-xs">{{ parent.description || description }}</h6>
+      <h2 class="q-my-md">{{ parent.title }}</h2>
+      <h6 class="q-mb-md q-mt-xs">{{ parent.description }}</h6>
     </div>
 
     <!-- Formulaire -->
-    <q-card bordered class="col-sm-12 col-xs-12" style="max-width: 720px">
+    <q-card bordered class="col-sm-12 col-xs-12 shadow-10" style="max-width: 720px">
       <q-card-section>
         <div>
           <p class="q-ma-xs"><strong>Nom & Prénom</strong></p>
@@ -70,7 +70,7 @@
         <q-btn
           rounded
           tag="a"
-          class="col-4 q-my-md q-px-md"
+          class="col-4 q-my-md q-px-md shadow-10"
           @click="() => openURL(social.value)"
           :href="social.value"
           text-color="accent"
@@ -89,16 +89,15 @@
 import { ref } from "vue";
 import { useProfileStore } from "../../../stores/profile.store";
 import { arrayObjEnt } from "../../../utils";
+import { model } from "../model";
 
 export default {
-  name: "Contact2Comp",
-  props: {
-    data: Object,
-  },
+  name: "ContactDefault",
+  props: ['data', 'demo'],
   setup(props) {
     const profileStore = useProfileStore();
 
-    const parent = ref(props.data);
+    const parent = ref(props.demo ? model : props.data);
     const form = ref({
       name: "",
       subject: "",

@@ -6,13 +6,20 @@ import { useAuthStore } from "src/stores/auth.store"
 // is Logged In
 export function checkIsLoggedIn (from, to) {
     // // console.log('Middleware checkIsLoggedIn', from, to)
-    // const authStore = useAuthStore();
-    // const isLoggedIn = authStore.getLoggedIn
+    const authStore = useAuthStore();
+    const isLoggedIn = authStore.getLoggedIn
     // // console.log('middleware isloggedin', authStore)
-    // // console.log('middleware isloggedin', isLoggedIn)
-    // if (!isLoggedIn) return { path: '/auth/login' }
-    // else return
-    return
+    console.log('middleware isloggedin', isLoggedIn)
+    if (!isLoggedIn) {
+        console.log('Middleware NOT')
+        return { path: '/auth/login' }
+    }
+    else {
+
+        console.log('Middleware OK')
+        return
+    }
+    // return
 }
 
 // is Admin In

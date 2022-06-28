@@ -9,7 +9,7 @@ export default class MonitControllers extends Connection {
     super();
     privateProps.set(this.databaseConnection());
   }
-  
+
   async get(req, res) {
     const dbMonit = await Monit.find()
 

@@ -64,11 +64,8 @@ export default defineComponent({
     let visible = ref(false);
 
     onMounted(async () => {
-      // await authStore.getSession();
       if (authStore.getLoggedIn) Router.push({ path: "/admin" });
     });
-
-    // console.log("page login", authStore, authStore.getLoggedIn);
 
     const loginSubmit = async (obj) => {
       visible.value = true;
@@ -91,6 +88,7 @@ export default defineComponent({
             color: "positive",
           });
           Router.push({ path: "/admin" });
+          location.reload()
         } else {
           $q.notify({
             icon: "thumb_up",
@@ -101,6 +99,7 @@ export default defineComponent({
           if (localStorage.getItem("user_token"))
             localStorage.removeItem("user_token");
           Router.push({ path: "/" });
+          location.reload()
         }
       }, 2500);
     };

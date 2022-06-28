@@ -25,22 +25,24 @@ export const useAuthStore = defineStore('auth', {
       try {
         api.put('/auth', { ...form })
           .then(res => {
-            // console.log('res login', res.data)
+            console.log('res login 1', res.data)
             const { token } = res.data;
             let decoded;
 
             if (token) {
+              console.log('res login 2', res.data)
               LocalStorage.set("user_token", token);
               decoded = jwt_decode(token)
             }
 
             if (decoded.auth) {
+              console.log('res login 3', decoded)
               this.loggedIn = decoded.auth
               this.user.name = decoded.name
               this.session = decoded
             } else {
+              console.log('res login 4')
               this.loggedIn = false
-              window.reload()
             }
 
           }).catch(err => { })
@@ -102,18 +104,13 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    extendSession() {
+    async extendSession() {
       // console.log('extendSession store')
       try {
-        api
-          .get('/extendsession')
-          .then(res => {
-            const { token, soonTokenExp } = res.data
-            // console.log('response extend session', res.data)
-            LocalStorage.set('user_token', token)
-            this.soonSessionExpired = soonTokenExp
-            this.hostLoaded = true
-          }).catch(err => { })
+        const res = await api.get('/extendsession')
+        const { token } = res.data
+        console.log('response extend session', res.data)
+        LocalStorage.set('user_token', token)
       } catch (err) {
         console.error(err);
       }

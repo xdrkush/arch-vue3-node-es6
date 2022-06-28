@@ -1,15 +1,18 @@
 import { defineStore } from 'pinia';
 import { api } from 'boot/axios'
+
 export const useProfileStore = defineStore('profile', {
   state: () => ({
     profile: {},
     sessions: [],
-    session: {}
+    session: {},
+    chart: {}
   }),
   getters: {
     getProfile: (state) => state.profile,
     getSessions: (state) => state.sessions,
-    getSession: (state) => state.session
+    getSession: (state) => state.session,
+    getChart: (state) => state.chart,
   },
   actions: {
     async getProfileApi() {
@@ -22,7 +25,7 @@ export const useProfileStore = defineStore('profile', {
         return error
       }
     },
-    
+
     editProfileApi(form) {
       try {
         api
@@ -49,6 +52,17 @@ export const useProfileStore = defineStore('profile', {
       } catch (error) {
         return error
       }
+    },
+
+    async getSessionsWithDelayAPI(delay) {
+      try {
+        const res = await api.get('/sessions/' + delay)
+        console.log('res, getSessionWithDelay', res)
+        this.chart = res.data.chart
+      } catch (error) {
+        return error
+      }
+
     },
   },
 });

@@ -35,6 +35,10 @@ const PageSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Section'
     }],
+    default: {
+        type: Boolean,
+        default: false
+    },
     isArchived: {
         type: Boolean,
         default: false,

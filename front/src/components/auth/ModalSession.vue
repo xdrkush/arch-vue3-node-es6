@@ -58,6 +58,7 @@ export default defineComponent({
         message: "Success !",
         color: "positive",
       });
+      location.reload()
     }
 
     return {

@@ -52,12 +52,6 @@ const UserSchema = new Schema({
     },
     social: {
         type: Object,
-        default: {
-            facebook: "",
-            twitter: "",
-            linkedin: "",
-            youtube: ""
-        }
     },
     isValid: {
         type: Boolean,

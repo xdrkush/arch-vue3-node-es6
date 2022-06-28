@@ -1,7 +1,10 @@
 <template>
   <q-page class="q-pa-md">
     <h2 class="q-ma-none">Admin Dashboard</h2>
-    <p>(in progress ...)</p>
+    <p>
+      (si les session ne sont pas charger alors rechaarger votre page (F5), ,in
+      progress ...)
+    </p>
 
     <div class="row">
       <ChartSession />
@@ -17,6 +20,9 @@ import ChartSession from "../../components/admin/ChartSession.vue";
 
 export default defineComponent({
   name: "IndexPage",
-  components: { ListSession, ChartSession },
+  components: {
+    ListSession,
+    ChartSession,
+  }
 });
 </script>

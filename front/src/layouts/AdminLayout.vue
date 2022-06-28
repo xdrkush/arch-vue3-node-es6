@@ -20,7 +20,6 @@
           icon="refresh"
           color="accent"
           class="q-mx-xs"
-          disabled
           @click="forceToRefresh"
         />
         <q-btn
@@ -91,10 +90,16 @@ const linksList = [
     icon: "edit",
     link: "/admin/website",
   },
+  {
+    title: "Message",
+    caption: "Répondez à vos messages",
+    icon: "mail",
+    link: "/admin/message",
+  },
 ];
 
 export default defineComponent({
-  name: "MainLayout",
+  name: "AdminLayout",
 
   components: {
     EssentialLink,
@@ -108,7 +113,7 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
 
     onMounted(() => {
-      if (!authStore.getLoggedIn) router.push({ path: "/auth/login" });
+      // if (!authStore.getLoggedIn) router.push({ path: "/auth/login" });
     })
 
     // Check isLoggedIn

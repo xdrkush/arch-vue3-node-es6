@@ -19,6 +19,7 @@ module.exports = {
     GetMonit: (req, res) => new MonitControllers().get(req, res),
     EditMonit: (req, res) => new MonitControllers().put(req, res),
     EditTheme: (req, res) => new MonitControllers().editTheme(req, res),
+    EditThemes: (req, res) => new MonitControllers().editThemes(req, res),
 
     // ProfileControllers
     GetProfile: (req, res) => new ProfileControllers().get(req, res),
@@ -52,6 +53,7 @@ module.exports = {
     // SessionControllers
     GetSession: (req, res) => new SessionControllers().get(req, res),
     GetSessions: (req, res) => new SessionControllers().getSessions(req, res),
+    GetSessionsWithDelay: (req, res) => new SessionControllers().getSessionsWithDelay(req, res),
     Logout: (req, res) => new SessionControllers().logout(req, res),
     ExtendSession : (req, res) => new SessionControllers().extendSession(req, res)
     // XXXControllers

@@ -32,7 +32,7 @@ import { ref } from "vue";
 import { useMainStore } from "stores/rootState";
 
 export default {
-  name: "HeaderHome",
+  name: "SliderDefault",
   setup() {
     const mainStore = useMainStore();
     // console.log("useMainStore", mainStore.sliders);

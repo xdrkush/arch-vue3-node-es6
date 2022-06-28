@@ -45,6 +45,10 @@ const SectionSchema = new Schema({
     arch: {
         type: Object,
     },
+    isDefault: {
+        type: Boolean,
+        default: false,
+    },
     isArchived: {
         type: Boolean,
         default: false,

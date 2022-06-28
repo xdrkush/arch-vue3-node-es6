@@ -12,30 +12,43 @@
         @drop="onDrop"
       >
         <q-expansion-item
-          :id="'dragEl-' + index"
           expand-separator
-          icon="drag_indicator"
-          :label="section.name"
-          :caption="'section : ' + index"
           :key="index"
           v-for="(section, index) in parent.sections"
-          :draggable="true"
-          @dragstart="(e) => onDragStart(e, section, index)"
           style="width: 100%"
         >
+          <template v-slot:header>
+            <q-item-section
+              avatar
+              :id="'dragEl-' + index"
+              :draggable="true"
+              @dragstart="(e) => onDragStart(e, section, index)"
+            >
+              <q-avatar
+                icon="drag_indicator"
+                color="primary"
+                text-color="white"
+              />
+            </q-item-section>
+
+            <q-item-section> {{ section.name }} </q-item-section>
+
+          </template>
+
           <q-card>
-              <q-card-section>
-                <Preview :comp="section" />
-                <FormEdit
-                  :data="section"
-                  :pageofsection="page"
-                  :section="true"
-                  :editFn="monitStore.editSection"
-                  :delete="true"
-                  :deleteFn="monitStore.deleteSectionToPage"
-                />
-              </q-card-section>
-            </q-card>
+            <q-card-section>
+              <DynamicComponent :data="section" />
+              <FormEdit
+                :btnSave="true"
+                :data="section"
+                :pageofsection="page"
+                :section="true"
+                :editFn="monitStore.editSection"
+                :delete="true"
+                :deleteFn="monitStore.deleteSectionToPage"
+              />
+            </q-card-section>
+          </q-card>
         </q-expansion-item>
       </q-list>
     </div>
@@ -46,12 +59,13 @@
 import { ref } from "vue";
 import { arraymove } from "../../utils";
 import { useMonitStore } from "../../stores/monit.store";
-import Preview from "./Preview";
+import DynamicComponent from "../website/DynamicComponent.vue";
 import FormEdit from "components/admin/FormEdit.vue";
 
 export default {
   components: {
-    Preview, FormEdit
+    DynamicComponent,
+    FormEdit,
   },
   props: {
     page: Object,
@@ -95,7 +109,7 @@ export default {
       onDrop(e) {
         console.log("onDrop", e.target);
         // Selected Parent match with draggedEl
-        let target = e.target.parentNode.parentNode.parentNode.parentNode;
+        let target = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
         e.preventDefault();
 
         // Item selected

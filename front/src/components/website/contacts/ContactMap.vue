@@ -1,11 +1,11 @@
 <template>
-  <div class="row justify-around items-center" style="max-height: 90vh">
+  <div class="row justify-around items-center" style="height: 92vh">
     <!-- Map -->
     <div
       style="
         border: 1px solid black;
         margin-top: 0vh;
-        height: 90vh;
+        height: 100%;
         width: 100vw;
       "
     >
@@ -31,22 +31,15 @@
       expand-icon-class="text-white"
       header-class="bg-accent text-white"
       class="shadow-1 overflow-hidden absolute text-left row"
-      style="border-radius: 30px; max-width: 720px; top: 8vh; right: 5px"
-      :label="parent.title || title"
+      style="border-radius: 30px; max-width: 720px; top: 8vh"
+      :label="parent.title"
     >
       <q-card bordered class="col-sm-12 col-xs-12 col-12 text-left">
-        <!-- <q-card-section>
-          <div class="text-h4">
-            <strong>{{ parent.title || title }}</strong>
-          </div>
-          <p class="q-ma-none">
-            {{ parent.description || description }}
-          </p>
-        </q-card-section> -->
-
-        <q-separator inset style="max-width: 720px; min-width: 90vw" />
-
-        <q-card-section style="border-radius: 30px; max-width: 720px;">
+        <q-separator inset style="max-width: 720px;" />
+        <h6 class="text-center q-ma-md">
+        {{ parent.description }}
+        </h6>
+        <q-card-section style="border-radius: 30px; max-width: 720px">
           <div>
             <p class="q-ma-xs"><strong>Nom & Prénom</strong></p>
             <q-input
@@ -93,10 +86,7 @@
             />
           </div>
           <div class="text-center">
-            <q-btn
-              class="q-my-md bg-primary text-accent"
-              label="envoyer"
-            />
+            <q-btn class="q-my-md bg-primary" label="envoyer" />
           </div>
 
           <!-- <div class="row">
@@ -118,14 +108,13 @@
 
 <script>
 import { ref } from "vue";
+import { model } from "../model";
 
 export default {
-  name: "ContactComp",
-  props: {
-    data: Object,
-  },
+  name: "ContactMap",
+  props: ["data", "demo"],
   setup(props) {
-    const parent = ref(props.data);
+    const parent = ref(props.demo ? model : props.data);
     const form = ref({
       name: "",
       subject: "",
@@ -135,8 +124,6 @@ export default {
     });
 
     return {
-      title: "Default Contact",
-      description: "Default Description Contact",
       parent,
       form,
     };

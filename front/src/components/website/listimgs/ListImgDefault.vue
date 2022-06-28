@@ -8,24 +8,37 @@
       {{ parent.description || description }}
     </h6>
 
-    <div v-if="parent.arch.array">
-      <div
+    <div>
+      <q-card
+        flat
         :key="index"
         v-for="(obj, index) in parent.arch.array"
-        class="row justify-around q-my-md"
+        class="row justify-around q-my-xl items-center shadow-10"
       >
         <!-- Image Left -->
         <div
           v-if="obj.align === 'left'"
           class="col-12 col-md-6 row justify-center"
         >
-          <q-img :src="obj.image" :ratio="obj.ratio" />
+          <q-img
+            class="shadow-10 border-radius-inherit"
+            :src="obj.image"
+            :ratio="
+              obj.ratio === '16/9' ? 16 / 9 : obj.ratio === '4/3' ? 4 / 3 : 1
+            "
+          />
         </div>
         <div
           v-else-if="obj.align === 'right'"
           class="col-12 col-md-6 row justify-center lt-md"
         >
-          <q-img :src="obj.image" :ratio="obj.ratio" />
+          <q-img
+            class="shadow-10 border-radius-inherit	"
+            :src="obj.image"
+            :ratio="
+              obj.ratio === '16/9' ? 16 / 9 : obj.ratio === '4/3' ? 4 / 3 : 1
+            "
+          />
         </div>
 
         <!-- Image Text -->
@@ -39,34 +52,30 @@
           v-if="obj.align === 'right'"
           class="col-12 col-md-6 row justify-center gt-sm"
         >
-          <q-img :src="obj.image" :ratio="obj.ratio" />
+          <q-img
+            class="shadow-10 border-radius-inherit	"
+            :src="obj.image"
+            :ratio="
+              obj.ratio === '16/9' ? 16 / 9 : obj.ratio === '4/3' ? 4 / 3 : 1
+            "
+          />
         </div>
-      </div>
+      </q-card>
     </div>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
+import { model } from "../model";
 
 export default {
-  name: "ImgLeftComp",
-  props: {
-    data: Object,
-  },
+  name: "ListImgDefault",
+  props: ["data", "demo"],
   setup(props) {
-    const parent = ref(props.data);
+    const parent = ref(props.demo ? model : props.data);
 
     return {
-      title: "Title ImgLeftComp",
-      description: "Description ImgLeftComp",
-      obj: {
-        ratio: 16 / 9,
-        image:
-          "https://cdn.pixabay.com/photo/2019/11/06/12/54/nature-4606064_960_720.jpg",
-        title: "Default title ImgLeftComp",
-        description: "Default Description ImgLeftComp",
-      },
       parent,
     };
   },

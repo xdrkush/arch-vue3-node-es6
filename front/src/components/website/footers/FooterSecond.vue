@@ -30,6 +30,7 @@
           </p>
 
           <p class=" col-12 col-md-12 q-ma-none">
+            
             <a class="q-ma-none q-pa-none text-accent" href="/p/legals"> Mentions Légales & C.G.U </a>
           </p>
         </div>
@@ -52,12 +53,6 @@
           icon="mail"
           tag="a"
           :href="'mailto:' + profile.mail"
-        />
-        <q-btn
-          :icon="$q.dark.isActive ? 'light_mode' : 'dark_mode'"
-          :color="$q.dark.isActive ? 'accent' : 'dark'"
-          class="q-mx-xs gt-xs"
-          @click="$q.dark.isActive ? $q.dark.set(false) : $q.dark.set(true)"
         />
       </q-toolbar>
     </q-footer>

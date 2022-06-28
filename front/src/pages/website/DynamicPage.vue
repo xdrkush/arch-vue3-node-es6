@@ -4,20 +4,20 @@
     <div v-if="monitStore.getPage.sections">
       <div :key="section" v-for="section in monitStore.getPage.sections">
         <!-- Component Dynamic -->
-        <DynamicComponent :data="section" />
+        <DynamicComponent :data="section" :demo="false" />
       </div>
     </div>
   </q-page>
 </template>
 
 <script>
-import { useMeta, createMetaMixin } from "quasar";
+// import { useMeta, createMetaMixin } from "quasar";
 import { defineComponent, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useMonitStore } from "../../stores/monit.store";
-import { useProfileStore } from "../../stores/profile.store";
-import DynamicComponent from "./DynamicComponent";
-import meta from "../../boot/meta";
+// import { useProfileStore } from "../../stores/profile.store";
+import DynamicComponent from "../../components/website/DynamicComponent";
+// import meta from "../../boot/meta";
 
 export default defineComponent({
   name: "DynamicPage",

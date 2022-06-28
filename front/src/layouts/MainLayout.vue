@@ -3,140 +3,52 @@
     <!-- Navbar -->
     <DynamicNavbar
       :switchDrawer="switchDrawer"
-      :component="{
-        title: 'navbarDefault',
-        name: 'navbarDefault',
-        type: 'navbarDefault',
-      }"
+      :component="monitStore.getTheme.navbar"
       :profile="profileStore.getProfile"
       :pages="monitStore.getPages"
+      :demo="false"
     />
 
     <!-- Sidebar -->
     <DynamicSidebar
       :drawer="drawer"
-      :component="{
-        title: 'sidebarDefault',
-        name: 'sidebarDefault',
-        type: 'sidebarDefault',
-      }"
+      :component="monitStore.getTheme.sidebar"
       :profile="profileStore.getProfile"
       :pages="monitStore.getPages"
+      :demo="false"
     />
-    <!-- <q-drawer
-      v-model="drawer"
-      :width="200"
-      :breakpoint="500"
-      overlay
-      bordered
-      class="lt-sm"
-    >
-      <q-scroll-area class="fit">
-        <q-list>
-          <q-btn
-            :icon="$q.dark.isActive ? 'light_mode' : 'dark_mode'"
-            :color="$q.dark.isActive ? 'accent' : 'dark'"
-            class="q-mx-xs full-width q-ma-xs"
-            rounded
-            @click="$q.dark.isActive ? $q.dark.set(false) : $q.dark.set(true)"
-          />
-
-          <q-item-label header> {{ profileStore.getProfile.nameCompany }} </q-item-label>
-
-          <q-item
-            clickable
-            tag="a"
-            :to="'/p/' + page.name"
-            :key="page"
-            v-for="page in monitStore.getPages"
-          >
-            <q-item-section v-if="page.icon" avatar>
-              <q-icon :name="page.icon" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>{{ page.name }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-scroll-area>
-    </q-drawer> -->
 
     <!-- Button Social (Modules) -->
     <ButtonSocialFixedTop
-      :active="true"
+      v-if="monitStore.getTheme.modules.ButtonSocialFixedTop.actived"
       :data="profileStore.getProfile.social"
+      :config="{}"
+    />
+
+    <!-- Button Back To Top (Modules) -->
+    <ButtonBackToTop
+      v-if="monitStore.getTheme.modules.ButtonBackToTop.actived"
       :config="{}"
     />
 
     <!-- Main (Body) -->
     <q-page-container>
+      <!-- Banner Message (Modules) -->
+      <BannerMessage
+        v-if="monitStore.getTheme.modules.BannerMessage.actived"
+        :data="monitStore.getTheme.modules.BannerMessage"
+        :config="{}"
+      />
+
       <router-view />
     </q-page-container>
 
     <!-- Footer -->
     <DynamicFooter
-      :component="{
-        title: 'footerDefault',
-        name: 'footerDefault',
-        type: 'footerDefault',
-      }"
+      :component="monitStore.getTheme.footer"
       :profile="profileStore.getProfile"
+      :demo="false"
     />
-    <!-- <q-footer>
-      <q-toolbar class="row">
-        <q-btn
-          v-if="profileStore.getProfile.phone"
-          class="q-ma-xs gt-sm"
-          color="accent"
-          :label="profileStore.getProfile.phone"
-          icon="phone"
-        />
-        <q-btn
-          v-if="profileStore.getProfile.phone"
-          class="q-ma-xs lt-md"
-          tag="a"
-          :href="'tel:' + profileStore.getProfile.phone.replace('.', '')"
-          color="accent"
-          icon="phone"
-        />
-
-        <q-space />
-
-        <div class="text-center">
-          <p class="text-white q-ma-none">
-            <strong>©️ 2022 Davroot Team ❤️</strong>
-          </p>
-          <p class="q-ma-none">Tous droits réservés</p>
-        </div>
-
-        <q-space />
-
-        <q-btn
-          v-if="profileStore.getProfile.mail"
-          class="q-ma-xs gt-sm"
-          color="accent"
-          :label="profileStore.getProfile.mail"
-          icon="mail"
-          tag="a"
-          :href="'mailto:' + profileStore.getProfile.mail"
-        />
-        <q-btn
-          v-if="profileStore.getProfile.mail"
-          class="q-ma-xs lt-md"
-          color="accent"
-          icon="mail"
-          tag="a"
-          :href="'mailto:' + profileStore.getProfile.mail"
-        />
-        <q-btn
-          :icon="$q.dark.isActive ? 'light_mode' : 'dark_mode'"
-          :color="$q.dark.isActive ? 'accent' : 'dark'"
-          class="q-mx-xs gt-xs"
-          @click="$q.dark.isActive ? $q.dark.set(false) : $q.dark.set(true)"
-        />
-      </q-toolbar>
-    </q-footer> -->
   </q-layout>
 </template>
 
@@ -150,6 +62,8 @@ import DynamicNavbar from "../components/website/navbars/DynamicNavbar.vue";
 import DynamicFooter from "../components/website/footers/DynamicFooter.vue";
 import DynamicSidebar from "../components/website/sidebars/DynamicSidebar.vue";
 import ButtonSocialFixedTop from "../modules/ButtonSocialFixedTop.vue";
+import ButtonBackToTop from "../modules/ButtonBackToTop.vue";
+import BannerMessage from "../modules/BannerMessage.vue";
 
 export default defineComponent({
   name: "MainLayout",
@@ -160,14 +74,16 @@ export default defineComponent({
     DynamicFooter,
     DynamicSidebar,
     // Modules
-    ButtonSocialFixedTop
+    ButtonSocialFixedTop,
+    ButtonBackToTop,
+    BannerMessage,
   },
 
   setup() {
     const monitStore = useMonitStore();
     const profileStore = useProfileStore();
     const router = useRouter();
-    const drawer = ref(false)
+    const drawer = ref(false);
 
     onMounted(() => {
       if (monitStore.getLanding) router.push({ path: "/landing" });

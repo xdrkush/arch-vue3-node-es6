@@ -14,17 +14,11 @@ import { ref } from "vue";
 
 export default {
   name: "YourComp",
-  props: {
-    data: Object,
-  },
+  props: ['data', 'demo'],
   setup(props) {
-    const parent = ref(props.data);
+    const parent = ref(props.demo ? model : props.data);
 
     return {
-      model: {
-        title: "Default Your Comp",
-        description: "Default Description Your Comp",
-      },
       parent,
     };
   },
