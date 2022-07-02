@@ -64,6 +64,7 @@ export default defineComponent({
     const route = useRoute();
 
     onMounted(() => {
+      profileStore.getProfileApi();
       authStore.getSession();
       monitStore.getPagesAPI();
       monitStore.getLandingStatus();
@@ -98,7 +99,7 @@ export default defineComponent({
       meta({
         title: "Welcome",
         description: "Description",
-        route: "Oops",
+        route: route.path.toString(),
       })
     );
 

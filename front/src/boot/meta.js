@@ -11,7 +11,7 @@ const meta = (data) => {
         // meta tags
         meta: {
             description: { name: "description", content: description },
-            keywords: { name: "keywords", content: "Quasar website" },
+            keywords: { name: "keywords", content: "Website davroot team" },
             equiv: {
                 "http-equiv": "Content-Type",
                 content: "text/html; charset=UTF-8",
