@@ -56,12 +56,12 @@ export default {
   setup(props) {
     const drawerChild = ref(props.drawer);
 
-    console.log('sidebarDefault', drawerChild)
+    // console.log('sidebarDefault', drawerChild)
 
     watch(
       () => props.drawer,
       (val) => {
-        console.log("watch dynamic sidebar", val);
+        // console.log("watch dynamic sidebar", val);
         drawerChild.value = val;
       }
     );

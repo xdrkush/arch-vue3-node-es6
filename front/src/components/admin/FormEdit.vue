@@ -179,9 +179,9 @@
                   :caption="itm.title"
                 >
                   <q-card>
-                    <q-card-section class="row justify-around">
+                    <q-card-section class="row items-center justify-around">
                       <div
-                        class="q-pa-xs"
+                        class="q-pa-xs col-12 col-md-12 col-xs-12"
                         :key="obj.value.name"
                         v-for="obj in arrayObjEnt(itm)"
                       >
@@ -299,7 +299,7 @@
                         </div>
 
                         <!-- Image -->
-                        <div v-else-if="obj.key === 'image'" class="row">
+                        <div v-else-if="obj.key === 'image'" class="row full-width">
                           <q-btn
                             v-if="obj.key === 'image'"
                             icon="photo"
@@ -360,6 +360,7 @@
                           </q-btn>
 
                           <q-input
+                            fullWidth
                             v-model="
                               item[loadedKey.key][arch.key][index][obj.key]
                             "
@@ -420,22 +421,10 @@
                           class="col-12 col-md-12 col-xs-12"
                           v-else-if="obj.key === 'description'"
                         >
-                          <div class="q-pa-md q-gutter-sm">
                             <q-editor
                               v-model="item[loadedKey.key][arch.key][index][obj.key]"
                               min-height="5rem"
                             />
-                          </div>
-                          <!-- <q-input
-                            v-model="
-                              item[loadedKey.key][arch.key][index][obj.key]
-                            "
-                            filled
-                            square
-                            class="col-"
-                            type="textarea"
-                            :label="loadedKey.key"
-                          /> -->
                         </div>
 
                         <!-- Text input -->
@@ -654,7 +643,7 @@ export default {
     data() {
       this.item = this.data;
       this.oldName = this.data.name;
-      console.log("DragOrder watcher", this.data, this.item, this.oldName);
+      // console.log("DragOrder watcher", this.data, this.item, this.oldName);
     },
   },
 
@@ -676,7 +665,7 @@ export default {
     };
 
     let onSubmit = () => {
-      console.log("OnSubmit Form Edit", oldName.value);
+      // console.log("OnSubmit Form Edit", oldName.value);
       if (props.section)
         props.editFn({
           section: { ...item.value, oldName: item.value.name },

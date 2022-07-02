@@ -39,6 +39,7 @@ import ModalSession from "./components/auth/ModalSession.vue";
 import ModalTokenExp from "./components/auth/ModalTokenExp.vue";
 import { useMeta, useQuasar, setCssVar, createMetaMixin } from "quasar";
 import meta from "./boot/meta.js";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "App",
@@ -60,9 +61,9 @@ export default defineComponent({
     const profileStore = useProfileStore();
     const monitStore = useMonitStore();
     const $q = useQuasar();
+    const route = useRoute();
 
     onMounted(() => {
-      profileStore.getProfileApi();
       authStore.getSession();
       monitStore.getPagesAPI();
       monitStore.getLandingStatus();
@@ -80,10 +81,23 @@ export default defineComponent({
     );
 
     // Meta Default
+    // profileStore.getProfileApi().then((data) => {
+    //   console.log("APP promise", data, route);
+    //   useMeta(
+    //     meta({
+    //       title: data.nameCompany,
+    //       description: data.description,
+    //       route: route.path,
+    //     })
+    //   );
+    // });
+
+    // console.log("APP", profileStore.getProfile.nameCompany);
+
     useMeta(
       meta({
-        title: "Title setup",
-        description: "Description setup",
+        title: "Welcome",
+        description: "Description",
         route: "Oops",
       })
     );
@@ -113,8 +127,10 @@ export default defineComponent({
 
     return {
       // Store
-      profileStore, authStore, monitStore,
+      profileStore,
+      authStore,
+      monitStore,
     };
-  },
+  }
 });
 </script>

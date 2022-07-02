@@ -318,7 +318,7 @@ export default defineComponent({
     watch(() => {
       () => chooseDelay,
         (val) => {
-          console.log("val", val);
+          // console.log("val", val);
         };
     });
 

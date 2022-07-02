@@ -1,6 +1,6 @@
 <template>
   <div
-    class="text-center column items-center justify-between"
+    class="column items-center justify-between"
     style="min-height: 100vh"
   >
     <!-- Logo -->
@@ -16,15 +16,18 @@
 
     <!-- Name Company -->
     <h2
-      class="q-ma-none q-mt-md title-user"
+      class="text-center q-ma-none q-mt-md title-user"
       style="font-size: 64px; max-width: 100vw"
     >
       {{ user.nameCompany }}
     </h2>
-    <p class="q-my-md text-h6" style="min-width: 300px; width: 80%; max-width: 80%">
-      {{ user.description }}
-    </p>
-
+    <q-card
+      flat
+      class="q-my-md bg-transparent"
+      style="min-width: 300px; width: 80%; max-width: 80%"
+    >
+      <q-card-section v-html="user.description" />
+    </q-card>
     <p
       class="bg-accent shadow-4 q-ma-none q-pa-none q-my-md"
       style="min-width: 300px; width: 80vw; max-width: 720px; height: 2px"

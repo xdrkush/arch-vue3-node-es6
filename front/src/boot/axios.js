@@ -8,7 +8,7 @@ let ls_token = LocalStorage.getItem('user_token')
 // console.log('BOOT axios', LocalStorage.getItem('user_token'), ls_token)
 
 if (ls_token === 'null' || ls_token ===  null) {
-  console.log('set token axios')
+  // console.log('set token axios')
   LocalStorage.set('user_token', 'visitor')
   ls_token = 'visitor'
 }

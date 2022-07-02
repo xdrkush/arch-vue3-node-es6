@@ -92,7 +92,7 @@ export default defineComponent({
       // Local
       drawer,
       switchDrawer() {
-        console.log("SwitchDrawer", drawer.value);
+        // console.log("SwitchDrawer", drawer.value);
         drawer.value = !drawer.value;
       },
       arrayObjEnt,

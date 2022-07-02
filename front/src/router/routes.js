@@ -18,7 +18,7 @@ const routes = [
     children: [
       { path: "", name: "HomePage", component: () => import("src/pages/website/DynamicPage.vue") },
       { path: "p/:name", name: "DynamicPage", component: () => import("src/pages/website/DynamicPage.vue") },
-      { path: "p/:name/:name", component: () => import("src/pages/website/DynamicPage.vue") },
+      { path: "p/:name/:title", component: () => import("src/pages/website/DynamicPage.vue") },
       { path: "article", component: () => import("src/pages/articles/ArticlePage.vue") },
       { path: "article/:title/:index", component: () => import("src/pages/articles/ArticleIDPage.vue") },
     ],

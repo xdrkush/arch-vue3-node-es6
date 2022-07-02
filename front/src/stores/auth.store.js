@@ -25,23 +25,23 @@ export const useAuthStore = defineStore('auth', {
       try {
         api.put('/auth', { ...form })
           .then(res => {
-            console.log('res login 1', res.data)
+            // console.log('res login 1', res.data)
             const { token } = res.data;
             let decoded;
 
             if (token) {
-              console.log('res login 2', res.data)
+              // console.log('res login 2', res.data)
               LocalStorage.set("user_token", token);
               decoded = jwt_decode(token)
             }
 
             if (decoded.auth) {
-              console.log('res login 3', decoded)
+              // console.log('res login 3', decoded)
               this.loggedIn = decoded.auth
               this.user.name = decoded.name
               this.session = decoded
             } else {
-              console.log('res login 4')
+              // console.log('res login 4')
               this.loggedIn = false
             }
 
@@ -65,18 +65,18 @@ export const useAuthStore = defineStore('auth', {
         LocalStorage.set('user_token', (token) ? token : 'visitor');
         let decoded = jwt_decode(token);
 
-        console.log('session', res.data)
+        // console.log('session', res.data)
 
         if (soonTokenExp) this.soonSessionExpired = soonTokenExp
 
         if (tokenExp === true) {
-          console.log('res session token expired')
+          // console.log('res session token expired')
           this.tokenExp = tokenExp
           this.loggedIn = false
           this.session = decoded
           this.hostLoaded = true
         } else if (token && decoded.auth) {
-          console.log('res session token not expired')
+          // console.log('res session token not expired')
           this.user.name = decoded.name
           this.loggedIn = decoded.auth
           this.session = decoded
@@ -109,7 +109,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         const res = await api.get('/extendsession')
         const { token } = res.data
-        console.log('response extend session', res.data)
+        // console.log('response extend session', res.data)
         LocalStorage.set('user_token', token)
       } catch (err) {
         console.error(err);

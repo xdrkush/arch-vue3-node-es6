@@ -5,22 +5,22 @@ import { ssrMiddleware } from 'quasar/wrappers'
 // render the page with Vue
 
 export default ssrMiddleware(({ app, resolve, render, serve }) => {
-  console.log('ICI')
+  // console.log('ICI')
   // we capture any other Express route and hand it
   // over to Vue and Vue Router to render our page
   app.get(resolve.urlPath('*'), (req, res) => {
-    console.log('REQ / RES', req.headers)
+    // console.log('REQ / RES', req.headers)
     res.setHeader('Content-Type', 'text/html')
 
     render(/* the ssrContext: */ { req, res })
       .then(html => {
-        console.log('render html')
+        // console.log('render html')
 
         // now let's send the rendered html to the client
         res.send(html)
       })
       .catch(err => {
-        console.log('EEE ::: ', err)
+        // console.log('EEE ::: ', err)
         // oops, we had an error while rendering the page
 
         // we were told to redirect to another URL

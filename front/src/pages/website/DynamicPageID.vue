@@ -65,7 +65,7 @@ export default defineComponent({
         const monitStore = useMonitStore();
         // const profileStore = useProfileStore();
 
-        console.log('dynamic page id', to, from)
+        // console.log('dynamic page id', to, from)
 
         // if (to.fullPath === "/") {
         //   monitStore.getPageAPI("home");

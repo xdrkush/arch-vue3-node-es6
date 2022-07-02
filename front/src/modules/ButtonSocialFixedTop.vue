@@ -10,7 +10,6 @@
         color="accent"
         icon="keyboard_arrow_down"
         direction="down"
-        :hide-label="hideLabels"
         padding="xs"
         style="min-width: 150px"
       >

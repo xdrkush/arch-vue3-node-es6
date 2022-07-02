@@ -56,7 +56,7 @@
             <h2 class="q-ma-none">
               <strong>{{ slid.title }}</strong>
             </h2>
-            <h3 class="q-ma-none q-mt-xl">{{ slid.subtitle }}</h3>
+            <h3 class="q-ma-none q-mt-xl">{{ slid.description }}</h3>
           </div>
         </div>
       </q-carousel-slide>

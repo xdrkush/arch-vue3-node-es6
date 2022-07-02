@@ -1,4 +1,4 @@
-import { useMonitStore } from "src/stores/monit.store"
+// import { useMonitStore } from "src/stores/monit.store"
 import { useAuthStore } from "src/stores/auth.store"
 
 // Config Router Global
@@ -10,14 +10,8 @@ export function checkIsLoggedIn(from, to) {
     const isLoggedIn = authStore.getLoggedIn
     // // console.log('middleware isloggedin', authStore)
     // console.log('middleware isloggedin', isLoggedIn)
-    if (!isLoggedIn) {
-        // console.log('Middleware NOT')
-        return { path: '/auth/login' }
-    }
-    else {
-        // console.log('Middleware OK')
-        return
-    }
+    if (!isLoggedIn) return { path: '/auth/login' }
+    else return
     // return
 }
 

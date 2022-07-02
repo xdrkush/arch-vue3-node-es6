@@ -38,13 +38,15 @@ export default defineComponent({
     // const { getPage, getPageAPI } = monitStore;
     const route = useRoute();
 
-    console.log("dynamicPage", route.params);
+    // console.log("dynamicPage", route.params);
 
     onMounted(async () => {
       if (route.fullPath === "/") {
         monitStore.getPageAPI("home");
-      } else {
+      } else if (route.params.name) {
         monitStore.getPageAPI(route.params.name);
+      } else if (route.params.title) {
+        monitStore.getPageAPI(route.params.title);
       }
     });
 

@@ -286,7 +286,7 @@ export default defineComponent({
       optionsFooter,
 
       switchDrawer() {
-        console.log("SwitchDrawer", drawer.value);
+        // console.log("SwitchDrawer", drawer.value);
         drawer.value = !drawer.value;
       },
 

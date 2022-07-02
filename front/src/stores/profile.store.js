@@ -15,12 +15,15 @@ export const useProfileStore = defineStore('profile', {
     getChart: (state) => state.chart,
   },
   actions: {
-    async getProfileApi() {
+    getProfileApi() {
       try {
-        const res = await api.get('/profile')
-        if (res.data.profile) {
-          this.profile = res.data.profile
-        }
+        return new Promise(async (resolve, reject) => {
+          const res = await api.get('/profile')
+          if (res.data.profile) {
+            this.profile = res.data.profile
+          }
+          resolve(res.data.profile)
+        })
       } catch (error) {
         return error
       }
@@ -57,7 +60,7 @@ export const useProfileStore = defineStore('profile', {
     async getSessionsWithDelayAPI(delay) {
       try {
         const res = await api.get('/sessions/' + delay)
-        console.log('res, getSessionWithDelay', res)
+        // console.log('res, getSessionWithDelay', res)
         this.chart = res.data.chart
       } catch (error) {
         return error

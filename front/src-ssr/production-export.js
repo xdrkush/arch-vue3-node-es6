@@ -16,7 +16,7 @@ export default ssrProductionExport(({ app, port, isReady }) => {
     app.set('trust proxy', ['uniquelocal'])
 
     app.listen(port, () => {
-      console.log('Server listening at port ' + port)
+      // console.log('Server listening at port ' + port)
     })
   }).catch(e => {
     console.log(e)

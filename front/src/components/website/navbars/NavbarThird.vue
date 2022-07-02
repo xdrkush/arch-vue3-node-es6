@@ -42,7 +42,7 @@
                 size="xl"
                 :label="page.name"
                 tag="a"
-                :href="`/p/${page.name}`"
+                :to="`/p/${page.name}`"
                 class="row items-center q-px-md q-my-xs"
               />
               <q-btn
