@@ -4,44 +4,85 @@
       reveal
       elevated
       :style="
-        demo ? 'position: relative; width: 100%;; left: 0; z-index: 0' : ''
+        demo ? 'position: relative; width: 100%; left: 0; z-index: 0' : ''
       "
     >
-      <q-toolbar>
-        <q-item clickable tag="a" to="/" class="row items-center">
+      <q-toolbar class="q-pl-none text-dark bg-light">
+        <q-item clickable tag="a" to="/" class="row items-center bg-primary">
           <q-avatar>
-            <q-icon name="fa-solid fa-house" color="accent" />
+            <q-icon name="fa-solid fa-house" color="light" />
           </q-avatar>
-          <h5 v-if="profile.nameCompany" class="q-ma-none q-pa-none q-ml-md text-accent" style="width: 200px">
-            {{ profile.nameCompany }}
+          <h5
+            v-if="profile.nameCompany"
+            class="q-ma-none q-pa-none q-ml-md text-body"
+            style="width: 200px"
+          >
+            <strong>{{ profile.nameCompany }}</strong>
           </h5>
         </q-item>
 
-        <q-toolbar class="gt-sm">
-          <q-breadcrumbs active-color="white" style="font-size: 16px">
-            <div :key="page" v-for="page in pages">
-              <div v-if="page.name === 'home'" />
-              <div v-else-if="page.name === 'legals'" />
-              <q-breadcrumbs-el
-                class="q-mx-md"
-                v-else
-                :label="page.title"
-                :icon="page.icon"
+        <div :key="page" v-for="page in pages" class="gt-sm">
+          <div v-if="page.name === 'home'" />
+          <div v-else-if="page.isSecondary" />
+          <div v-else-if="page.name === 'legals'" />
+          <q-btn-dropdown
+            v-else-if="page.references.length > 0"
+            class="text-body"
+            style="height: 50px"
+            stretch
+            flat
+            :icon="page.icon"
+            :label="page.name"
+          >
+            <q-list class="q-mb-md">
+              <q-btn
+                clickable
+                stretch
+                flat
+                size="xl"
+                :label="page.name"
                 tag="a"
-                :to="'/p/' + page.name.toLowerCase()"
+                :href="`/p/${page.name}`"
+                class="row items-center q-px-md q-my-xs"
               />
-            </div>
-          </q-breadcrumbs>
-        </q-toolbar>
+              <q-btn
+                :key="p"
+                v-for="p in page.references"
+                clickable
+                stretch
+                flat
+                size="md"
+                :label="p.name"
+                tag="a"
+                :href="`/p/${page.name}/${p.name}`"
+                class="row items-center q-px-md q-my-xs"
+              />
+            </q-list>
+          </q-btn-dropdown>
+          <q-btn
+            v-else
+            clickable
+            style="height: 50px"  
+            stretch
+            flat
+            :icon="page.icon"
+            :label="page.name"
+            tag="a"
+            :to="`/p/${page.name}`"
+            class="row items-center"
+          />
+        </div>
 
         <q-space />
 
+        <!-- Button Dark Mode -->
         <q-btn
           :icon="$q.dark.isActive ? 'light_mode' : 'dark_mode'"
           :color="$q.dark.isActive ? 'accent' : 'dark'"
           class="q-mx-xs gt-sm"
           @click="$q.dark.isActive ? $q.dark.set(false) : $q.dark.set(true)"
         />
+
         <!-- Button Sidebar -->
         <q-btn
           class="q-ma-xs lt-md"
@@ -49,20 +90,6 @@
           icon="menu"
           @click="switchDrawer"
         />
-
-        <!-- <div class="q-pa-none gt-xs" :key="page" v-for="page in pages">
-          <q-btn
-            v-if="page.name !== 'home'"
-            stretch
-            flat
-            tag="a"
-            class="text-white"
-            :to="'/p/' + page.name.toLowerCase()"
-            :label="page.name"
-            :icon="page.icon"
-            color="accent"
-          />
-        </div> -->
       </q-toolbar>
     </q-header>
   </div>

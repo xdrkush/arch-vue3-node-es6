@@ -1,38 +1,49 @@
 <template>
   <div class="q-gutter-md" style="position: relative">
-    <h1>dzefezf</h1>
-    <h2>{{ parent.title }}</h2>
+    <!-- <q-responsive
+      :ratio="parent.ratio === '16/9' ? 16 / 9 : parent.ratio === '4/3' ? 4 / 3 : 1"
+    > -->
+    <q-responsive
+      :ratio="16 / 9"
+      class="gradient-vertical"
+      style="height: 60vh; max-height: 80vh"
+    >
+      <q-img
+        style="max-height: 60vh; max-height: 80vh"
+        class="border-radius-inherit"
+        :src="parent.arch.image"
+      >
+        <div class="full-width full-height row items-center">
+          <div class="col-8 col-md-8 col-sm-8 col-xs-12">
+            <div class="text-h1 text-bold">{{ parent.title }}</div>
+            <div class="text-h6">{{ parent.description }}</div>
+            <q-btn
+              v-if="parent.isRefer"
+              tag="a"
+              :href="parent.refer"
+              label="C'est partit !"
+              color="accent"
+              class="q-mt-md"
+            />
+          </div>
+        </div>
+      </q-img>
+    </q-responsive>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
-import { colors } from "quasar";
-import { useProfileStore } from "../../../stores/profile.store";
 import { model } from "../model";
-
-const { getPaletteColor, hexToRgb } = colors;
 
 export default {
   name: "HeaderDefault",
   props: ["data", "demo"],
   setup(props) {
     const parent = ref(props.demo ? model : props.data);
-    const profileStore = useProfileStore();
-    const opacityToHex = (color, opacity) => {
-      let c = hexToRgb(color);
-      return `rgba(${c.r},${c.g},${c.b},${opacity})`;
-    };
 
     return {
       parent,
-      opacityToHex,
-      getPaletteColor,
-      profileStore,
-      autoplay: ref(true),
-      slide: ref("1"),
-      lorem:
-        "lorem  ipsume fze zlorem  ipsume fze zlorem  ipsume fze zlorem  ipsume fze zlorem  ipsume fze z",
     };
   },
 };

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Page /p/:name -->
     <q-tabs
       v-model="tab"
       inline-label
@@ -18,21 +19,23 @@
       />
 
       <!-- For :: All Pages -->
-      <q-tab
-        v-else
-        :key="page"
-        v-for="page in monitStore.getPages"
-        :name="page.name"
-        :icon="page.icon"
-        :label="page.name"
-      />
+      <div v-else :key="page" v-for="page in monitStore.getPages">
+        <div v-if="page.isSecondary" />
+        <q-tab
+          v-else
+          :name="page.name"
+          @click="() => loadPage(page)"
+          :icon="page.icon"
+          :label="page.name"
+        />
+      </div>
 
       <!-- Create Page -->
       <ModalPage v-if="!monitStore.getLanding" />
     </q-tabs>
 
     <q-tab-panels v-model="tab" animated>
-      <!-- Global tab -->
+      <!-- Template tab -->
       <q-tab-panel name="template">
         <q-list bordered class="rounded-borders">
           <!-- Gestion Template -->
@@ -44,37 +47,11 @@
           >
             <q-card>
               <q-card-section class="row justify-center">
-                <!-- Sidebar -->
-                <DynamicSidebar
-                  v-if="drawer"
-                  :drawer="drawer"
-                  :component="{
-                    title: 'sidebarDefault',
-                    name: 'sidebarDefault',
-                    type: 'sidebarDefault',
-                  }"
-                  :profile="profileStore.getProfile"
-                  :pages="monitStore.getPages"
-                  :demo="true"
-                />
+                <!-- Modal Layout -->
                 <ModalLayout />
               </q-card-section>
             </q-card>
           </q-expansion-item>
-
-          <!-- Gestion Modules -->
-          <!-- <q-expansion-item
-            expand-separator
-            icon="perm_identity"
-            label="Modules"
-            caption="Configuration themes"
-          >
-            <q-card>
-              <q-card-section>
-                <ModalModule />
-              </q-card-section>
-            </q-card>
-          </q-expansion-item> -->
         </q-list>
       </q-tab-panel>
 
@@ -108,18 +85,38 @@
         v-for="page in monitStore.getPages"
         :name="page.name"
       >
+        <!-- Page référencer /p/:name/:title/:index -->
+        <q-tabs
+          v-if="page.references"
+          v-model="tabReference"
+          inline-label
+          class="bg-secondary text-white shadow-2"
+          style="min-width: 70vw"
+        >
+          <!-- For :: All References -->
+          <q-tab
+            :key="p + index"
+            v-for="(p, index) in page.references"
+            :name="index"
+            :icon="p.icon"
+            :label="p.name"
+            @click="() => loadPage(p)"
+          />
+        </q-tabs>
+
         <!-- Global Page -->
         <q-expansion-item
           expand-separator
+          class="q-mt-md"
           icon="perm_identity"
-          :label="'Global ' + page.name"
+          :label="'Global ' + pageLoad.name"
           caption="Configuration page"
         >
           <q-card>
             <q-card-section>
               <FormEdit
                 :btnSave="true"
-                :data="page"
+                :data="pageLoad"
                 :editFn="monitStore.editPage"
                 :delete="true"
                 :deleteFn="monitStore.deletePage"
@@ -129,18 +126,21 @@
         </q-expansion-item>
 
         <!-- Test Drag order -->
-        <DragOrder :page="page" :array="page.sections" />
+        <DragOrder
+          v-if="pageLoad.sections.length > 0"
+          :page="pageLoad"
+          :array="pageLoad.sections"
+        />
 
         <!-- Modal Add Section to page -->
-        <ModalSection :page="page" />
+        <ModalSection :page="pageLoad" />
       </q-tab-panel>
-      
     </q-tab-panels>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import FormEdit from "components/admin/FormEdit.vue";
 import LandingPage from "pages/website/LandingPage.vue";
 import ModalPage from "./ModalPage.vue";
@@ -148,7 +148,6 @@ import ModalSection from "./ModalSection.vue";
 import DragOrder from "./DragOrder.vue";
 import { useMonitStore } from "../../stores/monit.store";
 import { useProfileStore } from "../../stores/profile.store";
-// import ModalModule from "./ModalModule.vue";
 import ModalLayout from "./ModalLayout.vue";
 
 export default {
@@ -158,20 +157,27 @@ export default {
     ModalPage,
     ModalSection,
     DragOrder,
-    // ModalModule,
     ModalLayout,
   },
   setup() {
     const monitStore = useMonitStore();
     const profileStore = useProfileStore();
     const drawer = ref(false);
+    const pageLoad = ref({});
+
+    const loadPage = (page) => {
+      // console.log("loadPage", page);
+      pageLoad.value = page;
+    };
 
     return {
       drawer,
+      pageLoad,
+      loadPage,
       tab: ref("template"),
+      tabReference: ref("1"),
       splitterModel: ref(20),
       switchDrawer() {
-        console.log("SwitchDrawer", drawer.value);
         drawer.value = !drawer.value;
       },
       monitStore,

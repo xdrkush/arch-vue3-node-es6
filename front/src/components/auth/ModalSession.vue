@@ -20,6 +20,7 @@
             <q-btn
               label="Extend session"
               color="primary"
+              v-close-popup
               @click="() => extendSession()"
             />
           </div>
@@ -58,7 +59,7 @@ export default defineComponent({
         message: "Success !",
         color: "positive",
       });
-      location.reload()
+      // location.reload()
     }
 
     return {

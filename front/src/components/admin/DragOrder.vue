@@ -31,13 +31,17 @@
               />
             </q-item-section>
 
-            <q-item-section> {{ section.name }} </q-item-section>
-
+            <q-item-section class="col">
+                {{ section.name.split('-')[0] }} ::
+                {{ section.title }}
+            </q-item-section>
           </template>
 
           <q-card>
             <q-card-section>
+              <!-- Preview -->
               <DynamicComponent :data="section" />
+              <!-- Form -->
               <FormEdit
                 :btnSave="true"
                 :data="section"
@@ -70,6 +74,15 @@ export default {
   props: {
     page: Object,
   },
+
+
+  watch: {
+    page() {
+      console.log('DragOrder watcher', this.page)
+      this.parent = this.page;
+    },
+  },
+
   setup(props) {
     const parent = ref(props.page);
     const monitStore = useMonitStore();
@@ -109,7 +122,9 @@ export default {
       onDrop(e) {
         console.log("onDrop", e.target);
         // Selected Parent match with draggedEl
-        let target = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        let target =
+          e.target.parentNode.parentNode.parentNode.parentNode.parentNode
+            .parentNode;
         e.preventDefault();
 
         // Item selected

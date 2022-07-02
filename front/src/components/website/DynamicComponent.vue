@@ -6,6 +6,9 @@
     <div v-else-if="component.type.toLowerCase().includes('listcard')">
       <DynamicListCard :data="component" :demo="demo" />
     </div>
+    <div v-else-if="component.type.toLowerCase().includes('text')">
+      <DynamicText :data="component" :demo="demo" />
+    </div>
     <div v-else-if="component.type.toLowerCase().includes('listimg')">
       <DynamicListImg :data="component" :demo="demo" />
     </div>
@@ -28,6 +31,7 @@ import DynamicListCard from "./listcards/DynamicListCard.vue";
 import DynamicListImg from "./listimgs/DynamicListImg.vue";
 import DynamicBanner from "./banners/DynamicBanner.vue";
 import DynamicContact from "./contacts/DynamicContact.vue";
+import DynamicText from "./texts/DynamicText.vue";
 
 export default defineComponent({
   name: "PreviewComp",
@@ -37,6 +41,7 @@ export default defineComponent({
     DynamicListImg,
     DynamicBanner,
     DynamicContact,
+    DynamicText,
   },
   props: ['data', 'demo'],
   setup(props) {

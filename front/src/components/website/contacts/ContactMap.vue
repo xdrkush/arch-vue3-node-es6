@@ -31,15 +31,15 @@
       expand-icon-class="text-white"
       header-class="bg-accent text-white"
       class="shadow-1 overflow-hidden absolute text-left row"
-      style="border-radius: 30px; max-width: 720px; top: 8vh"
+      style="border-radius: 30px; max-width: 1048px; top: 12vh"
       :label="parent.title"
     >
-      <q-card bordered class="col-sm-12 col-xs-12 col-12 text-left">
-        <q-separator inset style="max-width: 720px;" />
+      <q-card bordered class="row">
+        <q-separator inset/>
         <h6 class="text-center q-ma-md">
         {{ parent.description }}
         </h6>
-        <q-card-section style="border-radius: 30px; max-width: 720px">
+        <q-card-section class="col-12" style="border-radius: 30px;">
           <div>
             <p class="q-ma-xs"><strong>Nom & Prénom</strong></p>
             <q-input

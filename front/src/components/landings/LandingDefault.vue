@@ -21,7 +21,7 @@
     >
       {{ user.nameCompany }}
     </h2>
-    <p class="q-my-md" style="min-width: 300px; width: 80%; max-width: 80%">
+    <p class="q-my-md text-h6" style="min-width: 300px; width: 80%; max-width: 80%">
       {{ user.description }}
     </p>
 

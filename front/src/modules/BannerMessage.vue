@@ -9,7 +9,8 @@
     >
       <q-toolbar class="shadow-10">
         <q-btn flat round dense icon="map" />
-        <q-toolbar-title>{{ data.message }}</q-toolbar-title>
+        <p class="q-mb-none">{{ data.message }}</p>
+        <q-space/>
         <q-btn flat round dense icon="close" @click="opened = !opened" />
       </q-toolbar>
     </q-page-sticky>

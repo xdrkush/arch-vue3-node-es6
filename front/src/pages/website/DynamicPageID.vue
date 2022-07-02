@@ -38,13 +38,13 @@ export default defineComponent({
     // const { getPage, getPageAPI } = monitStore;
     const route = useRoute();
 
-    console.log("dynamicPage", route.params);
+    // console.log("dynamicPage", getPage, route);
 
     onMounted(async () => {
       if (route.fullPath === "/") {
         monitStore.getPageAPI("home");
       } else {
-        monitStore.getPageAPI(route.params.name);
+        monitStore.getPageAPI(route.path.replace("/p/", ""));
       }
     });
 
@@ -65,11 +65,13 @@ export default defineComponent({
         const monitStore = useMonitStore();
         // const profileStore = useProfileStore();
 
-        if (to.fullPath === "/") {
-          monitStore.getPageAPI("home");
-        } else {
-          monitStore.getPageAPI(to.path.replace("/p/", ""));
-        }
+        console.log('dynamic page id', to, from)
+
+        // if (to.fullPath === "/") {
+        //   monitStore.getPageAPI("home");
+        // } else {
+        //   monitStore.getPageAPI(to.path.replace("/p/", ""));
+        // }
 
         // console.log("meta dynamics");
         // Meta Default

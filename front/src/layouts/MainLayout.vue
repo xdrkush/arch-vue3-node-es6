@@ -39,7 +39,6 @@
         :data="monitStore.getTheme.modules.BannerMessage"
         :config="{}"
       />
-
       <router-view />
     </q-page-container>
 

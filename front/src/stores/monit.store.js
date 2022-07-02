@@ -21,7 +21,6 @@ export const useMonitStore = defineStore('monit', {
     async getLandingStatus() {
       try {
         const res = await api.get('/landing')
-        console.log('response getLandingStatus', res.data)
         this.landing = res.data.landing;
         this.theme = res.data.theme;
         this.load = true;
@@ -30,17 +29,11 @@ export const useMonitStore = defineStore('monit', {
       }
     },
 
-    editStatusLanding(bool) {
-      // console.log('bool', bool)
+    async editStatusLanding(bool) {
       try {
-        api
-          .put('/landing', { landing: bool })
-          .then(res => {
-            // console.log('response editStatusLanding', res.data.landing)
-            this.landing = res.data.landing
-            this.load = true
-          })
-          .catch(e => { })
+        const res = await api.put('/landing', { landing: bool })
+        this.landing = res.data.landing
+        this.load = true
       } catch (error) {
         return error
       }
@@ -57,153 +50,95 @@ export const useMonitStore = defineStore('monit', {
     },
 
     async getPagesAPI() {
-      // console.log('get pages store')
       try {
         const res = await api.get('/pages')
-        // .then(res => {
-        // console.log('response get Pages', res)
         this.pages = res.data.dbPages
         this.load = true
-        // })
-        // .catch(e => { })
       } catch (error) {
         return error
       }
     },
 
     async getPageAPI(name) {
-      // console.log('get page store', (new RegExp("[a-zA]").test(name)), name)
       if (!new RegExp("[a-zA]").test(name)) name = "home"
       try {
         const res = await api.get(`/page/${name}`)
-        // .then(res => {
-        // console.log('response get Page', res)
         this.page = res.data.dbPage
         this.load = true
-        // })
-        // .catch(e => { })
       } catch (error) {
         return error
       }
     },
 
-    createPage(form) {
-      // console.log('create page', form)
+    async createPage(form) {
       try {
-        api
-          .post('/page', { page: form })
-          .then(res => {
-            // console.log('response create Page', res.data)
-            this.pages = res.data.dbPages
-            this.load = true
-          })
-          .catch(e => { })
+        const res = api.post('/page', { page: form })
+        this.pages = res.data.dbPages
+        this.load = true
       } catch (error) {
         return error
       }
     },
-    editPage(form) {
-      // console.log('edit page', form)
+    async editPage(form) {
       try {
-        api
-          .put('/page', { page: form })
-          .then(res => {
-            // console.log('response edit Page', res.data)
-            this.pages = res.data.dbPages
-            this.load = true
-          })
-          .catch(e => { })
+        const res = api.put('/page', { page: form })
+        this.pages = res.data.dbPages
+        this.load = true
       } catch (error) {
         return error
       }
     },
-    deletePage(form) {
-      // console.log('delete page', form)
+    async deletePage(form) {
       try {
-        api
-          .delete('/page/' + form.oldName)
-          .then(res => {
-            // console.log('response delete Page', res.data)
-            this.pages = res.data.dbPages
-            this.load = true
-          })
-          .catch(e => { })
+        const res = api.delete('/page/' + form.oldName)
+        this.pages = res.data.dbPages
+        this.load = true
       } catch (error) {
         return error
       }
     },
-    editSection(form) {
-      // console.log('edit section', form)
+    async editSection(form) {
       try {
-        api
-          .put('/section', { page: form.page, section: form.section })
-          .then(res => {
-            // console.log('response edit Section', res.data)
-            this.pages = res.data.dbPages
-            this.load = true
-          })
-          .catch(e => { })
+        const res = api.put('/section', { page: form.page, section: form.section })
+        this.pages = res.data.dbPages
+        this.load = true
       } catch (error) {
         return error
       }
     },
-    getSectionsAPI() {
-      // console.log('get sections')
+    async getSectionsAPI() {
       try {
-        api
-          .get('/sections')
-          .then(res => {
-            // console.log('response get Sections', res.data)
-            this.pages = res.data.dbPages
-            this.sections = res.data.dbSections
-            this.load = true
-          })
-          .catch(e => { })
+        const res = api.get('/sections')
+        this.pages = res.data.dbPages
+        this.sections = res.data.dbSections
+        this.load = true
       } catch (error) {
         return error
       }
     },
-    addSectionToPage(form) {
-      // console.log('add section to page', form)
+    async addSectionToPage(form) {
       try {
-        api
-          .post('/sectiontopage', { page: form.page, section: form.section })
-          .then(res => {
-            // console.log('response add section to Page', res.data.landing)
-            this.pages = res.data.dbPages
-            this.sections = res.data.dbSections
-            this.load = true
-          })
-          .catch(e => { })
+        const res = await api.post('/sectiontopage', { page: form.page, section: form.section })
+        this.pages = res.data.dbPages
+        this.sections = res.data.dbSections
+        this.load = true
       } catch (error) {
         return error
       }
     },
-    deleteSectionToPage(form) {
-      // console.log('delete section', form)
+    async deleteSectionToPage(form) {
       try {
-        api
-          .put('/sectiontopage', { page: form.page, section: form.section })
-          .then(res => {
-            // console.log('response delete Section to page', res.data)
-            this.pages = res.data.dbPages
-            this.load = true
-          })
-          .catch(e => { })
+        await api.put('/sectiontopage', { page: form.page, section: form.section })
+        this.pages = res.data.dbPages
+        this.load = true
       } catch (error) {
         return error
       }
     },
-    editOrderSectionPage(page) {
+    async editOrderSectionPage(page) {
       try {
-        api
-          .put('/ordersectiontopage', { page })
-          .then(res => {
-            // console.log('response order sections to page', res.data)
-            // this.pages = res.data.dbPages
-            this.load = true
-          })
-          .catch(e => { })
+        await api.put('/ordersectiontopage', { page })
+        this.load = true
       } catch (error) {
         return error
       }

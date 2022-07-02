@@ -4,19 +4,18 @@ import { useAuthStore } from "src/stores/auth.store"
 // Config Router Global
 
 // is Logged In
-export function checkIsLoggedIn (from, to) {
+export function checkIsLoggedIn(from, to) {
     // // console.log('Middleware checkIsLoggedIn', from, to)
     const authStore = useAuthStore();
     const isLoggedIn = authStore.getLoggedIn
     // // console.log('middleware isloggedin', authStore)
-    console.log('middleware isloggedin', isLoggedIn)
+    // console.log('middleware isloggedin', isLoggedIn)
     if (!isLoggedIn) {
-        console.log('Middleware NOT')
+        // console.log('Middleware NOT')
         return { path: '/auth/login' }
     }
     else {
-
-        console.log('Middleware OK')
+        // console.log('Middleware OK')
         return
     }
     // return
@@ -33,7 +32,7 @@ export function checkIsLoggedIn (from, to) {
 // }
 
 // Check Landing Page
-export function checkLandingPage (to, from) {
+export function checkLandingPage(to, from) {
     // Error with the first load App.vue (getLanding is not loaded)
     // corectif dans les layout avec beforeCreate
 

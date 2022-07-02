@@ -14,7 +14,7 @@
 
         <q-card-section class="q-pa-md">
           <div class="q-gutter-md text-center" style="width: 100%">
-          <!-- Name -->
+            <!-- Name -->
             <q-input
               outlined
               style="width: 100%"
@@ -37,10 +37,7 @@
               </template>
 
               <template v-slot:option="scope">
-                <q-item
-                  clickable
-                  @click="() => (page.icon = scope.opt.value)"
-                >
+                <q-item clickable @click="() => (page.icon = scope.opt.value)">
                   <q-item-section avatar>
                     <q-icon :name="scope.opt.value" />
                   </q-item-section>
@@ -72,6 +69,57 @@
               v-model="page.description"
               label="descritpion"
             />
+
+            <div class="row full-width justify-around">
+              <q-toggle
+                v-model="page.isSecondary"
+                checked-icon="check"
+                color="negative"
+                :label="`Page is secondary: ${page.isSecondary}`"
+                unchecked-icon="clear"
+              />
+              <!-- Choose references -->
+              <q-select
+                v-if="page.isSecondary"
+                style="min-width: 150px"
+                v-model="page.references"
+                :options="monitStore.getPages"
+                label="Références"
+                option-value="name"
+                option-label="name"
+                emit-value
+                map-options
+                square
+                filled
+              >
+                <!-- <template v-slot:prepend>
+                <q-icon :name="scope.opt.icon" />
+              </template> -->
+
+                <template v-slot:option="scope">
+                  <q-item
+                    v-if="!scope.opt.isSecondary"
+                    clickable
+                    @click="() => (page.references = scope.opt.name)"
+                  >
+                    <q-item-section avatar>
+                      <q-icon :name="scope.opt.icon" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      <q-item-label>{{ scope.opt.name }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </template>
+
+                <template v-slot:after-options>
+                  <q-item>
+                    <q-item-section> end ... </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+            </div>
+
             <!-- Button's -->
             <q-btn label="Annulez" color="negative" />
             <q-btn
@@ -98,7 +146,7 @@ export default defineComponent({
     const monitStore = useMonitStore();
     const $q = useQuasar();
     const modalPage = ref(false);
-    let page = ref({});
+    let page = ref({ isSecondary: false });
 
     const CreatePageSubmit = async (obj) => {
       obj.name = obj.name.toLowerCase();
@@ -116,7 +164,8 @@ export default defineComponent({
       CreatePageSubmit,
       modalPage,
       page,
-      ICONS
+      ICONS,
+      monitStore,
     };
   },
 });

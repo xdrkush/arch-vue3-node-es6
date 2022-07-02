@@ -11,6 +11,10 @@
         <div v-else-if="row.key === 'page_id'" />
         <div v-else-if="row.key === 'placement'" />
         <div v-else-if="row.key === 'modules'" />
+        <div v-else-if="row.key === 'default'" />
+        <div v-else-if="row.key === 'isDefault'" />
+        <div v-else-if="row.key === 'references'" />
+        <div v-else-if="row.key === 'isSecondary'" />
         <div v-else-if="row.key === 'mail'" />
         <div v-else-if="row.key === 'type'" />
         <div v-else-if="row.key === 'key'" />
@@ -125,14 +129,18 @@
 
       <!-- Textarea -->
       <div v-else-if="loadedKey.key === 'description'">
-        <q-input
+        <!-- <FormWysiwygVue :data="item[loadedKey.key]"  /> -->
+        <div class="q-pa-md q-gutter-sm">
+          <q-editor v-model="item[loadedKey.key]" min-height="5rem" />
+        </div>
+        <!-- <q-input
           v-model="item[loadedKey.key]"
           filled
           square
           class="col-10"
           type="textarea"
           :label="loadedKey.key"
-        />
+        /> -->
       </div>
 
       <!-- Key Arch -->
@@ -219,8 +227,79 @@
                           </q-select>
                         </div>
 
+                        <!-- Toogle isRefer true | false -->
+                        <div v-else-if="obj.key === 'isRefer'">
+                          <q-toggle
+                            v-model="
+                              item[loadedKey.key][arch.key][index][obj.key]
+                            "
+                            checked-icon="check"
+                            color="green"
+                            :label="`${obj.key} is ${
+                              item[loadedKey.key][arch.key][index][obj.key]
+                            }`"
+                            unchecked-icon="clear"
+                          />
+                        </div>
+
+                        <!-- Select sRefer (to)  -->
+                        <div v-else-if="obj.key === 'refer'">
+                          <q-select
+                            v-model="
+                              item[loadedKey.key][arch.key][index][obj.key]
+                            "
+                            :options="monitStore.getPages"
+                            option-value="name"
+                            option-label="name"
+                            emit-value
+                            map-options
+                            square
+                            filled
+                          >
+                            <template v-slot:option="scope">
+                              <q-item
+                                v-if="!scope.opt.isSecondary"
+                                clickable
+                                @click="
+                                  () =>
+                                    (item[loadedKey.key][arch.key][index][
+                                      obj.key
+                                    ] = scope.opt.name)
+                                "
+                              >
+                                <q-item-section>
+                                  <q-item-label>
+                                    {{ scope.opt.name }}
+                                  </q-item-label>
+                                </q-item-section>
+                              </q-item>
+                              <q-item
+                                v-else
+                                clickable
+                                @click="
+                                  () =>
+                                    (item[loadedKey.key][arch.key][index][
+                                      obj.key
+                                    ] =
+                                      scope.opt.reference.name +
+                                      '/' +
+                                      scope.opt.name)
+                                "
+                              >
+                                <q-item-section>
+                                  <q-item-label>
+                                    {{ scope.opt.reference.name }}/{{
+                                      scope.opt.name
+                                    }}
+                                  </q-item-label>
+                                </q-item-section>
+                              </q-item>
+                            </template>
+                          </q-select>
+                        </div>
+
                         <!-- Image -->
-                        <div class="row" v-else-if="obj.key === 'image'">
+                        <div v-else-if="obj.key === 'image'" class="row">
                           <q-btn
                             v-if="obj.key === 'image'"
                             icon="photo"
@@ -296,8 +375,18 @@
                               item[loadedKey.key][arch.key][index][obj.key]
                             "
                             :options="[
-                              { id: 0, label: 'left', name: 'label', value: 'left' },
-                              { id: 1, label: 'right', name: 'label', value: 'right' },
+                              {
+                                id: 0,
+                                label: 'left',
+                                name: 'label',
+                                value: 'left',
+                              },
+                              {
+                                id: 1,
+                                label: 'right',
+                                name: 'label',
+                                value: 'right',
+                              },
                             ]"
                             option-value="value"
                             option-label="label"
@@ -331,7 +420,13 @@
                           class="col-12 col-md-12 col-xs-12"
                           v-else-if="obj.key === 'description'"
                         >
-                          <q-input
+                          <div class="q-pa-md q-gutter-sm">
+                            <q-editor
+                              v-model="item[loadedKey.key][arch.key][index][obj.key]"
+                              min-height="5rem"
+                            />
+                          </div>
+                          <!-- <q-input
                             v-model="
                               item[loadedKey.key][arch.key][index][obj.key]
                             "
@@ -340,7 +435,7 @@
                             class="col-"
                             type="textarea"
                             :label="loadedKey.key"
-                          />
+                          /> -->
                         </div>
 
                         <!-- Text input -->
@@ -534,11 +629,11 @@
 
 <script>
 import { ref } from "vue";
-import { ICONS, RATIO } from "../../utils";
 import { useQuasar, openURL, getCssVar } from "quasar";
 import { useMonitStore } from "src/stores/monit.store";
 import { setCssVar } from "quasar";
-import { arrayObjEnt, maxChar } from "../../utils";
+import { ICONS, RATIO, arrayObjEnt, maxChar } from "../../utils";
+// import FormWysiwygVue from "./FormWysiwyg.vue";
 
 export default {
   name: "FormEdit",
@@ -552,6 +647,17 @@ export default {
     deleteFn: Function,
     btnSave: Boolean,
   },
+
+  // components: { FormWysiwygVue },
+
+  watch: {
+    data() {
+      this.item = this.data;
+      this.oldName = this.data.name;
+      console.log("DragOrder watcher", this.data, this.item, this.oldName);
+    },
+  },
+
   setup(props) {
     const $q = useQuasar();
     const monitStore = useMonitStore();
@@ -559,7 +665,7 @@ export default {
     const item = ref(props.data);
     const loadedKey = ref({});
     const loadedInput = ref(false);
-    const oldName = item.value.name;
+    let oldName = ref(item.value.name);
     const newKey = ref("github");
 
     const loadInput = (data) => {
@@ -569,32 +675,33 @@ export default {
       item[data.key] = data;
     };
 
-    const onSubmit = () => {
+    let onSubmit = () => {
+      console.log("OnSubmit Form Edit", oldName.value);
       if (props.section)
         props.editFn({
-          section: { ...item.value, oldName },
+          section: { ...item.value, oldName: item.value.name },
           page: props.pageofsection,
         });
-      else props.editFn({ ...item.value, oldName });
+      else props.editFn({ ...item.value, oldName: item.value.name });
 
       $q.notify({
         icon: "thumb_up",
-        caption: `${oldName} à bien été creer/modifier `,
+        caption: `${oldName.value} à bien été creer/modifier `,
         message: "Success !",
         color: "positive",
       });
     };
 
-    const deleteOBJ = () => {
+    let deleteOBJ = () => {
       if (props.section)
         props.deleteFn({
-          section: { ...item.value, oldName },
+          section: { ...item.value, oldName: item.value.name },
           page: props.pageofsection,
         });
-      else props.deleteFn({ ...item.value, oldName });
+      else props.deleteFn({ ...item.value, oldName: item.value.name });
       $q.notify({
         icon: "thumb_up",
-        caption: `${oldName} à bien été supprimer`,
+        caption: `${oldName.value} à bien été supprimer`,
         message: "Success !",
         color: "positive",
       });

@@ -1,7 +1,10 @@
 <template>
   <div>
     <div v-if="data.type === 'listImgDefault'">
-      <ImgListDefault :data="data" :demo="demo" />
+      <ListImgDefault :data="data" :demo="demo" />
+    </div>
+    <div v-else-if="data.type === 'listImg5050'">
+      <ListImg5050 :data="data" :demo="demo" />
     </div>
     <div v-else>
       <p>Une erreur de composant est survenu !</p>
@@ -11,7 +14,8 @@
 
 <script>
 import { defineComponent } from "vue";
-import ImgListDefault from "./ListImgDefault.vue";
+import ListImgDefault from "./ListImgDefault.vue";
+import ListImg5050 from "./ListImg5050.vue";
 
 export default defineComponent({
   name: "DynamicListImg",
@@ -19,7 +23,8 @@ export default defineComponent({
   props: ['data', 'demo'],
 
   components: {
-    ImgListDefault,
+    ListImgDefault,
+    ListImg5050,
   },
 
 });
